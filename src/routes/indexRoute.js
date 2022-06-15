@@ -9,6 +9,13 @@ function IndexRoute() {
         <Routes>
             <Route path='/' element={<LandingPage />}/>
             <Route path='/daftarpenawar' element={<OfferList />}/>
+
+
+            {/* ---- Endpoint Testing ---- */}
+
+            {/* <Route path='/exampletesting' element={<ExampleTesting />}/> */}
+
+            {/* ---- Endpoint Testing ---- */}
         </Routes>
     </Fragment>
   );
