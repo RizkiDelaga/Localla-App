@@ -19,7 +19,7 @@ const AuthLayout = (props) => {
         <Col
           md={6}
           xs={12}
-          className={`${styles["form-container"]} d-flex align-items-center justify-content-center p-0`}
+          className={`${styles["form-cont"]} d-flex align-items-center justify-content-center p-0`}
         >
           {props.children}
         </Col>

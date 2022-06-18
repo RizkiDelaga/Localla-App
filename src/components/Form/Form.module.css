@@ -1,5 +1,6 @@
 .form-container {
   width: 65%;
+  height: 100vh;
 }
 
 .input-field {
@@ -18,11 +19,14 @@
   border: 1px solid #ced4da;
   padding: 0.375rem 0.75rem;
   border-radius: 16px !important;
+  height: 38px;
+  align-items: center;
 }
 
 .password-input {
   flex-grow: 2;
   border: none;
+  width: 100%;
 }
 
 .password-input:focus {
@@ -38,6 +42,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .toggle {
@@ -54,6 +59,7 @@
   width: 100%;
   border-radius: 16px;
   background-color: #7126b5 !important;
+  border: none !important;
 }
 
 .error-text {
