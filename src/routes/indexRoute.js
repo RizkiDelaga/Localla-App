@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
-import { Route, Routes } from "react-router-dom";
-import LandingPage from "../pages/LandingPage/LandingPage";
+import React, { Fragment } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Navbar from '../components/Navbar/Navbar';
+import LandingPage from '../pages/LandingPage/LandingPage';
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import OfferList from '../pages/OfferList/OfferList';
@@ -17,8 +18,8 @@ function IndexRoute() {
 
         {/* ---- Endpoint Testing ---- */}
 
-        {/* <Route path='/exampletesting' element={<ExampleTesting />}/> */}
-
+          <Route path='/navbar' element={<Navbar logo={true} search={true} mobileMenu={true} backButton={true} login={false} desktopMenu={true} normalTitle='Lanjutkan Pembayaran' largeTitle='Nyoba ajah' />}/>
+        
         {/* ---- Endpoint Testing ---- */}
       </Routes>
     </Fragment>
