@@ -18,10 +18,10 @@ function IndexRoute() {
 
         {/* ---- Endpoint Testing ---- */}
 
-          <Route path='/navbar' element={<Navbar logo={true} search={true} mobileMenu={true} backButton={true} login={false} desktopMenu={true} normalTitle='Lanjutkan Pembayaran' largeTitle='Nyoba ajah' />}/>
-        
+          <Route path='/navbar' element={<Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} transparentFade={true} />}/>
+
         {/* ---- Endpoint Testing ---- */}
-      </Routes>
+        </Routes>
     </Fragment>
   );
 }
