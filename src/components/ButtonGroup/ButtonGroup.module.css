@@ -1,0 +1,18 @@
+.buttonGroup Button{
+    height: 48px;
+    background-color: #E2D4F0;
+    border: none;
+    margin-right: 16px;
+    border-radius: 12px;
+    padding: 14px, 24px, 14px, 24px;
+    color: black;
+    font-size: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.buttonGroup img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
