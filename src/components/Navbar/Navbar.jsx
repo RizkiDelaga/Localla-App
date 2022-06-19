@@ -55,12 +55,17 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                   </button>
                   <Offcanvas show={show} onHide={handleClose} {...options} style={{width: '50%', minWidth: '200px', zIndex: '9999'}}>
                       <Offcanvas.Header closeButton>
-                      <Offcanvas.Title>Localla</Offcanvas.Title>
+                      <Offcanvas.Title className={`ps-2`}>Localla</Offcanvas.Title>
                       </Offcanvas.Header>
                       <Offcanvas.Body>
                           <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Notifikasi</div>
                           <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Daftar Jual</div>
                           <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Akun Saya</div>
+                          {login?
+                            <button className={`ms-2 ${style['button-login-mobile']}`}>
+                                <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>Masuk
+                            </button>
+                          : null}
                       </Offcanvas.Body>
                   </Offcanvas>
               </div> : null}
@@ -77,8 +82,8 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
               : null}
               {search?
                 <Form className={`w-100`} onSubmit={(event) => {event.preventDefault()}}>
-                  <Form.Group controlId="formBasicEmail" className={`d-flex align-items-center justify-content-center px-2 ${style['seacrh-input']} ${transparentFade? null : style['seacrh-input-color-on-transparent']} ${navbarTransparent? style['seacrh-input-color-on-transparent'] : null}`}>
-                    <input type="search" placeholder="Cari di sini ..." className={`${style['seacrh-input']} ${transparentFade? null : style['seacrh-input-color-on-transparent']} ${navbarTransparent? style['seacrh-input-color-on-transparent'] : null}`} />
+                  <Form.Group controlId="formBasicEmail" className={`d-flex align-items-center justify-content-center px-2 ${style['search-input']} ${transparentFade? null : style['search-input-color-on-transparent']} ${navbarTransparent? style['search-input-color-on-transparent'] : null}`}>
+                    <input type="search" placeholder="Cari di sini ..." className={`${style['search-input']} ${transparentFade? null : style['search-input-color-on-transparent']} ${navbarTransparent? style['search-input-color-on-transparent'] : null}`} />
                     <button type='submit' className={`${style['button-search']}`}>
                         <img src={Search_Icon} alt="" style={{width: '25px'}}/>
                     </button> 
