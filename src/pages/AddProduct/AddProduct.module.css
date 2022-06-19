@@ -1,0 +1,17 @@
+.formProduct {
+    width: 568px;
+    margin: auto;
+    border-radius: 16px;
+    padding: 12px, 16px, 12px, 16px;
+}
+
+.formProduct Button {
+    height: 48px;
+    width: 276px;
+    border-radius: 16px;
+    margin-right: 5px;
+    margin-top: 24px;
+    background-color: #7126B5;
+    color: white;
+    border: none;
+}
