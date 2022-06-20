@@ -4,6 +4,9 @@ import LandingPage from "../pages/LandingPage/LandingPage";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import OfferList from '../pages/OfferList/OfferList';
+import GroupButton from "../components/ButtonGroup/ButtonGroup";
+import EditProfile from "../pages/EditProfile/EditProfile";
+import AddProduct from "../pages/AddProduct/AddProduct";
 
 function IndexRoute() {
   return (
@@ -18,6 +21,10 @@ function IndexRoute() {
         {/* ---- Endpoint Testing ---- */}
 
         {/* <Route path='/exampletesting' element={<ExampleTesting />}/> */}
+        <Route path='/radiobutton' element={<GroupButton />}/>
+        <Route path='/editprofile' element={<EditProfile />}/>
+        <Route path='/addproduct' element={<AddProduct />}/>
+
 
         {/* ---- Endpoint Testing ---- */}
       </Routes>

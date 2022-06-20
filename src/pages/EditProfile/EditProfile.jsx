@@ -1,66 +1,54 @@
 import React, {Fragment} from 'react';
-import {Navbar} from 'react-bootstrap';
 import {Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Camera from '../../assets/icon/fi_camera.png'
+import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png'
 import style from './EditProfile.module.css';
-import ButtonBack from '../../assets/icon/fi_arrow-left.png';
 
-const EditProfile = () => {
+function EditProfile() {
   return (
-    
     <Fragment>
-      <Navbar expand="lg" variant="light" className={`${style.navbar}`} >
-        <Navbar.Brand href="#" style={{marginTop:'10px', marginLeft:'136px'}}>Localla</Navbar.Brand>
-        <div style={{marginLeft :'409px', marginTop:'27px', fontSize:'16px'}}>
-          <p >Lengkapi Info Akun</p>
-        </div>
-      </Navbar>
-      <Container>
-        <img src={ButtonBack} alt="back"style={{marginLeft:'250px', marginTop:'35px'}} />
-        <Card className={`${style.profileImage}`}>
-          <Card.Img variant="top" src= {Camera} style={{ width:'24px', margin : '36px'}} />
-        </Card>
+      <Container fluid className={`d-flex justify-content-center`} style={{marginTop: '90px'}}>
+        <section style={{width: '100%', maxWidth: '800px'}}>
 
-        <div className={`${style.formData}`}>
-          <Form.Label htmlFor="inputPassword5">Nama*</Form.Label>
-          <Form.Control
-            type="text"
-            id="inputPassword5"
-            aria-describedby="passwordHelpBlock"
-            placeholder="Nama"
-            style={{borderRadius:'16px', height:'48px'}}
-          />
-          <Form.Label style={{marginTop:'16px'}}>Pilih Kota</Form.Label>
-          <Form.Select style={{borderRadius:'16px', height:'48px'}} >
-            <option>Pilih Kota</option>
-            <option>Bandung</option>
-            <option>Yogyakarta</option>
-            <option>Jakarta</option>
-          </Form.Select>
+          <div className="d-flex justify-content-center">
+            <div className={`${style['personal-photo']}`}>
+              <img src={Default_PP_Icon} alt="" style={{width: '100%', objectFit: 'cover'}}/>
+            </div>
+            <div className="upload-photo">
 
-          <Form.Label htmlFor="inputPassword5" style={{marginTop:'16px'}} >Alamat*</Form.Label>
-          <Form.Control
-            type="text"
-            id="inputPassword5"
-            aria-describedby="passwordHelpBlock"
-            placeholder='Contoh : Jalan jeruk 06'
-            style={{borderRadius:'16px', height:'80px'}}
-          />
-          <Form.Label htmlFor="inputPassword5" style={{marginTop:'16px'}}>No Handphone*</Form.Label>
-          <Form.Control
-            type="text"
-            id="inputPassword5"
-            aria-describedby="passwordHelpBlock"
-            placeholder='Contoh : +6285351432198'
-            style={{borderRadius:'16px', height:'48px'}}
-          />
+            </div>
+          </div>
+          <Form onSubmit={(event) => {event.preventDefault()}}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nama</Form.Label>
+              <Form.Control type="text" placeholder="Nama" className={`${style['input-form-style']}`} />
+            </Form.Group>
+            
+            <Form.Group className="mb-3" style={{width: '100% !important'}}>
+              <Form.Label>Kota</Form.Label>
+              <Form.Select aria-label="Default select example" className={`text-secondary ${style['input-form-style']}`}>
+                <option hidden>Pilih Kota</option>
+                <option value="1" style={{color: '#000'}}>One</option>
+                <option value="2" style={{color: '#000'}}>Two</option>
+                <option value="3" style={{color: '#000'}}>Three</option>
+              </Form.Select>
+            </Form.Group>
 
-          <Button style={{width:'538px', height :'48px' ,borderRadius:'16px', backgroundColor :'#7126B5', padding:'12px 24px', fontSize:'14px', marginTop:'16px', border:'none'}}>Simpan</Button>   
-        </div>
-         
+            <Form.Group className="mb-3">
+              <Form.Label>Alamat</Form.Label>
+              <Form.Control as="textarea" rows={3} placeholder="Contoh: Jalan Ikan Hiu 33" className={`${style['input-form-style']}`} />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>No Handphone</Form.Label>
+              <Form.Control type="text" placeholder="contoh: +628123456789" className={`${style['input-form-style']}`} controlId="exampleForm.ControlInput1" />
+            </Form.Group>
+          </Form>
+
+          <div className="d-flex mt-4">
+            <button className={`${style['btn-decision']}`}>Simpan</button>
+          </div>
+        </section>
       </Container>
     </Fragment>
   )

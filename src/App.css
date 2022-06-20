@@ -1,0 +1,10 @@
+/* Radio Buttons Group Start */
+
+/* Overwrite Style */
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .show>.btn-primary.dropdown-toggle {
+    color: #ffffff !important;
+    background-color: #7126B5 !important;
+    border-color: #7126B5 !important;
+}
+
+/* Radio Buttons Group End */

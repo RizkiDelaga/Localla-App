@@ -1,67 +1,46 @@
 import React, {Fragment} from 'react';
-import {Navbar} from 'react-bootstrap';
 import {Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import style from './AddProduct.module.css';
 
-const AddProduct = () => {
+function AddProduct() {
   return (
     <Fragment>
-        
-          <Navbar expand="lg" variant="light"  style={{boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.15)'}} >
-            <Navbar.Brand href="#" style={{marginTop:'10px', marginLeft:'136px'}} >Localla</Navbar.Brand>
-          </Navbar>
+      <Container fluid className={`d-flex justify-content-center`} style={{marginTop: '90px'}}>
+        <section style={{width: '100%', maxWidth: '800px'}}>
+          <Form onSubmit={(event) => {event.preventDefault()}}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nama Produk</Form.Label>
+              <Form.Control type="text" placeholder="Nama Produk" className={`${style['input-form-style']}`} />
+            </Form.Group>
 
-          <Container>
-            <div className={`${style.formProduct}`}>
-              <Form.Label htmlFor="inputPassword5" style={{marginTop:'40px'}}>Nama Produk</Form.Label>
-              <Form.Control
-              type="text"
-              id="inputPassword5"
-              aria-describedby="passwordHelpBlock"
-              placeholder="Nama Produk"
-              style={{borderRadius:'16px', height:'48px'}}
-              />
+            <Form.Group className="mb-3">
+              <Form.Label>Harga Produk</Form.Label>
+              <Form.Control type="text" placeholder="Rp 0,00" className={`${style['input-form-style']}`} controlId="exampleForm.ControlInput1" />
+            </Form.Group>
+            
+            <Form.Group className="mb-3" style={{width: '100% !important'}}>
+              <Form.Label>Kategori</Form.Label>
+              <Form.Select aria-label="Default select example" className={`text-secondary ${style['input-form-style']}`}>
+                <option hidden>Pilih Kategori</option>
+                <option value="1" style={{color: '#000'}}>One</option>
+                <option value="2" style={{color: '#000'}}>Two</option>
+                <option value="3" style={{color: '#000'}}>Three</option>
+              </Form.Select>
+            </Form.Group>
 
-              <Form.Label htmlFor="inputPassword5" style={{marginTop:'16px'}} >Harga Produk</Form.Label>
-              <Form.Control
-              type="text"
-              id="inputPassword5"
-              aria-describedby="passwordHelpBlock"
-              placeholder="Rp 1.000,00"
-              style={{borderRadius:'16px', height:'48px'}}
-              />
+            <Form.Group className="mb-3">
+              <Form.Label>Alamat</Form.Label>
+              <Form.Control as="textarea" rows={3} placeholder="Contoh: Jalan Ikan Hiu 33" className={`${style['input-form-style']}`} />
+            </Form.Group>
+          </Form>
 
-              <Form.Label style={{marginTop:'16px'}}>Pilih Kategori</Form.Label>
-              <Form.Select style={{borderRadius:'16px', height:'48px'}} >
-                <option>Pilih Kategori</option>
-                <option>Bandung</option>
-                <option>Yogyakarta</option>
-                <option>Jakarta</option>
-              </Form.Select>    
-
-              <Form.Label htmlFor="inputPassword5" style={{marginTop:'16px'}}>Deskripsi</Form.Label>
-              <Form.Control
-              type="text"
-              id="inputPassword5"
-              aria-describedby="passwordHelpBlock"
-              placeholder="Produk ini terbuat dari serbuk emas"
-              style={{borderRadius:'16px', height:'48px'}}
-              /> 
-
-              <Form.Label htmlFor="inputPassword5" style={{marginTop:'16px'}}>Foto Produk</Form.Label>
-              <Form.Control
-              type=""
-              id="inputimage"
-              aria-describedby="passwordHelpBlock"
-              style={{width: '96px',height: '96px',border: '1px dashed #D0D0D0',borderRadius: '12px'}}
-              />
-
-              <Button>Preview</Button>
-              <Button>Terbitkan</Button>  
-            </div>
-        </Container>
+          <div className="d-flex mt-4">
+            <button className={`me-4 ${style['btn-decision']}`}>Preview</button>
+            <button className={`${style['btn-decision']}`}>Terbitakan</button>
+          </div>
+        </section>
+      </Container>
     </Fragment>
     
   )

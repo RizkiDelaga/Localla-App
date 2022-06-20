@@ -1,20 +1,39 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import Search from '../../assets/icon/fi_search.png';
-import {Button, Container} from 'react-bootstrap';
+import { ToggleButton, ToggleButtonGroup} from 'react-bootstrap';
 import style from './ButtonGroup.module.css';
+import { useState } from 'react';
 
-const GroupButton = () => {
+function GroupButton() {
+  const [buttonGroup, setButtonGroup] = useState('All')
+
   return (
       <Fragment>
-        <Container className={`${style.buttonGroup}`}>
-            <h4>Telusuri Kategori</h4>
-            <Button><img src={Search} alt=""/>Semua</Button>
-            <Button><img src={Search} alt=""/>Hobi</Button>
-            <Button><img src={Search} alt=""/>Kendaraan</Button>
-            <Button><img src={Search} alt=""/>Baju</Button>
-            <Button><img src={Search} alt=""/>Elektronik</Button>
-            <Button><img src={Search} alt=""/>Kesehatan</Button>
-        </Container>
+        <div className={`${style['horizontal-scroll']}`}>
+          <ToggleButtonGroup type="radio" name="options" defaultValue={"Semua"} className={`${style['button-group-custom']}`} onChange={(event) => {
+            console.log(event)
+            setButtonGroup(event)}}>
+            <ToggleButton id="radio-button-1" value={"Semua"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center button1 ${style['btn-group-style']}`} >
+              <img src={Search} className={`me-2`} alt=""/>Semua
+            </ToggleButton>
+            <ToggleButton id="radio-button-2" value={"Hobi"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} >
+              <img src={Search} className={`me-2`} alt=""/>Hobi
+            </ToggleButton>
+            <ToggleButton id="radio-button-3" value={"Kendaraan"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} >
+              <img src={Search} className={`me-2`} alt=""/>Kendaraan
+            </ToggleButton>
+            <ToggleButton id="radio-button-4" value={"Baju"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} >
+              <img src={Search} className={`me-2`} alt=""/>Baju
+            </ToggleButton>
+            <ToggleButton id="radio-button-5" value={"Elektronik"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} >
+              <img src={Search} className={`me-2`} alt=""/>Elektronik
+            </ToggleButton>
+            <ToggleButton id="radio-button-6" value={"Kesehatan"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} >
+              <img src={Search} className={`me-2`} alt=""/>Kesehatan
+            </ToggleButton>
+          </ToggleButtonGroup>
+          {console.log("asd  ", buttonGroup)}
+        </div>
       </Fragment>
   )
 }
