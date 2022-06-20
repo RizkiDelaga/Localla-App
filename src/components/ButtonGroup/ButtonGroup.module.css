@@ -1,0 +1,33 @@
+/* Radio Button Group Start */
+.button-group-custom {
+    background-color: white !important;
+}
+
+.horizontal-scroll {
+    padding: 5px;
+    display: flex;
+    overflow-x: auto;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    width: 0;
+}
+
+.horizontal-scroll .item {
+    height: 110px;
+    min-width: 550px;
+    text-align: center;
+    background-color: aliceblue;
+    margin: 5px;
+}
+
+.btn-group-style {
+    min-height: 48px;
+    border-radius: 16px !important;
+    background-color: #E2D4F0 !important;
+    color: #000000 !important;
+    font-weight: 400 !important;
+    border: none !important;
+}
+
+/* Radio Button Group End */
