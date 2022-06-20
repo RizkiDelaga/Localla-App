@@ -9,6 +9,7 @@ function GroupButton() {
 
   return (
       <Fragment>
+        <h1>Test</h1>
         <div className={`${style['horizontal-scroll']}`}>
           <ToggleButtonGroup type="radio" name="options" defaultValue={"Semua"} className={`${style['button-group-custom']}`} onChange={(event) => {
             console.log(event)
