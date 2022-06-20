@@ -1,13 +1,46 @@
-import React, {Fragment} from 'react';
-import {Container} from 'react-bootstrap';
+import React, {Fragment, useEffect, useState} from 'react';
+import {Button, Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { useDropzone } from 'react-dropzone';
 import style from './AddProduct.module.css';
+import Plus_Icon from '../../assets/icon/Plus_Icon.png';
+
 
 function AddProduct() {
+  const [files, setFiles] = useState([]);
+  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({
+    accept: {
+      'image/*': []
+    },
+    onDrop: acceptedFiles => {
+      setFiles([...files, ...acceptedFiles.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      }))]);
+    }
+  });
+  const filesName = files.map(file => <li key={file.path}>{file.path} <Button variant='danger' className={`ms-3 py-0`} onClick={() => {}}>Delete</Button></li>);
+    
+  const thumbs = files.map(file => (
+    <div className={`${style['thumb']}`} key={file.name}>
+      <div className={`${style['thumb-inner']}`}>
+        <img
+          src={file.preview}
+          className={`${style['img-preview']}`}
+          onLoad={() => { URL.revokeObjectURL(file.preview) }}
+          alt=""
+        />
+      </div>
+    </div>
+  ));
+  
+  useEffect(() => {
+    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+  }, []);
+
   return (
     <Fragment>
       <Container fluid className={`d-flex justify-content-center`} style={{marginTop: '90px'}}>
-        <section style={{width: '100%', maxWidth: '800px'}}>
+        <section className={`my-5`} style={{width: '100%', maxWidth: '800px'}}>
           <Form onSubmit={(event) => {event.preventDefault()}}>
             <Form.Group className="mb-3">
               <Form.Label>Nama Produk</Form.Label>
@@ -33,17 +66,32 @@ function AddProduct() {
               <Form.Label>Alamat</Form.Label>
               <Form.Control as="textarea" rows={3} placeholder="Contoh: Jalan Ikan Hiu 33" className={`${style['input-form-style']}`} />
             </Form.Group>
-          </Form>
 
-          <div className="d-flex mt-4">
-            <button className={`me-4 ${style['btn-decision']}`}>Preview</button>
-            <button className={`${style['btn-decision']}`}>Terbitakan</button>
-          </div>
+            <Form.Group className="mb-3">
+              <Form.Label>Foto Produk</Form.Label>
+
+              <div {...getRootProps({className: 'dropzone'})} className={`d-flex justify-content-center align-items-center ${style['dropzone-box']}`}>
+                <input {...getInputProps()} />
+                <div className={`p-2 text-center text-secondary ${style['dropzone-area']}`}>
+                  <img src={Plus_Icon} className={`mb-3`} alt="" style={{width: '40%'}} />
+                  <p>Tambah Foto</p>
+                </div>
+              </div>
+              <aside className={`d-block ${style['thumbs-container']}`}>
+                {thumbs}
+                <ul>{filesName}</ul>
+              </aside>
+            </Form.Group>
+            
+            <div className="d-flex my-5">
+              <button className={`me-4 ${style['btn-decision']}`}>Preview</button>
+              <button type='submit' className={`${style['btn-decision']}`}>Terbitakan</button>
+            </div>
+          </Form>
         </section>
       </Container>
     </Fragment>
-    
   )
 }
 
-export default AddProduct
+export default AddProduct;
