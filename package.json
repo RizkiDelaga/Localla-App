@@ -2,8 +2,11 @@
   "name": "localla-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.14.0",
+    "npm": "8.3.1"
+  },
   "dependencies": {
-    "-": "^0.0.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
