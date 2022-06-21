@@ -8,7 +8,7 @@ import Plus_Icon from '../../assets/icon/Plus_Icon.png';
 
 function AddProduct() {
   const [files, setFiles] = useState([]);
-  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({
+  const {getRootProps, getInputProps} = useDropzone({
     accept: {
       'image/*': []
     },
