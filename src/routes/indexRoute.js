@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import LandingPage from '../pages/LandingPage/LandingPage';
-import Login from "../pages/Auth/Login";
-import Register from "../pages/Auth/Register";
+// import Login from "../pages/Auth/Login";
+// import Register from "../pages/Auth/Register";
 import OfferList from '../pages/OfferList/OfferList';
 import GroupButton from "../components/ButtonGroup/ButtonGroup";
 import EditProfile from "../pages/EditProfile/EditProfile";
@@ -14,8 +14,8 @@ function IndexRoute() {
     <Fragment>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        {/* <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} /> */}
         <Route path='editprofile' element={<EditProfile />}/>
         <Route path='addproduct' element={<AddProduct />}/>
 
