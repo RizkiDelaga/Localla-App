@@ -1,3 +1,4 @@
+/* Input Form Start */
 .input-form-style {
     min-height: 48px !important;
     width: 100% !important;
@@ -5,6 +6,9 @@
     border-radius: 16px !important;
 }
 
+/* Input Form End */
+
+/* Button Decision Start */
 
 .btn-decision {
     border-radius: 16px;
@@ -21,3 +25,52 @@
     background-color: #7126B5;
     color: #ffffff;
 }
+
+/* Button Decision End */
+
+/* Dropzone File Start */
+
+.dropzone-box {
+    width: 100%;
+    min-width: 100px;
+    max-width: 200px;
+    min-height: 200px;
+    border: 2px dashed #D0D0D0;
+    border-radius: 16px;
+}
+
+.dropzone-area {
+    height: 100%;
+}
+
+.thumbs-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+  
+.thumb {
+    display: inline-flex;
+    border-radius: 2px;
+    border: 1px solid #eaeaea;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    width: 100px;
+    height: 100px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+  
+.thumb-inner {
+    display: flex;
+    overflow: hidden;
+}
+  
+.img-preview {
+    display: block;
+    width: auto;
+    height: 100%;
+}
+
+/* Dropzone File End */
