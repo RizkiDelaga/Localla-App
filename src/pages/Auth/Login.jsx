@@ -1,13 +1,16 @@
-// import React from "react";
-// import LoginForm from "../../components/Form/LoginForm";
-// import AuthLayout from "../../layouts/Auth/AuthLayout";
+import React, { Fragment } from "react";
+import LoginForm from "../../components/Form/LoginForm";
+import AuthLayout from "../../layouts/Auth/AuthLayout";
 
-// const Login = () => {
-//   return (
-//     <AuthLayout>
-//       <LoginForm />
-//     </AuthLayout>
-//   );
-// };
 
-// export default Login;
+const Login = () => {
+  return (
+    <Fragment>
+        <AuthLayout>
+            <LoginForm />
+        </AuthLayout>
+    </Fragment>
+  );
+};
+
+export default Login;

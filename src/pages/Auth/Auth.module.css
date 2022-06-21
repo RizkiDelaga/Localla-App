@@ -1,0 +1,114 @@
+.cont {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .login-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .alert-cont {
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .arrow {
+    padding: 40px 40px 0 !important;
+  }
+  
+  @media (max-width: 576px) {
+    .login-img {
+      display: none;
+    }
+  }
+  
+  @media (min-width: 576px) {
+    .arrow {
+      display: none;
+    }
+  }
+  
+  @media (min-height: 576px) {
+    .cont {
+      overflow-y: hidden;
+      height: 100vh;
+    }
+  }
+  
+
+/* Login Form Start */
+
+  .form-container {
+    width: 65%;
+    height: 100vh;
+  }
+  
+  .input-field {
+    border-radius: 16px !important;
+  }
+  
+  .text {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+  }
+  
+  .password-holder {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    border-radius: 16px !important;
+    height: 38px;
+    align-items: center;
+  }
+  
+  .password-input {
+    flex-grow: 2;
+    border: none;
+    width: 100%;
+  }
+  
+  .password-input:focus {
+    outline: none;
+  }
+  
+  .password-toggler {
+    border: none;
+    background: none;
+  }
+  
+  .toggler {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .toggle {
+    margin-top: 1rem;
+    background-color: transparent;
+    color: #9f5ccc;
+    border: none;
+    font-weight: 700;
+    padding: 0.15rem 1.5rem;
+    text-decoration: none;
+  }
+  
+  .button-submit {
+    width: 100%;
+    border-radius: 16px;
+    background-color: #7126b5 !important;
+    border: none !important;
+  }
+  
+  .error-text {
+    color: #b40e0e;
+  }
+  
+/* Register Form Start */

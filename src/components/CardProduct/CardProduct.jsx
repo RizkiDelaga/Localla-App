@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import style from './CardProduct.module.css';
 
