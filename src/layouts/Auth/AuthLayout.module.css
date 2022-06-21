@@ -1,11 +1,11 @@
 .cont {
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
 }
 
 .login-img {
   width: 100%;
-  height: auto;
+  height: 100vh !important;
   object-fit: cover;
 }
 

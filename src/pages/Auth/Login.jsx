@@ -1,12 +1,15 @@
-import React from "react";
+import React, { Fragment } from "react";
 import LoginForm from "../../components/Form/LoginForm";
 import AuthLayout from "../../layouts/Auth/AuthLayout";
 
+
 const Login = () => {
   return (
-    <AuthLayout>
-      <LoginForm />
-    </AuthLayout>
+    <Fragment>
+        <AuthLayout>
+            <LoginForm />
+        </AuthLayout>
+    </Fragment>
   );
 };
 

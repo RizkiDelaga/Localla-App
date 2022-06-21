@@ -2,29 +2,35 @@ import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import styles from "./AuthLayout.module.css";
 
+import Arrow_Left_Icon from '../../assets/icons/Arrow_Left_Icon.png';
+import Rectangle_131 from '../../assets/images/Rectangle_131.png';
+
+
 const AuthLayout = (props) => {
   return (
-    <div className={styles.cont}>
+    <Container fluid>
       <Row>
         <Container className={`${styles.arrow}`}>
-          <img src="./assets/icons/fi_arrow-left.png" alt="" />
+          <img src={Arrow_Left_Icon} alt="" />
         </Container>
-        <Col md={6} xs={0} className={`${styles.image} p-0`}>
+        <Col md={6} sm={12} xs={0} className={`p-0`}>
           <img
             className={`${styles["login-img"]}`}
-            src="./assets/Rectangle 131.png"
+            src={Rectangle_131}
             alt=""
           />
         </Col>
         <Col
           md={6}
+          sm={12}
           xs={12}
-          className={`${styles["form-cont"]} d-flex align-items-center justify-content-center p-0`}
+          className={`px-0 py-5 d-flex flex-column mt-auto mb-auto align-items-center`}
+          
         >
           {props.children}
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 };
 
