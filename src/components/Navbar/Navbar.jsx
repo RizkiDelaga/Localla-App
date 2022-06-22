@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { ButtonGroup, Container, Dropdown, DropdownButton, Form } from 'react-bootstrap';
+import { Container, Dropdown, Button, Form } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import style from './Navbar.module.css';
 
@@ -62,9 +62,9 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                           <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Daftar Jual</div>
                           <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Akun Saya</div>
                           {login?
-                            <button className={`ms-2 ${style['button-login-mobile']}`}>
+                            <Button className={`ms-2 ${style['button-login-mobile']}`}>
                                 <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>Masuk
-                            </button>
+                            </Button>
                           : null}
                       </Offcanvas.Body>
                   </Offcanvas>
@@ -72,9 +72,9 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
 
               {backButton?
                 <div className={`${style['switch-mobile-navbar']}`}>
-                  <button onClick={toggleShow} className={`me-3 ${style['back-button']}`}>
+                  <Button onClick={toggleShow} className={`me-3 ${style['back-button']}`}>
                     <img src={Arrow_Left_Icon} alt="" style={{width: '100%'}}/>
-                  </button>
+                  </Button>
                 </div> : null}
 
               {logo?
@@ -104,21 +104,21 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
               {(login || desktopMenu)?
                 <div className={`${style['menu-desktop']} ${normalTitle? null : 'w-100'}`} >
                     {login?
-                      <button className={`${style['button-login']}`}>
+                      <Button className={`${style['button-login']}`}>
                           <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>Masuk
-                      </button> 
+                      </Button> 
                     : null}
                     {desktopMenu? 
                       <div className={`d-flex align-items-center justify-content-center`}>
-                        <button utton className={`ms-3 ${style['button-icon']}`}>
+                        <Button utton className={`ms-3 ${style['button-icon']}`}>
                             <img src={Product_List_Icon} alt="" style={{width: '25px'}}/>
-                        </button>
+                        </Button>
 
                         <Dropdown align={{ md: 'end', lg: 'end' }} className={`ms-3`}>
                           <Dropdown.Toggle split className={`p-0 ${style['button-icon']} ${style['dropdown-toggle-split']}`} >
-                            <button className={`${style['button-icon']}`}>
+                            <Button className={`${style['button-icon']}`}>
                                 <img src={Bell_Icon} alt="" style={{width: '25px'}}/>
-                            </button>
+                            </Button>
                           </Dropdown.Toggle>
                           <Dropdown.Menu className={`${style['dropdown-menu']}`}>
                             <Dropdown.Item className={`${style['list-notif']}`}><ProductOfferList/></Dropdown.Item>
@@ -131,9 +131,9 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                           </Dropdown.Menu>
                         </Dropdown>
 
-                        <button utton className={`ms-3 ${style['button-icon']}`}>
+                        <Button utton className={`ms-3 ${style['button-icon']}`}>
                             <img src={User_Icon} alt="" style={{width: '25px'}}/>
-                        </button>
+                        </Button>
                       </div>
                     : null}
                 </div> : null}

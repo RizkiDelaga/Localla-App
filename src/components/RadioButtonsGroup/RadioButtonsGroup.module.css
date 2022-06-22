@@ -13,14 +13,6 @@
     width: 0;
 }
 
-.horizontal-scroll .item {
-    height: 110px;
-    min-width: 550px;
-    text-align: center;
-    background-color: aliceblue;
-    margin: 5px;
-}
-
 .btn-group-style {
     min-height: 48px;
     border-radius: 16px !important;

@@ -5,10 +5,11 @@ import LandingPage from '../pages/LandingPage/LandingPage';
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import OfferList from '../pages/OfferList/OfferList';
-import GroupButton from "../components/ButtonGroup/ButtonGroup";
+import RadioButtonsGroup from "../components/RadioButtonsGroup/RadioButtonsGroup";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import InfoProfile from '../pages/InfoProfile/InfoProfile';
 import AddProduct from "../pages/AddProduct/AddProduct";
+import ProductList from '../pages/ProductList/ProductList';
 
 function IndexRoute() {
   return (
@@ -20,11 +21,12 @@ function IndexRoute() {
         <Route path="register" element={<Register />} />
         <Route path='editprofile' element={<EditProfile />}/>
         <Route path='addproduct' element={<AddProduct />}/>
+        <Route path='ProductList' element={<ProductList />}/>
 
         {/* ---- Endpoint Testing ---- */}
           
           <Route path='daftarpenawar' element={<OfferList />}/>
-          <Route path='radiobutton' element={<GroupButton />}/>
+          <Route path='radiobutton' element={<RadioButtonsGroup />}/>
           <Route path='navbar' element={<Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} transparentFade={true} />}/>
 
         {/* ---- Endpoint Testing ---- */}
