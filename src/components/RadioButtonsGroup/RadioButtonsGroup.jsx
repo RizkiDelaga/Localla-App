@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import Search from '../../assets/icon/fi_search.png';
 import { ToggleButton, ToggleButtonGroup} from 'react-bootstrap';
-import style from './ButtonGroup.module.css';
+import style from './RadioButtonsGroup.module.css';
 import { useState } from 'react';
 
-function GroupButton() {
+function RadioButtonsGroup() {
   const [buttonGroup, setButtonGroup] = useState('All')
 
   return (
@@ -32,10 +32,10 @@ function GroupButton() {
               <img src={Search} className={`me-2`} alt=""/>Kesehatan
             </ToggleButton>
           </ToggleButtonGroup>
-          {console.log("asd  ", buttonGroup)}
+          {console.log("Button Value: ", buttonGroup)}
         </div>
       </Fragment>
   )
 }
 
-export default GroupButton;
+export default RadioButtonsGroup;
