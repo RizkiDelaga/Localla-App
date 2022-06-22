@@ -28,15 +28,15 @@ const InfoProfile = () => {
           </div>
           <div className={styles["btn-holder"]}>
             <img src={edit} alt="" />
-            <h6 className={styles["btn-logo1"]}>Ubah Akun</h6>
+            <h6 className={`ms-3 mb-0`}>Ubah Akun</h6>
           </div>
           <div className={styles["btn-holder"]}>
             <img src={setting} alt="" />
-            <h6 className={styles["btn-logo2"]}>Pengaturan Akun</h6>
+            <h6 className={`ms-3 mb-0`}>Pengaturan Akun</h6>
           </div>
           <div className={styles["btn-holder"]}>
             <img src={exit} alt="" />
-            <h6 className={styles["btn-logo3"]}>Keluar</h6>
+            <h6 className={`ms-3 mb-0`}>Keluar</h6>
           </div>
           <div className={styles.version}>
             <p className={styles["version-text"]}>Version 1.0.0</p>

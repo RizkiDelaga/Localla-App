@@ -34,10 +34,10 @@ const BottomNavigation = () => {
       <section className={style['bottom-navigation']} >
       {logo.map((item) => {
         return (
-          <button className={`mx-auto py-2 d-flex flex-column justify-content-center align-items-center text-center ${style['btn-menu']}`}>
+          <div className={`mx-auto py-2 d-flex flex-column justify-content-center align-items-center text-center ${style['btn-menu']}`}>
             <img src={item.img} alt="" />
             <h6 className={` m-0 ${style['text']}`}>{item.text}</h6>
-          </button>
+          </div>
         )
         })}
       </section>

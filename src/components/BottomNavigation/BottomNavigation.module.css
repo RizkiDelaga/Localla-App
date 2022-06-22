@@ -16,9 +16,10 @@
   height: 60px !important;
   border: none !important;
   background-color: #ffffff !important;
+  cursor: pointer;
 }
 
-.btn-menu:focus {
+.btn-menu:hover {
   width: 100%;
   max-height: 60px;
   border: none !important;

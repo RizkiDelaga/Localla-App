@@ -13,19 +13,6 @@
   align-items: center;
 }
 
-.btn-logo1 {
-  padding-left: 45%;
-  margin: 0;
-}
-.btn-logo2 {
-  padding-left: 43%;
-  margin: 0;
-}
-.btn-logo3 {
-  padding-left: 46%;
-  margin: 0;
-}
-
 .version {
   padding: 20px 0;
   display: flex;
@@ -36,16 +23,4 @@
   color: #8a8a8a;
   font-size: 12px;
   font-weight: 400;
-}
-
-@media (max-width: 780px) {
-  .btn-logo1 {
-    padding-left: 16px;
-  }
-  .btn-logo2 {
-    padding-left: 16px;
-  }
-  .btn-logo3 {
-    padding-left: 16px;
-  }
 }
