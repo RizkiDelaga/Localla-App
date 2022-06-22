@@ -38,7 +38,7 @@
   font-weight: 400;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 780px) {
   .btn-logo1 {
     padding-left: 16px;
   }

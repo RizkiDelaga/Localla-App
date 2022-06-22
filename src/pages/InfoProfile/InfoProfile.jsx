@@ -5,7 +5,7 @@ import edit from "../../assets/icons/fi_edit-3.png";
 import setting from "../../assets/icons/fi_settings.png";
 import exit from "../../assets/icons/fi_log-out.png";
 import styles from "./InfoProfile.module.css";
-import Footer from "../../components/Footer/Footer";
+import BottomNavigation from "../../components/BottomNavigation/BottomNavigation";
 
 const InfoProfile = () => {
   return (
@@ -42,8 +42,8 @@ const InfoProfile = () => {
             <p className={styles["version-text"]}>Version 1.0.0</p>
           </div>
         </section>
-        <Footer />
       </Container>
+      <BottomNavigation />
     </Fragment>
   );
 };

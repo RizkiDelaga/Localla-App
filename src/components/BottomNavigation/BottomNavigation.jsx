@@ -1,13 +1,12 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
 import home from "../../assets/icons/fi_home.png";
 import bell from "../../assets/icons/fi_bell.png";
 import plus from "../../assets/icons/fi_plus-circle.png";
 import list from "../../assets/icons/fi_list.png";
 import user from "../../assets/icons/fi_user.png";
-import styles from "./Footer.module.css";
+import style from "./BottomNavigation.module.css";
 
-const Footer = () => {
+const BottomNavigation = () => {
   const logo = [
     {
       img: home,
@@ -32,17 +31,17 @@ const Footer = () => {
   ];
 
   return (
-    <Row className={styles.footer}>
+      <section className={style['bottom-navigation']} >
       {logo.map((item) => {
         return (
-          <Col className={styles["logo-holder"]}>
+          <button className={`mx-auto py-2 d-flex flex-column justify-content-center align-items-center text-center ${style['btn-menu']}`}>
             <img src={item.img} alt="" />
-            <h6 className={styles.text}>{item.text}</h6>
-          </Col>
-        );
-      })}
-    </Row>
+            <h6 className={` m-0 ${style['text']}`}>{item.text}</h6>
+          </button>
+        )
+        })}
+      </section>
   );
 };
 
-export default Footer;
+export default BottomNavigation;
