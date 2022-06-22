@@ -15,18 +15,17 @@ function IndexRoute() {
     <Fragment>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path='/editprofile' element={<EditProfile />}/>
-        <Route path='/addproduct' element={<AddProduct />}/>
-        <Route path="/infoprofile" element={<InfoProfile/>}/>
-
+        <Route path="infoprofile" element={<InfoProfile/>}/>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path='editprofile' element={<EditProfile />}/>
+        <Route path='addproduct' element={<AddProduct />}/>
 
         {/* ---- Endpoint Testing ---- */}
           
-          <Route path='/daftarpenawar' element={<OfferList />}/>
-          <Route path='/radiobutton' element={<GroupButton />}/>
-          <Route path='/navbar' element={<Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} transparentFade={true} />}/>
+          <Route path='daftarpenawar' element={<OfferList />}/>
+          <Route path='radiobutton' element={<GroupButton />}/>
+          <Route path='navbar' element={<Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} transparentFade={true} />}/>
 
         {/* ---- Endpoint Testing ---- */}
         </Routes>
