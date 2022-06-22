@@ -7,6 +7,7 @@ import Register from "../pages/Auth/Register";
 import OfferList from '../pages/OfferList/OfferList';
 import GroupButton from "../components/ButtonGroup/ButtonGroup";
 import EditProfile from "../pages/EditProfile/EditProfile";
+import InfoProfile from '../pages/InfoProfile/InfoProfile';
 import AddProduct from "../pages/AddProduct/AddProduct";
 
 function IndexRoute() {
@@ -14,11 +15,11 @@ function IndexRoute() {
     <Fragment>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="infoprofile" element={<InfoProfile/>}/>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path='editprofile' element={<EditProfile />}/>
         <Route path='addproduct' element={<AddProduct />}/>
-
 
         {/* ---- Endpoint Testing ---- */}
           
