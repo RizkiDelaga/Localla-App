@@ -10,6 +10,7 @@ import EditProfile from "../pages/EditProfile/EditProfile";
 import InfoProfile from '../pages/InfoProfile/InfoProfile';
 import AddProduct from "../pages/AddProduct/AddProduct";
 import ProductList from '../pages/ProductList/ProductList';
+import DetailCard from '../components/DetailCard/DetailCard';
 
 function IndexRoute() {
   return (
@@ -22,6 +23,7 @@ function IndexRoute() {
         <Route path='editprofile' element={<EditProfile />}/>
         <Route path='addproduct' element={<AddProduct />}/>
         <Route path='ProductList' element={<ProductList />}/>
+        <Route path='DetailCard' element={<DetailCard />}/>
 
         {/* ---- Endpoint Testing ---- */}
           
