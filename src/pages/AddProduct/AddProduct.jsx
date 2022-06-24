@@ -34,7 +34,7 @@ function AddProduct() {
   ));
   
   useEffect(() => {
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    // return () => files.forEach(file => URL.revokeObjectURL(file.preview));
   }, []);
 
   return (
