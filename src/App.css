@@ -10,3 +10,8 @@
     background-color: #7126B5 !important;
     border-color: #7126B5 !important;
 }
+
+a {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}

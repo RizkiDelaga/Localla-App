@@ -4,9 +4,12 @@ import Form from 'react-bootstrap/Form';
 import { useDropzone } from 'react-dropzone';
 import style from './AddProduct.module.css';
 import Plus_Icon from '../../assets/icon/Plus_Icon.png';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
 
 
 function AddProduct() {
+  const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
     accept: {
@@ -39,6 +42,8 @@ function AddProduct() {
 
   return (
     <Fragment>
+      <Navbar logo={true} backButton="/productlist" normalTitle="Lengkapi Detail Produk" />
+
       <Container fluid className={`d-flex justify-content-center`} style={{marginTop: '90px'}}>
         <section className={`my-5`} style={{width: '100%', maxWidth: '800px'}}>
           <Form onSubmit={(event) => {event.preventDefault()}}>
@@ -84,8 +89,8 @@ function AddProduct() {
             </Form.Group>
             
             <div className="d-flex my-5">
-              <button className={`me-4 ${style['btn-decision']}`}>Preview</button>
-              <button type='submit' className={`${style['btn-decision']}`}>Terbitakan</button>
+              <button className={`me-4 ${style['btn-decision']}`} onClick={() => {navigate("/detailproduct")}}>Preview</button>
+              <button type='submit' className={`${style['btn-decision']}`} onClick={() => {navigate("/productlist")}}>Terbitakan</button>
             </div>
           </Form>
         </section>

@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
-import Navbar from '../Navbar/Navbar';
-import style from './DetailCard.module.css';
+import Navbar from '../../components/Navbar/Navbar';
+import style from './DetailProduct.module.css';
 
 import Image1 from '../../assets/images/image1.jpg';
 
 
-function DetailCard() {
+function DetailProduct() {
   const [status, setStatus] = React.useState(false);
   const [modalShow, setModalShow] = React.useState(false);
 
@@ -98,4 +98,4 @@ function ModalPopUp(props) {
   );
 }
 
-export default DetailCard; 
+export default DetailProduct;
