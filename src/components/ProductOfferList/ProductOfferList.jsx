@@ -32,7 +32,7 @@ function ProductOfferList() {
       </div>
       </Container>
 
-      <MyVerticallyCenteredModal
+      <ModalPopUp
         show={modalShow}
         onHide={() => {setModalShow(false)}}
       />
@@ -42,7 +42,7 @@ function ProductOfferList() {
 }
 
 
-function MyVerticallyCenteredModal(props) {
+function ModalPopUp(props) {
   const [status, setStatus] = React.useState(true);
   const [value, setValue] = React.useState(false);
 
@@ -61,7 +61,7 @@ function MyVerticallyCenteredModal(props) {
           <h6>Yeay kamu berhasil mendapat harga yang sesuai</h6>
           <p className={`text-secondary m-0`}>Segera hubungi pembeli melalui whatsapp untuk transaksi selanjutnya</p>
           <div className={`mt-3 d-flex flex-column justify-content-center ${style['match-product-detail']}`}>
-            <p style={{fontSize: '14px', fontWeight: '500', textAlign: 'center'}}>Product Match</p>
+            <h6 style={{ textAlign: 'center', marginBottom: '20px'}}>Product Match</h6>
             <Row className={`mb-3`}> 
               <Col xs="4">
                 <img src={Image1} style={{width: '100%', maxWidth: 'max-content', height: '100%', minHeight: '75px', borderRadius: '12px', objectFit: 'cover'}} alt="" />
