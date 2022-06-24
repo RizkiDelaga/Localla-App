@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import style from './CardProduct.module.css';
-import Default_Product_Image from '../../assets/images/image1.png';
+import Default_Product_Image from '../../assets/images/image1.jpg';
 
 
 function CardProduct() {
