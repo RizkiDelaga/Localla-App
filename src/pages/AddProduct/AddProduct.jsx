@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Button, Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useDropzone } from 'react-dropzone';
@@ -33,9 +33,9 @@ function AddProduct() {
     </div>
   ));
   
-  useEffect(() => {
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, []);
+  // useEffect(() => {
+  //   return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+  // }, []);
 
   return (
     <Fragment>
