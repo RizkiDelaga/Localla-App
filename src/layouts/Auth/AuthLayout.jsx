@@ -10,9 +10,9 @@ const AuthLayout = (props) => {
   return (
     <Container fluid>
       <Row>
-        <Container className={`${styles.arrow}`}>
+        {/* <Container className={`${styles.arrow}`}>
           <img src={Arrow_Left_Icon} alt="" />
-        </Container>
+        </Container> */}
         <Col md={6} sm={12} xs={0} className={`p-0`}>
           <img
             className={`${styles["login-img"]}`}

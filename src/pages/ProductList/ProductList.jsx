@@ -10,14 +10,16 @@ import Box_Icon from '../../assets/icons/Box_Icon.png';
 import Heart_Icon from '../../assets/icons/Heart_Icon.png';
 import Dollar_Sign_Icon from '../../assets/icons/Dollar_Sign_Icon.png';
 import Chevron_Right_Icon from '../../assets/icons/Chevron_Right_Icon.png';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function ProductList() {
+    const navigate = useNavigate();
     const [buttonGroup, setButtonGroup] = useState("Semua")
 
     return (
         <Fragment>
-            <Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} transparentFade={true} />
+            <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
             <Container style={{marginTop: '90px'}}>
                 <Row>
                     <Col lg={3} className={`p-0 py-2`}>
@@ -51,29 +53,29 @@ function ProductList() {
                     <Col lg={9} className={`p-0`}>
                         <Row className={`m-auto`}>
                             <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                                <div className={`p-2 text-center text-secondary ${style['add-product-box']}`}>
+                                <div className={`p-2 text-center text-secondary ${style['add-product-box']}`} onClick={() => {navigate("/addproduct")}}>
                                     <img src={Plus_Icon} className={`mb-3`} alt="" style={{width: '30%'}} />
                                     <p>Tambah Produk</p>
                                 </div>
                             </Col>
 
                             <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                                <CardProduct />
+                                <Link to="/detailproduct"><CardProduct /></Link>
                             </Col>
                             <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                                <CardProduct />
+                                <Link to="/detailproduct"><CardProduct /></Link>
                             </Col>
                             <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                                <CardProduct />
+                                <Link to="/detailproduct"><CardProduct /></Link>
                             </Col>
                             <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                                <CardProduct />
+                                <Link to="/detailproduct"><CardProduct /></Link>
                             </Col>
                             <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                                <CardProduct />
+                                <Link to="/detailproduct"><CardProduct /></Link>
                             </Col>
                             <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                                <CardProduct />
+                                <Link to="/detailproduct"><CardProduct /></Link>
                             </Col>
                         </Row>
                     </Col>
