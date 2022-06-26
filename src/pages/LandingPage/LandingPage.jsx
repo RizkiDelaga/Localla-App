@@ -9,7 +9,7 @@ import style from './LandingPage.module.css';
 import { Link, useNavigate } from "react-router-dom";
 
 import White_Plus_Icon from '../../assets/icons/White_Plus_Icon.png';
-import { getProduct } from '../../redux/actions/productAction';
+import { getProduct } from '../../redux/Actions/productAction';
 
 
 function LandingPage() {
