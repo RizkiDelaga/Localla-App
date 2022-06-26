@@ -9,6 +9,7 @@ import MyProfile from '../pages/InfoProfile/MyProfile';
 import AddProduct from "../pages/AddProduct/AddProduct";
 import ProductList from '../pages/ProductList/ProductList';
 import DetailProduct from '../pages/DetailProduct/DetailProduct';
+import ExamplePage from '../pages/ExamplePage/ExamplePage';
 
 function IndexRoute() {
   return (
@@ -23,6 +24,10 @@ function IndexRoute() {
         <Route path='productlist' element={<ProductList />}/>
         <Route path='detailproduct' element={<DetailProduct />}/>
         <Route path='offerlist' element={<OfferList />}/>
+
+
+        <Route path='ExamplePage' element={<ExamplePage />}/>
+
       </Routes>
     </Fragment>
   );
