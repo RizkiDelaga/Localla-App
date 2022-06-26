@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Container } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from "react-redux";
 import CardProduct from '../../components/CardProduct/CardProduct';
 import Navbar from '../../components/Navbar/Navbar';
 import RadioButtonsGroup from "../../components/RadioButtonsGroup/RadioButtonsGroup";
@@ -8,10 +9,19 @@ import style from './LandingPage.module.css';
 import { Link, useNavigate } from "react-router-dom";
 
 import White_Plus_Icon from '../../assets/icons/White_Plus_Icon.png';
+import { getProduct } from '../../redux/actions/productAction';
 
 
 function LandingPage() {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { isLoading: loadingProduct, data: dataProduct } = useSelector((state) => state.product);
+
+
+  React.useEffect(() => {
+      dispatch(getProduct());
+  }, []);
 
   return (
     <Fragment>
@@ -21,41 +31,16 @@ function LandingPage() {
           <RadioButtonsGroup />
 
           <Row className={`m-auto`}>
-            <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} >
-                <Link to="/detailproduct">
-                  <CardProduct/>
-                </Link>
-            </Col>
-            <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} >
-                <Link to="/detailproduct">
-                  <CardProduct/>
-                </Link>
-            </Col>
-            <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} >
-                <Link to="/detailproduct">
-                  <CardProduct/>
-                </Link>
-            </Col>
-            <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} >
-                <Link to="/detailproduct">
-                  <CardProduct/>
-                </Link>
-            </Col>
-            <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} >
-                <Link to="/detailproduct">
-                  <CardProduct/>
-                </Link>
-            </Col>
-            <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} >
-                <Link to="/detailproduct">
-                  <CardProduct/>
-                </Link>
-            </Col>
-            <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} >
-                <Link to="/detailproduct">
-                  <CardProduct/>
-                </Link>
-            </Col>
+            {loadingProduct? "Loading.." : dataProduct.map((item) => {
+              return (
+                <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} key={item.id} >
+                  {/* <Link to={`/product/${item.id}`}> */}
+                  <Link to="/detailproduct">
+                    <CardProduct product={item} />
+                  </Link>
+                </Col>
+              )
+            })}
           </Row>
         </Container>
 
