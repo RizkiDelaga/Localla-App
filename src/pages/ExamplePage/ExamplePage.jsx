@@ -1,78 +1,41 @@
-import React from 'react';
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import React from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
+// import "./styles.css";
+
+// import required modules
+import { Pagination } from "swiper";
 
 function ExamplePage() {
     return (
         <>
-        <OwlCarousel
-                nav={true}
-                dots={false}
-                center={true}
-                loop={true}
-                autoplay={true}
-                autoplayTimeout={"3000"}
-                responsive={{
-                    0: {
-                        items: 1,
-                        margin: 10,
-
-                    },
-                    610: {
-                        items: 2,
-                        margin: 20,
-
-                    },
-                    960: {
-                        items: 2,
-                        margin: 30,
-                    },
-                    1140: {
-                        items: 2,
-                        stagePadding: 100,
-                        margin: 80
-                    }
-                }}>
-            <div >
-                <h4>1</h4>
-            </div>
-            <div >
-                <h4>2</h4>
-            </div>
-            <div >
-                <h4>3</h4>
-            </div>
-            <div >
-                <h4>4</h4>
-            </div>
-            <div >
-                <h4>5</h4>
-            </div>
-            <div >
-                <h4>6</h4>
-            </div>
-            <div >
-                <h4>7</h4>
-            </div>
-            <div >
-                <h4>8</h4>
-            </div>
-            <div >
-                <h4>9</h4>
-            </div>
-            <div >
-                <h4>10</h4>
-            </div>
-            <div >
-                <h4>11</h4>
-            </div>
-            <div >
-                <h4>12</h4>
-            </div>
-        </OwlCarousel>
+          <Swiper
+            slidesPerView={"auto"}
+            centeredSlides={true}
+            spaceBetween={30}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            modules={[Pagination]}
+          >
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 1</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 2</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 3</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 4</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 5</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 6</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 7</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 8</SwiperSlide>
+            <SwiperSlide style={{height: '250px'}}>Slide lorem ipsom shit dollar... 9</SwiperSlide>
+          </Swiper>
         </>
-    );
+      );
 }
 
 export default ExamplePage;
