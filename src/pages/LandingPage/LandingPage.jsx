@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import CardProduct from '../../components/CardProduct/CardProduct';
 import Navbar from '../../components/Navbar/Navbar';
+import Banner from "../../components/Banner/Banner";
 import RadioButtonsGroup from "../../components/RadioButtonsGroup/RadioButtonsGroup";
 import style from './LandingPage.module.css';
 import { Link, useNavigate } from "react-router-dom";
@@ -27,7 +28,7 @@ function LandingPage() {
   return (
     <Fragment>
         <Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} transparentFade={true} />
-
+        <Banner />
         <Container style={{marginTop: '100px', marginBottom: '50px', padding: '0px'}}>
           <RadioButtonsGroup />
 
