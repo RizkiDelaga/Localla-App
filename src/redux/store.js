@@ -1,9 +1,12 @@
-// import { createStore, combineReducers } from "redux";
-// import FormReducer from "./Reducers/FormReducer";
-// import AuthPageReducer from "./Reducers/AuthPageReducer";
+import { createStore, compose, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import rootReducer from './Reducers/rootReducer';
 
-// const reducer = combineReducers({ FormReducer, AuthPageReducer });
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-// const store = createStore(reducer);
+const store = createStore(
+    rootReducer,
+    composeEnhancer(applyMiddleware(thunk))
+);
 
-// export default store;
+export default store;
