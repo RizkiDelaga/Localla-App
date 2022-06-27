@@ -2,10 +2,13 @@ import React, { Fragment } from 'react';
 import ProductOfferList from '../../components/ProductOfferList/ProductOfferList';
 import { Container, Card } from 'react-bootstrap';
 import style from './OfferList.module.css'
+import Navbar from '../../components/Navbar/Navbar';
+
 
 function OfferList() {
   return (
     <Fragment>
+        <Navbar logo={true} backButton="/productlist" normalTitle="Info Penawar" />
         <Container style={{height: '2200px'}}>
             <div className={`d-flex justify-content-center`}>
                 <div style={{maxWidth: '800px', margin: '0 50px'}}>

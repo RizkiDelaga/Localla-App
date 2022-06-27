@@ -1,12 +1,17 @@
 import React, {Fragment} from 'react';
 import {Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png'
 import style from './EditProfile.module.css';
+import Navbar from '../../components/Navbar/Navbar';
+
 
 function EditProfile() {
+  const navigate = useNavigate();
   return (
     <Fragment>
+      <Navbar logo={true} backButton="/myprofile" normalTitle="Lengkapi Info Akun" />
       <Container fluid className={`d-flex justify-content-center`} style={{marginTop: '90px'}}>
         <section style={{width: '100%', maxWidth: '800px'}}>
 
@@ -46,7 +51,7 @@ function EditProfile() {
           </Form>
 
           <div className="d-flex mt-4">
-            <button className={`${style['btn-decision']}`}>Simpan</button>
+            <button className={`${style['btn-decision']}`} onClick={() => {navigate("/myprofile")}}>Simpan</button>
           </div>
         </section>
       </Container>

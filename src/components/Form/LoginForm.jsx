@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styles from "./Form.module.css";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import fi_eye from '../../assets/icons/fi_eye.png';
 
 
 function LoginForm() {
+    const navigate = useNavigate();
     const [dataLogin, setDataLogin] = useState({
         email: "",
         password: ""
@@ -69,6 +70,7 @@ function LoginForm() {
                 variant="primary"
                 type="submit"
                 className={`${styles["button-submit"]} mt-3`}
+                onClick={() => {navigate("/editprofile")}}
                 >
                 Masuk
                 </Button>

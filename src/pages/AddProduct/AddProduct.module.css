@@ -37,6 +37,7 @@
     min-height: 200px;
     border: 2px dashed #D0D0D0;
     border-radius: 16px;
+    cursor: pointer;
 }
 
 .dropzone-area {

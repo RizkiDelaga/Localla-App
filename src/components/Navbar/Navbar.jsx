@@ -12,9 +12,11 @@ import Login_Icon from '../../assets/icons/Login_Icon.png';
 import Search_Icon from '../../assets/icons/Search_Icon.png';
 import Arrow_Left_Icon from '../../assets/icons/Arrow_Left_Icon.png';
 import ProductOfferList from '../ProductOfferList/ProductOfferList';
+import { useNavigate } from 'react-router-dom';
 
 
 function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeTitle, search, login, transparentFade }) {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [navbarTransparent, setNavbarTransparent] = useState(false);
 
@@ -58,11 +60,11 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                       <Offcanvas.Title className={`ps-2`}>Localla</Offcanvas.Title>
                       </Offcanvas.Header>
                       <Offcanvas.Body>
-                          <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Notifikasi</div>
-                          <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Daftar Jual</div>
-                          <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}>Akun Saya</div>
+                          <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`} onClick={() => {navigate("/offerlist")}}>Notifikasi</div>
+                          <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`} onClick={() => {navigate("/productlist")}}>Daftar Jual</div>
+                          <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`} onClick={() => {navigate("/myprofile")}}>Akun Saya</div>
                           {login?
-                            <Button className={`ms-2 ${style['button-login-mobile']}`}>
+                            <Button className={`ms-2 ${style['button-login-mobile']}`} onClick={() => {navigate("/login")}}>
                                 <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>Masuk
                             </Button>
                           : null}
@@ -72,7 +74,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
 
               {backButton?
                 <div className={`${style['switch-mobile-navbar']}`}>
-                  <Button onClick={toggleShow} className={`me-3 ${style['back-button']}`}>
+                  <Button onClick={() => {navigate(backButton)}} className={`me-3 ${style['back-button']}`}>
                     <img src={Arrow_Left_Icon} alt="" style={{width: '100%'}}/>
                   </Button>
                 </div> : null}
@@ -104,13 +106,13 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
               {(login || desktopMenu)?
                 <div className={`${style['menu-desktop']} ${normalTitle? null : 'w-100'}`} >
                     {login?
-                      <Button className={`${style['button-login']}`}>
+                      <Button className={`${style['button-login']}`} onClick={() => {navigate("/login")}}>
                           <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>Masuk
                       </Button> 
                     : null}
                     {desktopMenu? 
                       <div className={`d-flex align-items-center justify-content-center`}>
-                        <Button utton className={`ms-3 ${style['button-icon']}`}>
+                        <Button utton className={`ms-3 ${style['button-icon']}`} onClick={() => {navigate("/productlist")}}>
                             <img src={Product_List_Icon} alt="" style={{width: '25px'}}/>
                         </Button>
 
@@ -121,17 +123,17 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                             </Button>
                           </Dropdown.Toggle>
                           <Dropdown.Menu className={`${style['dropdown-menu']}`}>
-                            <Dropdown.Item className={`${style['list-notif']}`}><ProductOfferList/></Dropdown.Item>
+                            <Dropdown.Item className={`${style['list-notif']}`} onClick={() => {navigate("/offerlist")}}><ProductOfferList/></Dropdown.Item>
                             <hr />
-                            <Dropdown.Item className={`${style['list-notif']}`}><ProductOfferList/></Dropdown.Item>
+                            <Dropdown.Item className={`${style['list-notif']}`} onClick={() => {navigate("/offerlist")}}><ProductOfferList/></Dropdown.Item>
                             <hr />
-                            <Dropdown.Item className={`${style['list-notif']}`}><ProductOfferList/></Dropdown.Item>
+                            <Dropdown.Item className={`${style['list-notif']}`} onClick={() => {navigate("/offerlist")}}><ProductOfferList/></Dropdown.Item>
                             <hr />
-                            <Dropdown.Item className={`${style['list-notif']}`}><ProductOfferList/></Dropdown.Item>
+                            <Dropdown.Item className={`${style['list-notif']}`} onClick={() => {navigate("/offerlist")}}><ProductOfferList/></Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
 
-                        <Button utton className={`ms-3 ${style['button-icon']}`}>
+                        <Button utton className={`ms-3 ${style['button-icon']}`} onClick={() => {navigate("/myprofile")}}>
                             <img src={User_Icon} alt="" style={{width: '25px'}}/>
                         </Button>
                       </div>
