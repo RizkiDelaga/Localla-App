@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import styles from "./Form.module.css";
-import { Form, Button } from "react-bootstrap";
+import style from "./Form.module.css";
+import { Form, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 import fi_eye from '../../assets/icons/fi_eye.png';
+import axios from "axios";
 
 
 function LoginForm() {
@@ -12,34 +13,63 @@ function LoginForm() {
         email: "",
         password: ""
     });
+    const [showAlert, setShowAlert] = useState(false);
+    const [registerStatus, setRegisterStatus] = useState({
+      isSuccess: false,
+      message: ""
+    });
+
+    const submitHandler = async () => {
+        try {
+            const res = await axios({
+              method: 'POST',
+              url: 'https://rent-car-appx.herokuapp.com/admin/auth/login',
+              data: dataLogin
+            })
+            console.log("respon..  ", res);
+            if (res.status === 201){
+              localStorage.setItem("access_token", res.data.access_token)
+              navigate("/editprofile");
+            }
+        } catch (error){
+            setRegisterStatus({
+                isSuccess: false,
+                message: error.response.data.message
+                });
+              setShowAlert(true);
+            console.log("error..  ", error);
+        }
+    }
 
     return (
-        <Form className={`${styles["form-container"]}`} onSubmit={(event) => {event.preventDefault()}}>
-            <p className={`${styles.text} mt-3`}>Masuk</p>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                className={`${styles["input-field"]}`}
-                type="email"
-                placeholder="Contoh: johndee@gmail.com"
-                onChange={(e) => {
-                    setDataLogin({
-                        ...dataLogin,
-                        email: e.target.value
-                    })
-                }}
-                required
-                />
-                {/* {emailError && ( */}
-                <p className={`${styles["error-text"]}`}>Email tidak valid</p>
-                {/* )} */}
-            </Form.Group>
+        <Form className={`px-3 ${style["form-container"]}`} onSubmit={(event) => {
+            event.preventDefault()
+            submitHandler()
+            }}>
+            <h3 className={`fw-bold mb-5 text-center`}>Masuk</h3>            
+            {showAlert? 
+            (<Alert className={`${style["auth-alert"]} ${registerStatus.isSuccess? style['success-alert'] : style['failed-alert']}`} onClose={() => setShowAlert(false)} dismissible>
+                <h5 className="m-0">{registerStatus.message}</h5>
+            </Alert>) : null}
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <div className={`${styles["password-holder"]}`}>
+            <Form.Label className="fw-bolder">Email</Form.Label>
+            <Form.Control
+            className={`${style["input-field"]}`}
+            type="email"
+            placeholder="Contoh: johndee@gmail.com"
+            onChange={(e) => {
+                setDataLogin({
+                    ...dataLogin,
+                    email: e.target.value
+                })
+            }}
+            required
+            />
+
+            <Form.Label className="fw-bolder mt-3">Password</Form.Label>
+            <div className={`${style["password-holder"]}`}>
                 <input
-                    className={`${styles["password-input"]}`}
+                    className={`${style["password-input"]}`}
                     type={"password"}
                     placeholder="Masukkan password"
                     onChange={(e) => {
@@ -51,39 +81,28 @@ function LoginForm() {
                     required
                 />
                 <button
-                    className={`${styles["password-toggler"]}`}
+                    className={`${style["password-toggler"]}`}
                     type="button"
                 >
                     <img src={fi_eye} alt="" />
                 </button>
-                </div>
-                {/* {passwordError && ( */}
-                <p className={`${styles["error-text"]}`}>
-                    Password must not contain any white spaces and must be at least 8
-                    characters long.
-                </p>
-                {/* )} */}
-            </Form.Group>
+            </div>
 
-            {/* {!isLoading && ( */}
-                <Button
-                variant="primary"
-                type="submit"
-                className={`${styles["button-submit"]} mt-3`}
-                onClick={() => {navigate("/editprofile")}}
-                >
-                Masuk
-                </Button>
-            {/* )} */}
 
-            {/* {isLoading && <p>Loading...</p>} */}
-            <div className={`${styles.toggler} pt-3`}>
+            <input
+            type="submit"
+            className={`${style["button-submit"]} mt-3`}
+            value="Masuk"
+            />
+
+            <div className={`${style.toggler} pt-3`}>
                 <p>
                 Belum punya akun?
                 <Link
                     to="/register"
                     type="button"
-                    className={`${styles.toggle} px-2`}
+                    className={`${style.toggle} px-2`}
+                    onClick={() => {setDataLogin({ email: "", password: "" })}}
                 >
                     Daftar di sini
                 </Link>

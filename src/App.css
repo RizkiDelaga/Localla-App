@@ -15,3 +15,10 @@ a {
     color: inherit !important;
     text-decoration: inherit !important;
 }
+
+.alert-dismissible .btn-close {
+    position: absolute !important;
+    right: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
