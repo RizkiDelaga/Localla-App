@@ -18,7 +18,7 @@ function LandingPage() {
 
   const dispatch = useDispatch();
   const { isLoading: loadingProduct, data: dataProduct } = useSelector((state) => state.product);
-  console.log(dataProduct);
+  console.log("dataProduct ",dataProduct);
 
 
   React.useEffect(() => {
@@ -37,7 +37,7 @@ function LandingPage() {
               return (
                 <Col xl='2' lg='3' md='4' sm='6' xs='12' className={`my-2 px-2`} key={item.id} >
                   {/* <Link to={`/product/${item.id}`}> */}
-                  <Link to="/detailproduct">
+                  <Link to={`/product/${item.id}`}>
                     <CardProduct product={item} />
                   </Link>
                 </Col>

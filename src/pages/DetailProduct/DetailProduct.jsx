@@ -2,15 +2,27 @@ import React, { Fragment } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Navbar from '../../components/Navbar/Navbar';
+import { useDispatch, useSelector } from "react-redux";
 import style from './DetailProduct.module.css';
+import { getProduct, getDetailProduct } from '../../redux/Actions/productAction.js';
+
 
 import Image1 from '../../assets/images/image1.jpg';
+import { useParams } from 'react-router-dom';
 
 
 function DetailProduct() {
+  let { id } = useParams();
   const [status, setStatus] = React.useState(false);
   const [modalShow, setModalShow] = React.useState(false);
 
+  const dispatch = useDispatch();
+  const { isLoading: loadingProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
+  console.log("detailProduct.. ", detailProduct);
+
+  React.useEffect(() => {
+    dispatch(getDetailProduct(id));
+}, []);
 
   return (
     <Fragment>
@@ -21,17 +33,16 @@ function DetailProduct() {
             <Card className={`p-2 ${style['description-card']}`}>
                 <Card.Body>
                   <h5 className={`mb-4`}>Deskripsi</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus at, magni velit id a omnis excepturi sit ipsam, vel repellendus numquam? Ducimus consequuntur dolorum numquam molestias quia, provident nemo? Voluptatum? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate, quibusdam aspernatur totam voluptates quas nisi sequi dolorum, neque architecto sed, saepe quae! Atque, itaque? Sit id possimus reprehenderit labore iste.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus at, magni velit id a omnis excepturi sit ipsam, vel repellendus numquam? Ducimus consequuntur dolorum numquam molestias quia, provident nemo? Voluptatum?</p>
+                  <p>{detailProduct.description}</p>
                 </Card.Body>
             </Card>
           </Col>
           <Col xl="4" lg="4" md="5" sm="12" xs="12">
             <Card className={`p-2 ${style['detail-product-card']}`}>
                 <Card.Body>
-                  <h5>Jam Tangan Casio</h5>
-                  <Card.Text className={`m-0 text-secondary`} style={{fontSize: "14px"}}>Aksesoris</Card.Text>
-                  <h6 className={`mt-3 mb-4 ${style.cardBody}`}> Rp 250.000 </h6>
+                  <h5>{detailProduct.title}</h5>
+                  <Card.Text className={`m-0 text-secondary`} style={{fontSize: "14px"}}>{detailProduct.category}</Card.Text>
+                  <h6 className={`mt-3 mb-4 ${style.cardBody}`}> Rp {detailProduct.price}</h6>
 
                   <button className={`${style['btn-decision']}`} onClick={() => setModalShow(true)}>{status? "Terbitakan" : "Nego Sekarang"}</button>
                   {status? <button className={`mt-2 ${style['btn-decision']}`}>Edit</button> : null}
@@ -42,6 +53,7 @@ function DetailProduct() {
       </Container>
 
       <ModalPopUp
+        detailProduct={detailProduct}
         show={modalShow}
         onHide={() => {setModalShow(false)}}
       />
@@ -67,13 +79,13 @@ function ModalPopUp(props) {
           <p className={`text-secondary m-0`}>Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual.</p>
           <div className={`mt-3 d-flex flex-column justify-content-center ${style['match-product-detail']}`}>
             <h6 style={{ textAlign: 'center', marginBottom: '20px'}}>Product Match</h6>
-            <Row> 
+            <Row>
               <Col xs="4">
                 <img src={Image1} style={{width: '100%', maxWidth: 'max-content', height: '100%', minHeight: '75px', borderRadius: '12px', objectFit: 'cover'}} alt="" />
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
-                <h6 className={`mb-1`}>Jam Tangan Casio</h6>
-                <p className={`text-secondary my-0`} style={{fontSize: '14px'}} >Rp 250.000</p>
+                <h6 className={`mb-1`}>{props.detailProduct.title}</h6>
+                <p className={`text-secondary my-0`} style={{fontSize: '14px'}} >Rp {props.detailProduct.price}</p>
               </Col>
             </Row>
           </div>
