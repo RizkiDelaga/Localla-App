@@ -1,41 +1,12 @@
-.cont {
-  width: 100%;
-  overflow-x: hidden;
-}
-
 .login-img {
   width: 100%;
   height: 100vh !important;
   object-fit: cover;
 }
 
-.alert-cont {
-  width: 100%;
-  position: absolute;
-  top: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-.arrow {
-  padding: 40px 40px 0 !important;
-}
-
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .login-img {
-    display: none;
+    height: 180px !important;
   }
 }
 
-@media (min-width: 576px) {
-  .arrow {
-    display: none;
-  }
-}
-
-@media (min-height: 576px) {
-  .cont {
-    overflow-y: hidden;
-    height: 100vh;
-  }
-}

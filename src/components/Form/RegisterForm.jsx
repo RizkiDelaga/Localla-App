@@ -1,108 +1,139 @@
 import React, { useState } from "react";
-import styles from "./Form.module.css";
-import { Form, Button } from "react-bootstrap";
+import style from "./Form.module.css";
+import { Form, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import fi_eye from '../../assets/icons/fi_eye.png';
+import axios from "axios";
 
 
 function RegisterForm() {
     const [dataRegistrasi, setDataRegistrasi] = useState({
-        name: "",
+        role: "",
         email: "",
         password: ""
     });
+    const [showAlert, setShowAlert] = useState(false);
+    const [registerStatus, setRegisterStatus] = useState({
+      isSuccess: false,
+      message: ""
+    });
 
-  return (
-    <Form className={`${styles["form-container"]}`} onSubmit={(event) => {event.preventDefault()}}>
-      <p className={`${styles.text} mt-3`}>Daftar</p>
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Nama</Form.Label>
-        <Form.Control
-          className={`${styles["input-field"]}`}
-          type="text"
-          placeholder="Nama Lengkap"
-          onChange={(e) => {
-            setDataRegistrasi({
-                ...dataRegistrasi,
-                name: e.target.value
-            })}}
-          required
-        />
-        {/* {userNameError && ( */}
-          <p className={`${styles["error-text"]}`}>
-            Name harus diisi dan minimal 4 karakter
-          </p>
-        {/* )} */}
-      </Form.Group>
+    const submitHandler = async () => {
+      try {
+        const res = await axios({
+          method: 'POST',
+          url: 'https://rent-car-appx.herokuapp.com/admin/auth/register',
+          data: dataRegistrasi
+        })
+        if(res.status === 201){
+          setRegisterStatus({
+            isSuccess: true,
+            message: "Register Successfully!"
+            });
+          setShowAlert(true);
+          setDataRegistrasi({
+            role: "",
+            email: "",
+            password: ""
+        })
+        }
+      } catch (error){
+        setRegisterStatus({
+          isSuccess: false,
+          message: error.response.data.message
+          });
+        setShowAlert(true);
+        console.log("error..  ", error);
+      }
+    }
 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          className={`${styles["input-field"]}`}
-          type="email"
-          placeholder="Contoh: johndee@gmail.com"
-          onChange={(e) => {
-            setDataRegistrasi({
-                ...dataRegistrasi,
-                email: e.target.value
-            })}}
-          required
-        />
-        {/* {emailError && ( */}
-          <p className={`${styles["error-text"]}`}>Email tidak valid</p>
-        {/* )} */}
-      </Form.Group>
+    return (
+      <Form className={`px-3 ${style["form-container"]}`} onSubmit={(event) => {
+        event.preventDefault()
+        submitHandler()
+        }}>
+        <h3 className={`fw-bold mb-5 text-center`}>Daftar</h3>
+        {showAlert? 
+          (<Alert className={`${style["auth-alert"]} ${registerStatus.isSuccess? style['success-alert'] : style['failed-alert']}`} onClose={() => setShowAlert(false)} dismissible>
+            <h5 className="m-0">{registerStatus.message}</h5>
+          </Alert>) : null}
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <div className={`${styles["password-holder"]}`}>
-          <input
-            className={`${styles["password-input"]}`}
-            type={"password"}
-            placeholder="Masukkan password"
+          <Form.Label className="fw-bolder">Nama</Form.Label>
+          <Form.Control
+            className={`${style["input-field"]}`}
+            type="text"
+            placeholder="Nama Lengkap"
+            value={dataRegistrasi.role}
             onChange={(e) => {
-                setDataRegistrasi({
-                    ...dataRegistrasi,
-                    email: e.target.value
-                })}}
+              setDataRegistrasi({
+                  ...dataRegistrasi,
+                  role: e.target.value
+              })}}
             required
           />
-          <button
-            className={`${styles["password-toggler"]}`}
-            type="button"
-          >
-            <img src={fi_eye} alt="" />
-          </button>
-        </div>
-        {/* {passwordError && ( */}
-          <p className={`${styles["error-text"]}`}>
-            Password harus ada 1 uppercase, 1 lowercase, 1 angka dan minimal 9
-            karakter
+
+          <Form.Label className="fw-bolder mt-3">Email</Form.Label>
+          <Form.Control
+            className={`${style["input-field"]}`}
+            type="email"
+            placeholder="Contoh: johndee@gmail.com"
+            value={dataRegistrasi.email}
+            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            onChange={(e) => {
+              setDataRegistrasi({
+                  ...dataRegistrasi,
+                  email: e.target.value
+              })}}
+            required
+          />
+          <Form.Text className="text-muted d-block m-0">
+            Email harus valid
+          </Form.Text>
+
+          <Form.Label className="fw-bolder mt-3">Password</Form.Label>
+            <div className={`${style["password-holder"]}`}>
+              <input
+                className={`${style["password-input"]}`}
+                type="password"
+                placeholder="Masukkan password"
+                value={dataRegistrasi.password}
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                title="Password harus memiliki setidaknya 1 karakter huruf kecil, 1 karakter huruf besar, 1 karakter angka, dan 1 karakter spesial"
+                onChange={(e) => {
+                    setDataRegistrasi({
+                        ...dataRegistrasi,
+                        password: e.target.value
+                    })}}
+                required
+              />
+              <button
+                className={`${style["password-toggler"]}`}
+                type="button"
+              >
+                <img src={fi_eye} alt="" />
+              </button>
+            </div>
+            <Form.Text className="text-muted">
+              Password harus mengangandung huruf kapital, huruf kecil, angka, dan karakter spesial
+            </Form.Text>
+
+          <input
+            type="submit"
+            className={`${style["button-submit"]} mt-3`}
+            value="Daftar"
+          />
+
+        <div className={`${style.toggler} pt-3`}>
+          <p>
+            Sudah punya akun?
+            <Link to="/login" type="button" className={`${style.toggle} px-2`}>
+              Masuk di sini
+            </Link>
           </p>
-        {/* )} */}
-      </Form.Group>
-
-      {/* {!isLoading && ( */}
-        <Button
-          variant="primary"
-          type="submit"
-          className={`${styles["button-submit"]} mt-3`}
-        >
-          Daftar
-        </Button>
-      {/* )} */}
-
-      <div className={`${styles.toggler} pt-3`}>
-        <p>
-          Sudah punya akun?
-          <Link to="/login" type="button" className={`${styles.toggle} px-2`}>
-            Masuk di sini
-          </Link>
-        </p>
-      </div>
-    </Form>
-  );
+        </div>
+      </Form>
+    );
 };
 
 export default RegisterForm;

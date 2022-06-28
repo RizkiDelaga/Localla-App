@@ -1,17 +1,12 @@
 .form-container {
   max-width: 500px;
   margin: 25px;
+  width: 100% !important;
 }
 
 .input-field {
   border-radius: 16px !important;
   height: 48px;
-}
-
-.text {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 36px;
 }
 
 .password-holder {
@@ -62,8 +57,33 @@
   border-radius: 16px;
   background-color: #7126b5 !important;
   border: none !important;
+  color: #fff;
 }
 
-.error-text {
-  color: #b40e0e;
+.auth-alert {
+  position: fixed !important;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.success-alert {
+  background-color: #7126b5 !important;
+}
+
+.failed-alert {
+  background-color: #e91c1c !important;
+}
+
+@media (max-width: 540px) {
+  .auth-alert {
+
+    width: 90%;
+  }
 }
