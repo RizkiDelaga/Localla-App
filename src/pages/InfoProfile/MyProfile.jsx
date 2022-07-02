@@ -23,13 +23,18 @@ const MyProfile = () => {
             <div className={`${style["personal-photo"]}`}>
               <img
                 src={Default_PP_Icon}
-                alt=""
+                alt="profile-img"
                 style={{ width: "100%", objectFit: "cover" }}
               />
             </div>
             <div className="upload-photo"></div>
           </div>
-          <div className={style["btn-holder"]} onClick={() => {navigate("/editprofile")}}>
+          <div
+            className={style["btn-holder"]}
+            onClick={() => {
+              navigate("/editprofile");
+            }}
+          >
             <img src={edit} alt="" />
             <h6 className={`ms-3 mb-0`}>Ubah Akun</h6>
           </div>
@@ -37,7 +42,12 @@ const MyProfile = () => {
             <img src={setting} alt="" />
             <h6 className={`ms-3 mb-0`}>Pengaturan Akun</h6>
           </div>
-          <div className={style["btn-holder"]} onClick={() => {navigate("/")}}>
+          <div
+            className={style["btn-holder"]}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <img src={exit} alt="" />
             <h6 className={`ms-3 mb-0`}>Keluar</h6>
           </div>
