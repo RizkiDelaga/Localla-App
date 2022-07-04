@@ -11,7 +11,6 @@ import Image1 from '../../assets/images/image1.jpg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import CardUser from '../../components/CardUser/CardUser';
 
-import Image1 from "../../assets/images/image1.jpg";
 
 function DetailProduct() {
   let { id } = useParams();
