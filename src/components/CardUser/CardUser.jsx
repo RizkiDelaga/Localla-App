@@ -11,14 +11,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function CardUser(props) {
     const navigate = useNavigate();
-    console.log("props.. ", props);
   
     
   return (
     <Fragment>
       <div className={`d-flex ${style.CardUser}`}>
         <div className='d-flex justify-content-center align-items-center w-100' onClick={() => {navigate('/myprofile')}}>
-            <img src={Image1} alt="" className={`me-3 ${style.imgUser}`}/>
+            <img src={props.userDetail? props.userDetail.image_url.url : Image1} alt="" className={`me-3 ${style.imgUser}`}/>
             <div className={`${style.userInfoText}`}>
                 <h5>John Doe</h5>
                 <p className='m-0' style={{fontSize: '14px'}}>Kota</p>

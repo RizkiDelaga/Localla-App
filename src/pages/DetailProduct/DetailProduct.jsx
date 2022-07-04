@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Navbar from '../../components/Navbar/Navbar';
 import { useDispatch, useSelector } from "react-redux";
 import style from './DetailProduct.module.css';
-import { getProduct, getDetailProduct } from '../../redux/Actions/productAction.js';
+import { getDetailProduct } from '../../redux/Actions/productAction.js';
 
 
 import Image1 from '../../assets/images/image1.jpg';
@@ -63,19 +63,21 @@ function DetailProduct() {
         </Row>
       </Container>}
 
+      {loadingProduct? null :
       <ModalPopUp
         detailProduct={detailProduct}
+        loadingProduct={loadingProduct}
         show={modalShow}
         onHide={() => {
           setModalShow(false);
         }}
-      />
+      />}
     </Fragment>
   );
 }
 
 function ModalPopUp(props) {
-  const [bidPrice, setBidPrice] = React.useState("");
+  const [bidPrice, setBidPrice] = React.useState();
 
   return (
     <Modal
@@ -84,7 +86,7 @@ function ModalPopUp(props) {
       dialogClassName={`${style["modal-size"]}`}
       contentClassName={`${style["modal-style"]}`}
       className={`${style["modal-centered"]}`}
-      onExited={() => setBidPrice(false)}
+      onExited={() => setBidPrice(undefined)}
     >
       <Modal.Header closeButton className={`px-4 pt-3 border-0`} />
         <Modal.Body className={`mx-4 p-0`}>
@@ -94,7 +96,7 @@ function ModalPopUp(props) {
             <h6 style={{ textAlign: 'center', marginBottom: '20px'}}>Product Match</h6>
             <Row>
               <Col xs="4">
-                <img src={Image1} style={{width: '100%', maxWidth: 'max-content', height: '100%', minHeight: '75px', borderRadius: '12px', objectFit: 'cover'}} alt="" />
+                <img src={props.detailProduct? props.detailProduct.image_url.url : Image1} style={{width: '100%', maxWidth: 'max-content', height: '100%', minHeight: '75px', borderRadius: '12px', objectFit: 'cover'}} alt="" />
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <h6 className={`mb-1`}>{props.detailProduct.title}</h6>
@@ -119,7 +121,7 @@ function ModalPopUp(props) {
 
       <Modal.Footer className={`px-4 py-4 border-0`}>
         {console.log("bidPrice.. ", bidPrice)}
-        <Button className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === ""} >Kirim</Button>
+        <Button className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === undefined} >Kirim</Button>
       </Modal.Footer>
     </Modal>
   );

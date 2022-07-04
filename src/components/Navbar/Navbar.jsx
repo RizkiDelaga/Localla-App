@@ -3,11 +3,6 @@ import { Container, Dropdown, Button, Form } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import style from './Navbar.module.css';
 
-import Menu_Icon from '../../assets/icons/Menu_Icon.png';
-import Logo_Icon from '../../assets/icons/Logo_Icon.png';
-import Bell_Icon from '../../assets/icons/Bell_Icon.png';
-import Product_List_Icon from '../../assets/icons/Product_List_Icon.png';
-import User_Icon from '../../assets/icons/User_Icon.png';
 import Login_Icon from '../../assets/icons/Login_Icon.png';
 import Search_Icon from '../../assets/icons/Search_Icon.png';
 import Arrow_Left_Icon from '../../assets/icons/Arrow_Left_Icon.png';
@@ -60,7 +55,9 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
             {mobileMenu?
               <div className={`${style['switch-mobile-navbar']}`}>
                   <button onClick={toggleShow} className={`${style['collapse-button-menu']}`}>
-                      <img src={Menu_Icon} alt="" style={{width: '100%'}}/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
                   </button>
                   <Offcanvas show={show} onHide={handleClose} {...options} style={{width: '50%', minWidth: '200px', zIndex: '9999'}}>
                       <Offcanvas.Header closeButton>
@@ -74,8 +71,9 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                             <div className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`} onClick={() => {navigate("/myprofile")}}>Akun Saya</div>
                           </> : null}
                         {login?
-                          <Button className={`ms-2 ${style['button-login-mobile']}`} onClick={() => {navigate("/login")}}>
-                              <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>Masuk
+                          <Button className={`ms-2 d-flex justify-content-center align-items-center ${style['button-login-mobile']}`} onClick={() => {navigate("/login")}}>
+                            <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>
+                            <p className='m-0'>Masuk</p>
                           </Button>
                         : null}
                       </Offcanvas.Body>
@@ -117,13 +115,14 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
               
                 <div className={`${style['menu-desktop']} ${normalTitle? null : 'w-100'}`} >
                     {login?
-                      <Button className={`${style['button-login']}`} onClick={() => {navigate("/login")}}>
-                          <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>Masuk
+                      <Button className={`d-flex justify-content-center align-items-center ${style['button-login']}`} onClick={() => {navigate("/login")}}>
+                          <img src={Login_Icon} alt="" style={{width: '25px', paddingRight: '5px'}}/>
+                          <p className='m-0'>Masuk</p>
                       </Button> 
                     : null}
                     {desktopMenu? 
                       <div className={`d-flex align-items-center justify-content-center`}>
-                        <Button utton className={`ms-3  ${style['button-icon']}`} onClick={() => {navigate("/productlist")}}>
+                        <Button className={`ms-3  ${style['button-icon']}`} onClick={() => {navigate("/productlist")}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="100%" fill="currentColor" className="bi bi-menu-button-wide-fill" viewBox="0 0 16 16">
                               <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v2A1.5 1.5 0 0 0 1.5 5h13A1.5 1.5 0 0 0 16 3.5v-2A1.5 1.5 0 0 0 14.5 0h-13zm1 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm9.927.427A.25.25 0 0 1 12.604 2h.792a.25.25 0 0 1 .177.427l-.396.396a.25.25 0 0 1-.354 0l-.396-.396zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2H1zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2h14zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
                             </svg>
@@ -148,7 +147,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                           </Dropdown.Menu>
                         </Dropdown>
 
-                        <Button utton className={`ms-3  ${style['button-icon']}`} onClick={() => {navigate("/myprofile")}}>
+                        <Button className={`ms-3  ${style['button-icon']}`} onClick={() => {navigate("/myprofile")}}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="100%" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>

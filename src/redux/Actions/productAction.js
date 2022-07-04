@@ -38,7 +38,7 @@ export const getDetailProduct = (idProduct) => {
             method: 'GET',
             url: `https://localla-api.herokuapp.com/api/v1/product/${idProduct}`
         }).then((res) => {
-            console.log("data.. ", res.data.status);
+            console.log("data.. ", res.data);
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_FULFILLED`,
                 payload: res.data.data || null
