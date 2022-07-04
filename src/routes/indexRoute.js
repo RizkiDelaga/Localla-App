@@ -21,7 +21,7 @@ function IndexRoute() {
         <Route path='editprofile' element={<EditProfile />}/>
         <Route path='addproduct' element={<AddProduct />}/>
         <Route path='productlist' element={<ProductList />}/>
-        <Route path='detailproduct' element={<DetailProduct />}/>
+        <Route path='product/:id' element={<DetailProduct />}/>
         <Route path='offerlist' element={<OfferList />}/>
       </Routes>
     </Fragment>

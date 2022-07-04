@@ -1,4 +1,4 @@
-import { GET_PRODUCT } from '../types';
+import { GET_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_SELLER_ID, GET_PRODUCT_BY_KEY } from '../types';
 
 const initialState = {
     data: [],
@@ -6,7 +6,7 @@ const initialState = {
     error: null
 }
 
-const productReducer = (state = initialState, action) => {
+export const productReducer = (state = initialState, action) => {
     const { type, payload, error } = action;
 
     switch (type) {
@@ -34,4 +34,60 @@ const productReducer = (state = initialState, action) => {
     }
 };
 
-export default productReducer;
+export const detailProductReducer = (state = initialState, action) => {
+    const { type, payload, error } = action;
+
+    switch (type) {
+
+        case `${GET_DETAIL_PRODUCT}_LOADING`:
+            return {
+                ...state
+            };
+        case `${GET_DETAIL_PRODUCT}_FULFILLED`:
+            return {
+                ...state,
+                data: payload,
+                isLoading: false
+            };
+        case `${GET_DETAIL_PRODUCT}_ERROR`:
+            return {
+                ...state,
+                isLoading: false,
+                error: error
+            };
+                    
+        default:
+            return {
+                ...state
+            }
+    }
+};
+
+export const productByCategoryReducer = (state = initialState, action) => {
+    const { type, payload, error } = action;
+
+    switch (type) {
+
+        case `${GET_PRODUCT_BY_KEY}_LOADING`:
+            return {
+                ...state
+            };
+        case `${GET_PRODUCT_BY_KEY}_FULFILLED`:
+            return {
+                ...state,
+                data: payload,
+                isLoading: false
+            };
+        case `${GET_PRODUCT_BY_KEY}_ERROR`:
+            return {
+                ...state,
+                isLoading: false,
+                error: error
+            };
+                    
+        default:
+            return {
+                ...state
+            }
+    }
+};

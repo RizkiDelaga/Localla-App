@@ -7,6 +7,7 @@
     background-color: #7126B5;
     color: #ffffff;
     width: fit-content;
+    max-height: 48px;
     font-weight: 500;
     padding: 8px 18px;
     border-radius: 12px;
@@ -19,3 +20,34 @@
     background-color: #7026b5c2;
     color: #ffffff;
 }
+
+/* Radio Button Group Start */
+.button-group-custom {
+    background-color: #f9fafb;
+}
+
+.horizontal-scroll {
+    padding: 5px;
+    display: flex;
+    overflow-x: auto;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    width: 0;
+}
+
+.btn-group-style {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    min-width: fit-content !important;
+    max-width: fit-content !important;
+    min-height: 48px;
+    border-radius: 16px !important;
+    background-color: #E2D4F0 !important;
+    color: #000000 !important;
+    font-weight: 400 !important;
+    border: none !important;
+}
+
+/* Radio Button Group End */

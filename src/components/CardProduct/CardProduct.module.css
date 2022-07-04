@@ -1,11 +1,18 @@
 .card-product {
     /* min-width: 120px; */
+    min-width: 100% !important;
     max-width: 270px !important;
     height: 100%;
+    background-color: #ffffff;
     /* max-height: 270px; */
     padding: 8px;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
     border-radius: 6px;
+}
+
+.card-product:hover {
+    position: relative;
+    bottom: 15px;
 }
 
 .img-container {
