@@ -11,6 +11,7 @@ import Image1 from '../../assets/images/image1.jpg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import CardUser from '../../components/CardUser/CardUser';
 
+import Image1 from "../../assets/images/image1.jpg";
 
 function DetailProduct() {
   let { id } = useParams();
@@ -66,10 +67,12 @@ function DetailProduct() {
       <ModalPopUp
         detailProduct={detailProduct}
         show={modalShow}
-        onHide={() => {setModalShow(false)}}
+        onHide={() => {
+          setModalShow(false);
+        }}
       />
     </Fragment>
-  )
+  );
 }
 
 function ModalPopUp(props) {
@@ -79,9 +82,9 @@ function ModalPopUp(props) {
     <Modal
       {...props}
       aria-labelledby="contained-modal-title-vcenter"
-      dialogClassName={`${style['modal-size']}`}
-      contentClassName={`${style['modal-style']}`}
-      className={`${style['modal-centered']}`}
+      dialogClassName={`${style["modal-size"]}`}
+      contentClassName={`${style["modal-style"]}`}
+      className={`${style["modal-centered"]}`}
       onExited={() => setBidPrice(false)}
     >
       <Modal.Header closeButton className={`px-4 pt-3 border-0`} />
