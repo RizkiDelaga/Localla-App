@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ToggleButton, ToggleButtonGroup} from 'react-bootstrap';
+import { ToggleButton, ToggleButtonGroup, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 
 import style from './ProductList.module.css'
@@ -12,7 +12,8 @@ import Heart_Icon from '../../assets/icons/Heart_Icon.png';
 import Dollar_Sign_Icon from '../../assets/icons/Dollar_Sign_Icon.png';
 import Chevron_Right_Icon from '../../assets/icons/Chevron_Right_Icon.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { getProductBySellerId, getProductCategory } from '../../redux/Actions/productAction';
+import { getProductByKey } from '../../redux/Actions/productAction';
+import { getProductBySellerId } from '../../redux/Actions/ProductSellerAction';
 
 
 function ProductList() {
@@ -22,20 +23,24 @@ function ProductList() {
 
     const dispatch = useDispatch();
     const { isLoading: loadingProductSeller, data: dataProductSeller } = useSelector((state) => state.productBySellerId);
-    const { isLoading: loadingProduct, data: dataProduct } = useSelector((state) => state.product);
+    const { isLoading: loadingProduct, data: dataProductByCategory } = useSelector((state) => state.productByCategory);
     // console.log("dataProductSeller ", dataProductSeller);
 
     React.useEffect(() => {
-        dispatch(getProductBySellerId())
+        dispatch(getProductBySellerId(7))
     }, []);
 
-    const productItems = (listProduct) => {
+    const productItems = (loadingProduct, listProduct) => {
         return (
-            listProduct.map((item) => {
+            loadingProduct? 
+            <div className="text-center mt-5">
+              <Spinner animation="border" />
+            </div>
+            : listProduct.map((item) => {
                 console.log("item ", item);
                 return (
-                    <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
-                        <Link to={`/product/${item.id}`}><CardProduct product={item} /></Link>
+                    <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-3 px-2`} >
+                        <CardProduct product={item} />
                     </Col>
                 )
             })
@@ -64,7 +69,7 @@ function ProductList() {
                                 </ToggleButton>
                                 <ToggleButton id="radio-button-2" value={"Interested"} className={`my-2 ${style['btn-group-category']} ${style['bb-category']}`} onClick={() => {
                                     setShowAddProduct(false)
-                                    dispatch(getProductCategory())
+                                    dispatch(getProductByKey('asdasd'))
                                 }}>
                                     <div className={`d-flex justify-content-center align-items-center`}>
                                         <img src={Heart_Icon} className={`me-2`} style={{width: '25px'}} alt=""/><p className={`m-0`}>Diminati</p>
@@ -73,7 +78,7 @@ function ProductList() {
                                 </ToggleButton>
                                 <ToggleButton id="radio-button-3" value={"Sold"} className={`my-2 ${style['btn-group-category']}`} onClick={() => {
                                     setShowAddProduct(false)
-                                    dispatch(getProductBySellerId())
+                                    dispatch(getProductBySellerId(7))
                                 }}>
                                     <div className={`d-flex justify-content-center align-items-center`}>
                                         <img src={Dollar_Sign_Icon} className={`me-2`} style={{width: '25px'}} alt=""/><p className={`m-0`}>Terjual</p>
@@ -87,13 +92,13 @@ function ProductList() {
                     <Col lg={9} className={`p-0`}>
                         <Row className={`m-auto`}>
                             {showAddProduct? 
-                            <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-2 px-2`} >
+                            <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-3 px-2`} >
                                 <div className={`p-2 text-center text-secondary ${style['add-product-box']}`} onClick={() => {navigate("/addproduct")}}>
                                     <img src={Plus_Icon} className={`mb-3`} alt="" style={{width: '30%'}} />
                                     <p>Tambah Produk</p>
                                 </div>
                             </Col> : null}
-                            {changeCategory === "All Product"? productItems(dataProductSeller) : changeCategory === "Interested"? productItems(dataProduct) : changeCategory === "Sold"? productItems(dataProductSeller) : null}
+                            {changeCategory === "All Product"? productItems(loadingProductSeller, dataProductSeller) : changeCategory === "Interested"? productItems(loadingProduct, dataProductByCategory) : changeCategory === "Sold"? productItems(loadingProductSeller, dataProductSeller) : null}
                         </Row>
                     </Col>
                 </Row>

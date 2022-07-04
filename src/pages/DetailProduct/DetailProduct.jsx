@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Form, Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Navbar from '../../components/Navbar/Navbar';
 import { useDispatch, useSelector } from "react-redux";
@@ -8,11 +8,14 @@ import { getProduct, getDetailProduct } from '../../redux/Actions/productAction.
 
 
 import Image1 from '../../assets/images/image1.jpg';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import CardUser from '../../components/CardUser/CardUser';
 
 
 function DetailProduct() {
   let { id } = useParams();
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const [status, setStatus] = React.useState(false);
   const [modalShow, setModalShow] = React.useState(false);
 
@@ -21,36 +24,44 @@ function DetailProduct() {
   console.log("detailProduct.. ", detailProduct);
 
   React.useEffect(() => {
-    dispatch(getDetailProduct(id));
+    if (!state) {
+      console.log("isPreviewProduct.. ", state);
+      dispatch(getDetailProduct(id));
+    }
 }, []);
 
   return (
     <Fragment>
       <Navbar logo={true} backButton="/productlist" login={true} desktopMenu={true} transparentFade={true} />
+      {loadingProduct?
+      <div className="text-center" style={{marginTop: '100px'}}>
+        <Spinner animation="border" />
+      </div> :
       <Container style={{marginTop: '100px'}}>
         <Row>
           <Col className={`mb-4`}>
             <Card className={`p-2 ${style['description-card']}`}>
                 <Card.Body>
                   <h5 className={`mb-4`}>Deskripsi</h5>
-                  <p>{detailProduct.description}</p>
+                  <p>{state? state.description : detailProduct.description}</p>
                 </Card.Body>
             </Card>
           </Col>
           <Col xl="4" lg="4" md="5" sm="12" xs="12">
-            <Card className={`p-2 ${style['detail-product-card']}`}>
+            <Card className={`p-2 mb-3 ${style['detail-product-card']}`}>
                 <Card.Body>
-                  <h5>{detailProduct.title}</h5>
-                  <Card.Text className={`m-0 text-secondary`} style={{fontSize: "14px"}}>{detailProduct.category}</Card.Text>
-                  <h6 className={`mt-3 mb-4 ${style.cardBody}`}> Rp {detailProduct.price}</h6>
+                  <h5>{state? state.title : detailProduct.title}</h5>
+                  <Card.Text className={`m-0 text-secondary`} style={{fontSize: "14px"}}>{state? state.category : detailProduct.category}</Card.Text>
+                  <h6 className={`mt-3 mb-4 ${style.cardBody}`}> Rp {new Intl.NumberFormat('de-DE').format(parseInt(state? state.price : detailProduct.price))}</h6>
 
-                  <button className={`${style['btn-decision']}`} onClick={() => setModalShow(true)}>{status? "Terbitakan" : "Nego Sekarang"}</button>
-                  {status? <button className={`mt-2 ${style['btn-decision']}`}>Edit</button> : null}
+                  <button className={`${style['btn-decision']}`} onClick={() => {state? navigate('/productlist') : setModalShow(true)}}>{state? "Terbitkan" : "Nego Sekarang"}</button>
+                  {state? <button className={`mt-2 ${style['btn-decision']}`} onClick={() =>{navigate(-1)}}>Edit</button> : null}
                 </Card.Body>
             </Card>
+            <CardUser userDetail={detailProduct}/>
           </Col>
         </Row>
-      </Container>
+      </Container>}
 
       <ModalPopUp
         detailProduct={detailProduct}
@@ -62,7 +73,7 @@ function DetailProduct() {
 }
 
 function ModalPopUp(props) {
-  const [bidPrice, setBidPrice] = React.useState(false);
+  const [bidPrice, setBidPrice] = React.useState("");
 
   return (
     <Modal
@@ -85,7 +96,7 @@ function ModalPopUp(props) {
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <h6 className={`mb-1`}>{props.detailProduct.title}</h6>
-                <p className={`text-secondary my-0`} style={{fontSize: '14px'}} >Rp {props.detailProduct.price}</p>
+                <p className={`text-secondary my-0`} style={{fontSize: '14px'}} >Rp {new Intl.NumberFormat('de-DE').format(parseInt(props.detailProduct.price))}</p>
               </Col>
             </Row>
           </div>
@@ -98,13 +109,15 @@ function ModalPopUp(props) {
                   placeholder="Rp 0,00"
                   onChange={(e) => {
                       setBidPrice(e.target.value)
+                      
                   }}
                   />
           </div>
         </Modal.Body>
 
       <Modal.Footer className={`px-4 py-4 border-0`}>
-        <Button className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === false} >Kirim</Button>
+        {console.log("bidPrice.. ", bidPrice)}
+        <Button className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === ""} >Kirim</Button>
       </Modal.Footer>
     </Modal>
   );

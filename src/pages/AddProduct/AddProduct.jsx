@@ -89,7 +89,7 @@ function AddProduct() {
             </Form.Group>
             
             <div className="d-flex my-5">
-              <button className={`me-4 ${style['btn-decision']}`} onClick={() => {navigate("/detailproduct")}}>Preview</button>
+              <button className={`me-4 ${style['btn-decision']}`} onClick={() => {navigate("/product/preview", { state: {description: "Lorem ipsum", title: "asd saa dasd", category: "baju", price: 213138} })}}>Preview</button>
               <button type='submit' className={`${style['btn-decision']}`} onClick={() => {navigate("/productlist")}}>Terbitakan</button>
             </div>
           </Form>

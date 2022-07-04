@@ -9,7 +9,7 @@ import axios from "axios";
 
 function RegisterForm() {
     const [dataRegistrasi, setDataRegistrasi] = useState({
-        role: "",
+        name: "",
         email: "",
         password: ""
     });
@@ -19,11 +19,13 @@ function RegisterForm() {
       message: ""
     });
 
+    console.log("dataRegistrasi..  ", dataRegistrasi);
+
     const submitHandler = async () => {
       try {
         const res = await axios({
           method: 'POST',
-          url: 'https://rent-car-appx.herokuapp.com/admin/auth/register',
+          url: 'https://localla-api.herokuapp.com/api/v1/user/register',
           data: dataRegistrasi
         })
         if(res.status === 201){
@@ -33,7 +35,7 @@ function RegisterForm() {
             });
           setShowAlert(true);
           setDataRegistrasi({
-            role: "",
+            name: "",
             email: "",
             password: ""
         })
@@ -64,11 +66,11 @@ function RegisterForm() {
             className={`${style["input-field"]}`}
             type="text"
             placeholder="Nama Lengkap"
-            value={dataRegistrasi.role}
+            value={dataRegistrasi.name}
             onChange={(e) => {
               setDataRegistrasi({
                   ...dataRegistrasi,
-                  role: e.target.value
+                  name: e.target.value
               })}}
             required
           />

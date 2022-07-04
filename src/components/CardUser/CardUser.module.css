@@ -1,0 +1,31 @@
+.CardUser {
+    /* width: 100%; */
+    height: fit-content;
+    border-radius: 16px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userInfoText {
+    width: 100%;
+}
+
+.imgUser {
+    max-width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.btnEdit {
+    width: 100px;
+    height: 35px;
+    border-radius: 16px;
+    border: 2px solid #7126B5;
+    background-color: rgb(255, 255, 255);
+    color: #7126B5;
+}

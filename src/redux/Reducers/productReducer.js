@@ -1,4 +1,4 @@
-import { GET_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_SELLER_ID } from '../types';
+import { GET_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_SELLER_ID, GET_PRODUCT_BY_KEY } from '../types';
 
 const initialState = {
     data: [],
@@ -63,22 +63,22 @@ export const detailProductReducer = (state = initialState, action) => {
     }
 };
 
-export const productBySellerIdReducer = (state = initialState, action) => {
+export const productByCategoryReducer = (state = initialState, action) => {
     const { type, payload, error } = action;
 
     switch (type) {
 
-        case `${GET_PRODUCT_BY_SELLER_ID}_LOADING`:
+        case `${GET_PRODUCT_BY_KEY}_LOADING`:
             return {
                 ...state
             };
-        case `${GET_PRODUCT_BY_SELLER_ID}_FULFILLED`:
+        case `${GET_PRODUCT_BY_KEY}_FULFILLED`:
             return {
                 ...state,
                 data: payload,
                 isLoading: false
             };
-        case `${GET_PRODUCT_BY_SELLER_ID}_ERROR`:
+        case `${GET_PRODUCT_BY_KEY}_ERROR`:
             return {
                 ...state,
                 isLoading: false,

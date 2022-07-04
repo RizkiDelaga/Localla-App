@@ -23,14 +23,17 @@ function LoginForm() {
         try {
             const res = await axios({
               method: 'POST',
-              url: 'https://rent-car-appx.herokuapp.com/admin/auth/login',
+              url: 'https://localla-api.herokuapp.com/api/v1/auth/login',
               data: dataLogin
             })
-            console.log("respon..  ", res);
-            if (res.status === 201){
-              localStorage.setItem("access_token", res.data.access_token)
-              navigate("/editprofile");
+            console.log("respon..a  ", res);
+            if (res.status === 200){
+              localStorage.setItem("access_token", res.data.tokenAccess)
             }
+            if (res.data.data.role === "seller") {
+              return navigate("/");
+            }
+            navigate("/editprofile");
         } catch (error){
             setRegisterStatus({
                 isSuccess: false,

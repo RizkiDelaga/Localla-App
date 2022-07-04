@@ -37,7 +37,10 @@ const MyProfile = () => {
             <img src={setting} alt="" />
             <h6 className={`ms-3 mb-0`}>Pengaturan Akun</h6>
           </div>
-          <div className={style["btn-holder"]} onClick={() => {navigate("/")}}>
+          <div className={style["btn-holder"]} onClick={() => {
+            navigate("/")
+            localStorage.removeItem("access_token")
+            }}>
             <img src={exit} alt="" />
             <h6 className={`ms-3 mb-0`}>Keluar</h6>
           </div>
