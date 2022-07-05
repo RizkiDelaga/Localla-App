@@ -58,7 +58,7 @@ function DetailProduct() {
                   {state? <button className={`mt-2 ${style['btn-decision']}`} onClick={() =>{navigate(-1)}}>Edit</button> : null}
                 </Card.Body>
             </Card>
-            <CardUser userDetail={detailProduct}/>
+            <CardUser userDetail={state? state : detailProduct}/>
           </Col>
         </Row>
       </Container>}
