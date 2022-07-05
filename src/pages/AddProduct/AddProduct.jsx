@@ -68,25 +68,10 @@ function AddProduct() {
         formData.append('image', file);
       });
       dispatch(createProduct(formData));
-
-    //   axios({
-    //     method: 'POST',
-    //     url: 'https://localla-api.herokuapp.com/api/v1/product/',
-    //     data: formData,
-    //     headers: {
-    //       'content-type': 'multipart/form-data',
-    //       'authorization': `${localStorage.getItem('access_token')}`
-    //     }
-    // }).then((res) => {
-    //     console.log("res data.. ", res);
-        
-    // }).catch((err) => {
-    //     console.log("error.. ", err);
-    // })
   }
   
-  useEffect(() => {
-    // return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+  React.useEffect(() => {
+    document.title = "Add Product";
   }, []);
 
   return (
@@ -145,16 +130,15 @@ function AddProduct() {
                 </div>
               </div>
               <aside className={`d-block ${style['thumbs-container']}`}>
-                {/* {files === undefined? console.log("files.. ", files[0]) : console.log("files.. ", "null")} */}
                 {thumbs}
                 <ul>{filesName}</ul>
               </aside>
             </Form.Group>
 
-            <input type="file" onChange={(e) => {
+            {/* <input type="file" onChange={(e) => {
               console.log("e.target.files", e.target.files[0]);
               setDataProduct({...dataProduct, image: e.target.files[0]})
-            }} />
+            }} /> */}
             
             <div className={`my-5 ${style['display-button']}`}>
               <button className={`me-4 mb-3 ${style['btn-decision']}`} onClick={() => {navigate("/product/preview", { state: {description: "Lorem ipsum", title: "asd saa dasd", category: "baju", price: 213138} })}}>Preview</button>

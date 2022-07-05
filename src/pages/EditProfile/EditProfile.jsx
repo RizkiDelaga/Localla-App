@@ -9,6 +9,11 @@ import Navbar from '../../components/Navbar/Navbar';
 
 function EditProfile() {
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    document.title = "Edit Profile";
+  }, []);
+
   return (
     <Fragment>
       <Navbar logo={true} backButton="/myprofile" normalTitle="Lengkapi Info Akun" />

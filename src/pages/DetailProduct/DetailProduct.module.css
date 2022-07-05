@@ -1,3 +1,13 @@
+
+.swipper {
+    /* max-width: 400px !important; */
+}
+.image-carousell {
+    height: 400px;
+}
+
+
+
 /* Detail Product Card Start */
 
 .detail-product-card {
@@ -16,7 +26,8 @@
 
 .btn-decision {
     width: 100% !important;
-    height: 48px;
+    min-height: 48px;
+    height: fit-content;
     border-radius: 16px;
     border: 2px solid #f6a833;
     background-color: rgb(255, 255, 255);
