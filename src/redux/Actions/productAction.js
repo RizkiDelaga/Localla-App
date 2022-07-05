@@ -1,6 +1,7 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
-    GET_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_SELLER_ID, GET_PRODUCT_BY_KEY
+    GET_PRODUCT, CREATE_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_KEY
 } from "../types";
 
 export const getProduct = () => {
@@ -27,6 +28,36 @@ export const getProduct = () => {
     }
 }
 
+export const createProduct = (dataProduct) => {
+    return (dispatch) => {
+        dispatch({
+            type: `${CREATE_PRODUCT}_LOADING`
+        });
+
+        axios({
+            method: 'POST',
+            url: 'https://localla-api.herokuapp.com/api/v1/product/',
+            data: dataProduct,
+            headers: {
+                'content-type': 'multipart/form-data',
+                'authorization': `${localStorage.getItem('access_token')}`
+            }
+        }).then((res) => {
+            console.log("data.. ", res);
+            dispatch({
+                type: `${CREATE_PRODUCT}_FULFILLED`,
+                payload: res.data
+            });
+            dispatch(getProduct());
+        }).catch((err) => {
+            dispatch({
+                type: `${CREATE_PRODUCT}_ERROR`,
+                error: err.message
+            })
+        })
+    }
+}
+
 
 export const getDetailProduct = (idProduct) => {
     return (dispatch) => {
@@ -41,16 +72,8 @@ export const getDetailProduct = (idProduct) => {
             console.log("data.. ", res.data);
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_FULFILLED`,
-                payload: res.data.data || null
+                payload: res.data.data
             })
-            // if (res.data.status === true) {
-            //     dispatch({
-            //         type: `${GET_DETAIL_PRODUCT}_FULFILLED`,
-            //         payload: res.data.data
-            //     })
-            // } else {
-            //     navigate("/")
-            // }
         }).catch((err) => {
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_ERROR`,

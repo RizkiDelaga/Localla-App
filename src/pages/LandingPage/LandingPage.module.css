@@ -4,7 +4,7 @@
     left: 50%;
     transform: translate(-50%, 0);
     border: none;
-    background-color: #7126B5;
+    background-color: #f6a833;
     color: #ffffff;
     width: fit-content;
     max-height: 48px;
@@ -16,10 +16,10 @@
     -moz-box-shadow: -1px 54px 180px -31px rgba(0,0,0,0.65);
 }
 
-.btn-add-product:hover {
+/* .btn-add-product:hover {
     background-color: #7026b5c2;
     color: #ffffff;
-}
+} */
 
 /* Radio Button Group Start */
 .button-group-custom {
@@ -44,7 +44,7 @@
     max-width: fit-content !important;
     min-height: 48px;
     border-radius: 16px !important;
-    background-color: #E2D4F0 !important;
+    background-color: #d295394d !important;
     color: #000000 !important;
     font-weight: 400 !important;
     border: none !important;

@@ -1,4 +1,4 @@
-import { GET_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_SELLER_ID, GET_PRODUCT_BY_KEY } from '../types';
+import { GET_PRODUCT, CREATE_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_KEY } from '../types';
 
 const initialState = {
     data: [],
@@ -25,6 +25,21 @@ export const productReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 error: error
+            };
+
+        case `${CREATE_PRODUCT}_LOADING`:
+            return {
+                ...state,
+            };
+        case `${CREATE_PRODUCT}_FULFILLED`:
+            return {
+                ...state,
+                isLoading: false
+            };
+        case `${CREATE_PRODUCT}_ERROR`:
+            return {
+                ...state,
+                isLoading: false,
             };
                     
         default:

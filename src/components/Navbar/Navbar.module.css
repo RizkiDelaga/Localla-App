@@ -128,7 +128,7 @@
 }
 
 .list-notif:focus {
-    background-color: #7126B5 !important;
+    background-color: #f6a833 !important;
     color: #ffffff !important;
 }
 
@@ -144,14 +144,14 @@
     width: fit-content;
     height: 50px;
     padding: 0px 20px !important;
-    background-color: #7126B5    !important;
+    background-color: #f6a833    !important;
     border: none !important;
     border-radius: 14px !important;
     color: #ffffff;
 }
 
 .button-login:hover {
-    background-color: #7026b5c9 !important;
+    background-color: #d29539bf !important;
 }
 
 /* Login Button End */
@@ -198,7 +198,7 @@
         width: fit-content;
         height: 50px;
         padding: 0px 20px !important;
-        background-color: #7126B5    !important;
+        background-color: #f6a833    !important;
         border: none !important;
         border-radius: 14px !important;
         color: #ffffff;

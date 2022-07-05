@@ -11,7 +11,7 @@ function CardProduct({ product }) {
     <Fragment>
         <Link to={`/product/${product.id}`}>
           <div className={`${style['card-product']}`}>
-              <img src={product? product.image_url.url : Default_Product_Image} className={`${style['img-container']}`} alt="" />
+              <img src={product? product.image_url.url[0] : Default_Product_Image} className={`${style['img-container']}`} alt="" />
               <div className={`my-2`}>
                   <h6 className={`m-0`}>{product? product.title : "Lorem ipsum dolor sit"}</h6>
                   <p className={`m-0 py-2 text-secondary`} style={{fontSize: '14px'}}>{product? product.category : "Category"}</p>

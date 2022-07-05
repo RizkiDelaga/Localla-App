@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import style from "./Form.module.css";
 import { Form, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -51,81 +51,82 @@ function RegisterForm() {
     }
 
     return (
-      <Form className={`px-3 ${style["form-container"]}`} onSubmit={(event) => {
-        event.preventDefault()
-        submitHandler()
-        }}>
-        <h3 className={`fw-bold mb-5 text-center`}>Daftar</h3>
-        {showAlert? 
-          (<Alert className={`${style["auth-alert"]} ${registerStatus.isSuccess? style['success-alert'] : style['failed-alert']}`} onClose={() => setShowAlert(false)} dismissible>
-            <h5 className="m-0">{registerStatus.message}</h5>
-          </Alert>) : null}
+      <Fragment>
+        <Form className={`px-3 ${style["form-container"]}`} onSubmit={(event) => {
+          event.preventDefault()
+          submitHandler()
+          }}>
+          <h3 className={`fw-bold mb-5 text-center`}>Daftar</h3>
+          {showAlert? 
+            (<Alert className={`${style["auth-alert"]} ${registerStatus.isSuccess? style['success-alert'] : style['failed-alert']}`} onClose={() => setShowAlert(false)} dismissible>
+              <h5 className="m-0">{registerStatus.message}</h5>
+            </Alert>) : null}
 
-          <Form.Label className="fw-bolder">Nama</Form.Label>
-          <Form.Control
-            className={`${style["input-field"]}`}
-            type="text"
-            placeholder="Nama Lengkap"
-            value={dataRegistrasi.name}
-            onChange={(e) => {
-              setDataRegistrasi({
-                  ...dataRegistrasi,
-                  name: e.target.value
-              })}}
-            required
-          />
+            <Form.Label className="fw-bolder">Nama</Form.Label>
+            <Form.Control
+              className={`${style["input-field"]}`}
+              type="text"
+              placeholder="Nama Lengkap"
+              value={dataRegistrasi.name}
+              onChange={(e) => {
+                setDataRegistrasi({
+                    ...dataRegistrasi,
+                    name: e.target.value
+                })}}
+              required
+            />
 
-          <Form.Label className="fw-bolder mt-3">Email</Form.Label>
-          <Form.Control
-            className={`${style["input-field"]}`}
-            type="email"
-            placeholder="Contoh: johndee@gmail.com"
-            value={dataRegistrasi.email}
-            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-            onChange={(e) => {
-              setDataRegistrasi({
-                  ...dataRegistrasi,
-                  email: e.target.value
-              })}}
-            required
-          />
-          <Form.Text className="text-muted d-block m-0">
-            Email harus valid
-          </Form.Text>
-
-          <Form.Label className="fw-bolder mt-3">Password</Form.Label>
-            <div className={`${style["password-holder"]}`}>
-              <input
-                className={`${style["password-input"]}`}
-                type="password"
-                placeholder="Masukkan password"
-                value={dataRegistrasi.password}
-                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                title="Password harus memiliki setidaknya 1 karakter huruf kecil, 1 karakter huruf besar, 1 karakter angka, dan 1 karakter spesial"
-                onChange={(e) => {
-                    setDataRegistrasi({
-                        ...dataRegistrasi,
-                        password: e.target.value
-                    })}}
-                required
-              />
-              <button
-                className={`${style["password-toggler"]}`}
-                type="button"
-              >
-                <img src={fi_eye} alt="" />
-              </button>
-            </div>
-            <Form.Text className="text-muted">
-              Password harus mengangandung huruf kapital, huruf kecil, angka, dan karakter spesial
+            <Form.Label className="fw-bolder mt-3">Email</Form.Label>
+            <Form.Control
+              className={`${style["input-field"]}`}
+              type="email"
+              placeholder="Contoh: johndee@gmail.com"
+              value={dataRegistrasi.email}
+              pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+              onChange={(e) => {
+                setDataRegistrasi({
+                    ...dataRegistrasi,
+                    email: e.target.value
+                })}}
+              required
+            />
+            <Form.Text className="text-muted d-block m-0">
+              Email harus valid
             </Form.Text>
 
-          <input
-            type="submit"
-            className={`${style["button-submit"]} mt-3`}
-            value="Daftar"
-          />
+            <Form.Label className="fw-bolder mt-3">Password</Form.Label>
+              <div className={`${style["password-holder"]}`}>
+                <input
+                  className={`${style["password-input"]}`}
+                  type="password"
+                  placeholder="Masukkan password"
+                  value={dataRegistrasi.password}
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                  title="Password harus memiliki setidaknya 1 karakter huruf kecil, 1 karakter huruf besar, 1 karakter angka, dan 1 karakter spesial"
+                  onChange={(e) => {
+                      setDataRegistrasi({
+                          ...dataRegistrasi,
+                          password: e.target.value
+                      })}}
+                  required
+                />
+                <button
+                  className={`${style["password-toggler"]}`}
+                  type="button"
+                >
+                  <img src={fi_eye} alt="" />
+                </button>
+              </div>
+              <Form.Text className="text-muted">
+                Password harus mengangandung huruf kapital, huruf kecil, angka, dan karakter spesial
+              </Form.Text>
 
+            <input
+              type="submit"
+              className={`${style["button-submit"]} mt-3`}
+              value="Daftar"
+            />
+        </Form>
         <div className={`${style.toggler} pt-3`}>
           <p>
             Sudah punya akun?
@@ -134,7 +135,7 @@ function RegisterForm() {
             </Link>
           </p>
         </div>
-      </Form>
+      </Fragment>
     );
 };
 

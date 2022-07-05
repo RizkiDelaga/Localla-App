@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import style from "./Form.module.css";
 import { Form, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -45,58 +45,59 @@ function LoginForm() {
     }
 
     return (
-        <Form className={`px-3 ${style["form-container"]}`} onSubmit={(event) => {
-            event.preventDefault()
-            submitHandler()
-            }}>
-            <h3 className={`fw-bold mb-5 text-center`}>Masuk</h3>            
-            {showAlert? 
-            (<Alert className={`${style["auth-alert"]} ${registerStatus.isSuccess? style['success-alert'] : style['failed-alert']}`} onClose={() => setShowAlert(false)} dismissible>
-                <h5 className="m-0">{registerStatus.message}</h5>
-            </Alert>) : null}
+        <Fragment>
+            <Form className={`px-3 ${style["form-container"]}`} onSubmit={(event) => {
+                event.preventDefault()
+                submitHandler()
+                }}>
+                <h3 className={`fw-bold mb-5 text-center`}>Masuk</h3>            
+                {showAlert? 
+                (<Alert className={`${style["auth-alert"]} ${registerStatus.isSuccess? style['success-alert'] : style['failed-alert']}`} onClose={() => setShowAlert(false)} dismissible>
+                    <h5 className="m-0">{registerStatus.message}</h5>
+                </Alert>) : null}
 
-            <Form.Label className="fw-bolder">Email</Form.Label>
-            <Form.Control
-            className={`${style["input-field"]}`}
-            type="email"
-            placeholder="Contoh: johndee@gmail.com"
-            onChange={(e) => {
-                setDataLogin({
-                    ...dataLogin,
-                    email: e.target.value
-                })
-            }}
-            required
-            />
-
-            <Form.Label className="fw-bolder mt-3">Password</Form.Label>
-            <div className={`${style["password-holder"]}`}>
-                <input
-                    className={`${style["password-input"]}`}
-                    type={"password"}
-                    placeholder="Masukkan password"
-                    onChange={(e) => {
-                        setDataLogin({
-                            ...dataLogin,
-                            password: e.target.value
-                        })
-                    }}
-                    required
+                <Form.Label className="fw-bolder">Email</Form.Label>
+                <Form.Control
+                className={`${style["input-field"]}`}
+                type="email"
+                placeholder="Contoh: johndee@gmail.com"
+                onChange={(e) => {
+                    setDataLogin({
+                        ...dataLogin,
+                        email: e.target.value
+                    })
+                }}
+                required
                 />
-                <button
-                    className={`${style["password-toggler"]}`}
-                    type="button"
-                >
-                    <img src={fi_eye} alt="" />
-                </button>
-            </div>
 
+                <Form.Label className="fw-bolder mt-3">Password</Form.Label>
+                <div className={`${style["password-holder"]}`}>
+                    <input
+                        className={`${style["password-input"]}`}
+                        type={"password"}
+                        placeholder="Masukkan password"
+                        onChange={(e) => {
+                            setDataLogin({
+                                ...dataLogin,
+                                password: e.target.value
+                            })
+                        }}
+                        required
+                    />
+                    <button
+                        className={`${style["password-toggler"]}`}
+                        type="button"
+                    >
+                        <img src={fi_eye} alt="" />
+                    </button>
+                </div>
 
-            <input
-            type="submit"
-            className={`${style["button-submit"]} mt-3`}
-            value="Masuk"
-            />
+                <input
+                type="submit"
+                className={`${style["button-submit"]} mt-3`}
+                value="Masuk"
+                />
+            </Form>
 
             <div className={`${style.toggler} pt-3`}>
                 <p>
@@ -111,7 +112,7 @@ function LoginForm() {
                 </Link>
                 </p>
             </div>
-        </Form>
+        </Fragment>
     );
 };
 

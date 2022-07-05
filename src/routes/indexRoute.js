@@ -9,6 +9,7 @@ import MyProfile from '../pages/InfoProfile/MyProfile';
 import AddProduct from "../pages/AddProduct/AddProduct";
 import ProductList from '../pages/ProductList/ProductList';
 import DetailProduct from '../pages/DetailProduct/DetailProduct';
+import NotFound from '../pages/NotFound/NotFound';
 
 function IndexRoute() {
   return (
@@ -23,6 +24,8 @@ function IndexRoute() {
         <Route path='productlist' element={<ProductList />}/>
         <Route path='product/:id' element={<DetailProduct />}/>
         <Route path='offerlist' element={<OfferList />}/>
+        <Route path='*' element={<NotFound />}/>
+        
       </Routes>
     </Fragment>
   );

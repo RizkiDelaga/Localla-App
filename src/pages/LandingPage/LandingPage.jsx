@@ -11,6 +11,7 @@ import White_Plus_Icon from '../../assets/icons/White_Plus_Icon.png';
 import Search from '../../assets/icon/fi_search.png';
 import { getProduct, getProductByKey } from '../../redux/Actions/productAction';
 import { getProductBySellerId } from '../../redux/Actions/ProductSellerAction';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 
 function LandingPage() {
@@ -31,9 +32,10 @@ function LandingPage() {
       <div className="text-center mt-5">
         <Spinner animation="border" />
       </div>
+      : listProduct.length <= 0? <NoDataFound />
       : listProduct.map((item) => {
         return (
-          <Col xl='2' lg='3' md='4' sm='6' xs='6' className={`my-3 d-flex justify-content-center`} style={{width: "maxContent"}} key={item.id} >
+          <Col xl='2' lg='3' md='4' sm='6' xs='6' className={`my-3 `} style={{width: "maxContent"}} key={item.id} >
             <CardProduct product={item} />
           </Col>
         )
@@ -45,7 +47,7 @@ function LandingPage() {
     <Fragment>
         <Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} transparentFade={true} />
         <Banner />
-        <Container style={{marginTop: '100px', marginBottom: '50px', padding: '0px'}}>
+        <Container className='p-0 my-5'>
           <div className={`${style['horizontal-scroll']}`}>
             <ToggleButtonGroup type="radio" name="options" defaultValue={"All Product"} className={`${style['button-group-custom']}`} onChange={(event) => {
               console.log(event)
@@ -67,12 +69,17 @@ function LandingPage() {
               }}>
                 <img src={Search} className={`me-2`} alt=""/>Shoes
               </ToggleButton>
+              <ToggleButton id="radio-button-4" value={"Bahan"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
+                  dispatch(getProductByKey('Bahan'))
+              }}>
+                <img src={Search} className={`me-2`} alt=""/>Kain
+              </ToggleButton>
             </ToggleButtonGroup>
             {console.log("Button Value: ", changeCategory)}
           </div>
 
           <Row className={`mx-auto mt-3`}>
-            {changeCategory === "All Product"? productItems(loadingProduct, dataProduct) : changeCategory === "T-shirt"? productItems(loadingProductByCategory, dataProductByCategory) : changeCategory === "Shoes"? productItems(loadingProductByCategory, dataProductByCategory) : null}
+            {changeCategory === "All Product"? productItems(loadingProduct, dataProduct) : changeCategory === "T-shirt"? productItems(loadingProductByCategory, dataProductByCategory) : changeCategory === "Shoes"? productItems(loadingProductByCategory, dataProductByCategory) : changeCategory === "Bahan"? productItems(loadingProductByCategory, dataProductByCategory) : null}
           </Row>
         </Container>
 
