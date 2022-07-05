@@ -26,6 +26,7 @@ function ProductList() {
     const { isLoading: loadingProduct, data: dataProductByCategory } = useSelector((state) => state.productByCategory);
 
     React.useEffect(() => {
+        document.title = "My Product List";
         dispatch(getProductBySellerId(1))
     }, []);
 

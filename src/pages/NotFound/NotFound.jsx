@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react';
-import { Container, Row, Col, ToggleButton, ToggleButtonGroup, Spinner } from 'react-bootstrap';
 import Navbar from '../../components/Navbar/Navbar';
 
 import Error404_Icon from '../../assets/images/404_Icon.png';
 
 function NotFound() {
+
+  React.useEffect(() => {
+    document.title = "Page Not Found";
+  }, []);
 
   return (
     <Fragment>

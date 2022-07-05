@@ -4,6 +4,7 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import "swiper/css/bundle";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -10,6 +10,10 @@ import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
   const navigate = useNavigate();
+  
+  React.useEffect(() => {
+    document.title = "Profile";
+  }, []);
 
   return (
     <Fragment>

@@ -7,10 +7,8 @@ import Banner from "../../components/Banner/Banner";
 import style from './LandingPage.module.css';
 import { Link, useNavigate } from "react-router-dom";
 
-import White_Plus_Icon from '../../assets/icons/White_Plus_Icon.png';
 import Search from '../../assets/icon/fi_search.png';
 import { getProduct, getProductByKey } from '../../redux/Actions/productAction';
-import { getProductBySellerId } from '../../redux/Actions/ProductSellerAction';
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 
@@ -23,6 +21,7 @@ function LandingPage() {
   const { isLoading: loadingProductByCategory, data: dataProductByCategory } = useSelector((state) => state.productByCategory);
 
   React.useEffect(() => {
+      document.title = "Localla | Home";
       dispatch(getProduct());
   }, []);
 

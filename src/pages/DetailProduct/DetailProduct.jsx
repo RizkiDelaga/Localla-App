@@ -6,17 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import style from './DetailProduct.module.css';
 import { getDetailProduct } from '../../redux/Actions/productAction.js';
 
-
 import Image1 from '../../assets/images/image1.jpg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import CardUser from '../../components/CardUser/CardUser';
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Autoplay, Pagination, Navigation } from "swiper";
 
 function DetailProduct() {
   let { id } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [status, setStatus] = React.useState(false);
   const [modalShow, setModalShow] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -28,7 +33,8 @@ function DetailProduct() {
       console.log("isPreviewProduct.. ", state);
       dispatch(getDetailProduct(id));
     }
-}, []);
+    document.title = detailProduct.title;
+  }, []);
 
   return (
     <Fragment>
@@ -39,15 +45,44 @@ function DetailProduct() {
       </div> :
       <Container style={{marginTop: '100px'}}>
         <Row>
-          <Col className={`mb-4`}>
-            <Card className={`p-2 ${style['description-card']}`}>
+          <Col xl={8} lg={8} md={12} sm={12} xs={12} className={`mb-4`}>
+            <Swiper
+              navigation={true}
+              mousewheel={{
+                invert: true,
+              }}
+              rewind={true}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                dynamicBullets: true,
+                clickable: true,
+              }}
+              modules={[Pagination, Autoplay, Navigation]}
+              className={`${style['swipper']}`}
+            >
+              {detailProduct? detailProduct.image_url.url.map((image) => {
+                return (
+                  <SwiperSlide style={{width: '100%'}}>
+                    {console.log("image.. ", image)}
+                    <div className={`${style['image-carousell']}`}>
+                      <img src={detailProduct? image : Image1} alt="" style={{width: '100%', height: '100%', objectFit: "contain"}} />
+                    </div>
+                  </SwiperSlide>
+                )
+              }): null}
+            </Swiper>
+
+            <Card className={`mt-3 p-2 ${style['description-card']}`}>
                 <Card.Body>
                   <h5 className={`mb-4`}>Deskripsi</h5>
                   <p>{state? state.description : detailProduct.description}</p>
                 </Card.Body>
             </Card>
           </Col>
-          <Col xl="4" lg="4" md="5" sm="12" xs="12">
+          <Col>
             <Card className={`p-2 mb-3 ${style['detail-product-card']}`}>
                 <Card.Body>
                   <h5>{state? state.title : detailProduct.title}</h5>
