@@ -12,6 +12,7 @@
 
 .card-product:hover {
     position: relative;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
     bottom: 15px;
 }
 
@@ -20,4 +21,56 @@
     height: 130px;
     border-radius: 6px;
     object-fit: cover;
+}
+
+.product-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-action {
+    display: flex;
+}
+
+.edit-product-button {
+    width: 100%;
+    border: 2px solid #f6a833;
+    background-color: #f6a833;
+    color: white;
+    border-radius: 4px;
+    margin-right: 5px;
+    height: 30px;
+}
+
+.delete-product-button {
+    width: 100%;
+    border: 2px solid red;
+    background-color: red;
+    color: white;
+    border-radius: 4px;
+    height: 30px;
+}
+
+.edit-product-button:hover {
+    border: 2px solid #f6a833;
+    background-color: white;
+    color: #f6a833;
+}
+
+.delete-product-button:hover {
+    border: 2px solid red;
+    background-color: white;
+    color: red;
+}
+
+@media (max-width: 360px) {
+    .product-action {
+        flex-wrap: wrap;
+    }
+
+    .edit-product-button {
+        margin-right: 0px;
+    }
 }

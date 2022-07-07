@@ -14,6 +14,8 @@ import Chevron_Right_Icon from '../../assets/icons/Chevron_Right_Icon.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { getProductByKey } from '../../redux/Actions/productAction';
 import { getProductBySellerId } from '../../redux/Actions/ProductSellerAction';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
+import { getMyProfile } from '../../redux/Actions/ProfileAction';
 
 
 function ProductList() {
@@ -22,24 +24,31 @@ function ProductList() {
     const [showAddProduct, setShowAddProduct] = useState(true)
 
     const dispatch = useDispatch();
+    const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
     const { isLoading: loadingProductSeller, data: dataProductSeller } = useSelector((state) => state.productBySellerId);
-    const { isLoading: loadingProduct, data: dataProductByCategory } = useSelector((state) => state.productByCategory);
+    const { isLoading: loadingProduct, data: dataProduct } = useSelector((state) => state.product);
 
     React.useEffect(() => {
         document.title = "My Product List";
-        dispatch(getProductBySellerId(1))
-    }, []);
+        dispatchMyprofile()
+        dispatch(getProductBySellerId(dataMyProfile.id))
+    }, [loadingDataMyProfile, loadingProductSeller]);
 
-    const productItems = (loadingProduct, listProduct) => {
+    const dispatchMyprofile = async() => {
+        return await dispatch(getMyProfile());
+      }
+
+    const productItems = (isLoading, listProduct ) => {
         return (
-            loadingProduct? 
-            <div className="text-center mt-5">
-              <Spinner animation="border" />
-            </div>
+            listProduct.length <= 0? <NoDataFound /> 
+            : isLoading? 
+            (<div className="text-center mt-5">
+                <Spinner animation="border" />
+            </div>)
             : listProduct.map((item) => {
                 return (
                     <Col xl='3' lg='4' md='4' sm='6' xs='6' className={`my-3 px-2`} >
-                        <CardProduct product={item} />
+                        <CardProduct product={item} productAction={true} />
                     </Col>
                 )
             })
@@ -49,7 +58,7 @@ function ProductList() {
     return (
         <Fragment>
             <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-            <Container style={{marginTop: '90px'}}>
+            <Container style={{marginTop: '100px'}}>
                 <Row>
                     <Col lg={3} className={`p-0 py-2`}>
                         <div className={`${style['category-product-list']}`}>
@@ -68,7 +77,7 @@ function ProductList() {
                                 </ToggleButton>
                                 <ToggleButton id="radio-button-2" value={"Interested"} className={`my-2 ${style['btn-group-category']} ${style['bb-category']}`} onClick={() => {
                                     setShowAddProduct(false)
-                                    dispatch(getProductByKey('asdasd'))
+                                    // dispatch(getProductBySellerId(1))
                                 }}>
                                     <div className={`d-flex justify-content-center align-items-center`}>
                                         <img src={Heart_Icon} className={`me-2`} style={{width: '25px'}} alt=""/><p className={`m-0`}>Diminati</p>
@@ -77,7 +86,7 @@ function ProductList() {
                                 </ToggleButton>
                                 <ToggleButton id="radio-button-3" value={"Sold"} className={`my-2 ${style['btn-group-category']}`} onClick={() => {
                                     setShowAddProduct(false)
-                                    dispatch(getProductBySellerId(1))
+                                    // dispatch(getProductBySellerId(1))
                                 }}>
                                     <div className={`d-flex justify-content-center align-items-center`}>
                                         <img src={Dollar_Sign_Icon} className={`me-2`} style={{width: '25px'}} alt=""/><p className={`m-0`}>Terjual</p>
@@ -99,7 +108,9 @@ function ProductList() {
                             </Col> : null}
                             {changeCategory === "All Product"?
                                 productItems(loadingProductSeller, dataProductSeller) :
-                                changeCategory === "Interested"? productItems(loadingProduct, dataProductByCategory) :
+                                changeCategory === "Interested"? productItems(loadingProductSeller, dataProductSeller.filter((e) => {
+                                    return e.status === "available";
+                                })) :
                                 changeCategory === "Sold"? productItems(loadingProductSeller, dataProductSeller.filter((e) => {
                                     return e.status === "true";
                                 })) : null}

@@ -33,7 +33,7 @@ const BottomNavigation = () => {
     {
       img: user,
       text: "Akun",
-      link: "/myprofile",
+      link: "/profile",
     },
   ];
 

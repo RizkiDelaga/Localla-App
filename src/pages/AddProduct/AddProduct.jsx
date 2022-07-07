@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {Button, Container} from 'react-bootstrap';
+import { Button, Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useDropzone } from 'react-dropzone';
 import style from './AddProduct.module.css';
@@ -22,9 +22,7 @@ function AddProduct() {
   });
 
   const dispatch = useDispatch();
-  // const { isLoading: loadingProduct, data: createProductMessage } = useSelector((state) => state.createProductMessage);
-  // console.log("createProductMessage.. ", createProductMessage);
-
+  const { isLoading: loadingProduct, data: statusDataProduct, error: getErrorPostProduct } = useSelector((state) => state.product);
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
     accept: {
@@ -36,7 +34,6 @@ function AddProduct() {
       }))]);
     }
   });
-
 
   const filesName = files.map(file => <li key={file.path}>{file.path} <Button variant='danger' className={`ms-3 py-0`} onClick={() => {}}>Delete</Button></li>);
     
@@ -56,7 +53,6 @@ function AddProduct() {
   const addProductHandler = () => {
       const formData = new FormData();
 
-      // e.preventDefault();
       console.log("e.target.files[0].... ", dataProduct.image[0]);
       console.log("dataProduct.image", dataProduct.image);
       formData.append('title', dataProduct.title);
@@ -134,19 +130,13 @@ function AddProduct() {
                 <ul>{filesName}</ul>
               </aside>
             </Form.Group>
-
-            {/* <input type="file" onChange={(e) => {
-              console.log("e.target.files", e.target.files[0]);
-              setDataProduct({...dataProduct, image: e.target.files[0]})
-            }} /> */}
             
             <div className={`my-5 ${style['display-button']}`}>
               <button className={`me-4 mb-3 ${style['btn-decision']}`} onClick={() => {navigate("/product/preview", { state: {description: "Lorem ipsum", title: "asd saa dasd", category: "baju", price: 213138} })}}>Preview</button>
               <button type='submit' className={`${style['btn-decision']}`} onClick={() => {
-                // setDataProduct({...dataProduct, image: files})
                 console.log("dataProduct", dataProduct);
                 addProductHandler();
-                navigate("/productlist");
+                // navigate("/productlist");
               }}>Terbitkan</button>
             </div>
           </Form>
