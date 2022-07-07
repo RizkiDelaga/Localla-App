@@ -1,4 +1,15 @@
+.product-offer-card {
+    /* background-color: rgb(223, 0, 0); */
+}
+
+.flex-condition {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .btnDecision {
+    flex-wrap: wrap;
     border-radius: 50px;
     border: 2px solid #f6a833;
     background-color: rgb(255, 255, 255);
@@ -15,9 +26,10 @@
     color: #ffffff;
 }
 
-.productImage {
+.product-image {
     width: 100%;
     height: 100%;
+    min-height: 120px;
     object-fit: cover;
     border-radius: 12px;
 }
@@ -52,9 +64,6 @@
 
 
 
-
-
-
 .modal-button-action {
     border-radius: 16px !important;
     border: none !important;
@@ -69,8 +78,18 @@
 /* Modal End */
 
 
-@media only screen and (min-width: 0) and (max-width: 780px) {
+@media (max-width: 400px) {
     .btnDecision {
         width: 100%;
+    }
+}
+
+
+@media (max-width: 200px) {
+    .flex-condition {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }

@@ -5,7 +5,7 @@
     margin-top: -45px;
 }
 
-@media only screen and (min-width: 0) and (max-width: 780px) {
+@media (max-width: 780px) {
     .btnBack {
         display: none;
     }

@@ -16,7 +16,7 @@ function EditProfile() {
 
   return (
     <Fragment>
-      <Navbar logo={true} backButton="/myprofile" normalTitle="Lengkapi Info Akun" />
+      <Navbar logo={true} backButton="/profile" normalTitle="Lengkapi Info Akun" />
       <Container fluid className={`d-flex justify-content-center`} style={{marginTop: '90px'}}>
         <section style={{width: '100%', maxWidth: '800px'}}>
 
@@ -56,7 +56,7 @@ function EditProfile() {
           </Form>
 
           <div className="d-flex mt-4">
-            <button className={`${style['btn-decision']}`} onClick={() => {navigate("/myprofile")}}>Simpan</button>
+            <button className={`${style['btn-decision']}`} onClick={() => {navigate("/profile")}}>Simpan</button>
           </div>
         </section>
       </Container>

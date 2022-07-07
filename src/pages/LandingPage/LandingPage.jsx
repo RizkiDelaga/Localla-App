@@ -27,11 +27,11 @@ function LandingPage() {
 
   const productItems = (loadingProduct, listProduct) => {
     return (
-      loadingProduct? 
+      listProduct.length <= 0? <NoDataFound />
+      : loadingProduct? 
       <div className="text-center mt-5">
         <Spinner animation="border" />
       </div>
-      : listProduct.length <= 0? <NoDataFound />
       : listProduct.map((item) => {
         return (
           <Col xl='2' lg='3' md='4' sm='6' xs='6' className={`my-3 `} style={{width: "maxContent"}} key={item.id} >
@@ -58,13 +58,13 @@ function LandingPage() {
                 Semua
               </ToggleButton>
               <ToggleButton id="radio-button-2" value={"T-shirt"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
-                  dispatch(getProductByKey("Kaos"))
+                  dispatch(getProductByKey("T-Shirt"))
               }}>
                 <ion-icon name="shirt" size="small" className="me-2"></ion-icon>
                 T-shirt
               </ToggleButton>
               <ToggleButton id="radio-button-3" value={"Shoes"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
-                  dispatch(getProductByKey('asdasd'))
+                  dispatch(getProductByKey('Shoes'))
               }}>
                 <img src={Search} className={`me-2`} alt=""/>Shoes
               </ToggleButton>

@@ -29,3 +29,27 @@
     background-color: rgb(255, 255, 255);
     color: #f6a833;
 }
+
+
+.CardUser {
+    /* width: 100%; */
+    height: fit-content;
+    border-radius: 16px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 400px) {
+    .CardUser {
+        flex-wrap: wrap;
+    }
+
+    .btnEdit {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

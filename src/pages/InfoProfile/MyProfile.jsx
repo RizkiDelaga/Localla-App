@@ -4,7 +4,7 @@ import Default_PP_Icon from "../../assets/icon/Default_PP_Icon.png";
 import edit from "../../assets/icons/fi_edit-3.png";
 import setting from "../../assets/icons/fi_settings.png";
 import exit from "../../assets/icons/fi_log-out.png";
-import style from "./MyProfile.module.css";
+import style from "./profile.module.css";
 import BottomNavigation from "../../components/BottomNavigation/BottomNavigation";
 import { useNavigate } from "react-router-dom";
 

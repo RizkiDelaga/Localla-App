@@ -10,26 +10,26 @@ function ProductOfferList() {
   return (
     <Fragment>
       <Container fluid>
-      <div className="product-offer-list" style={{minWidth: '300px'}}>
-        <Row>
-          <Col xs={3} className={`px-0`} style={{width: '80px', height: '80px'}}>
-            <img src={Image1} alt="" className={`${style.productImage}`} />
-          </Col>
-          <Col>
-          <div className={`d-flex justify-content-between`}>
-            <p className={`text-secondary mb-2`} style={{fontSize: '14px'}}>Penawaran produk</p>
-            <p className={`text-secondary mb-2`} style={{fontSize: '14px'}}>20 Apr, 14:04</p>
-          </div>
-            <h6 className={`my-1`}>Jam Tangan Casio</h6>
-            <h6 className={`my-1`}>Rp 250.000</h6>
-            <h6 className={`my-1`}>Ditawar Rp 200.000</h6>
-          </Col>
-          <Col xs={12} className={`d-flex justify-content-end p-0 mt-3`}>
-            <button className={`me-3 ${style.btnDecision}`}>Tolak</button>
-            <button className={`${style.btnDecision}`} onClick={() => setModalShow(true)}>Terima</button>
-          </Col>
-        </Row>
-      </div>
+        <div className={`${style['product-offer-card']}`}>
+          <Row className={`mb-3 ${style['flex-condition']}`}> 
+            <Col lg="2" md="2" sm="3" xs="3" className='pe-0' style={{minWidth: '120px'}}>
+              <img src={Image1} className={`${style['product-image']}`} alt="" />
+            </Col>
+            <Col className={`d-flex flex-column justify-content-center px-3`} style={{minWidth: '200px'}}>
+              <div className={`d-flex justify-content-between`}>
+                <p className={`text-secondary mb-2`} style={{fontSize: '14px'}}>Penawaran produk</p>
+                <p className={`text-secondary mb-2 text-end`} style={{fontSize: '14px'}}>20 Apr, 14:04</p>
+              </div>
+              <h6 className={`my-1`}>Jam Tangan Casio</h6>
+              <h6 className={`my-1`}>Rp 250.000</h6>
+              <h6 className={`my-1`}>Ditawar Rp 200.000</h6>
+            </Col>
+            <Col xs={12} className={`d-flex justify-content-end mt-3`} style={{flexWrap: 'wrap'}}>
+              <button className={`mt-2 ${style.btnDecision}`}>Tolak</button>
+              <button className={`mt-2 ${style.btnDecision}`} onClick={() => setModalShow(true)}>Terima</button>
+            </Col>
+          </Row>
+        </div>
       </Container>
 
       <ModalPopUp

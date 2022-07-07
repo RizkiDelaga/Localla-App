@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import {
-    GET_PRODUCT, CREATE_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_KEY
+    GET_PRODUCT, CREATE_PRODUCT, DETELE_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_KEY
 } from "../types";
+// import { Redirect } from 'react-router-dom';
 
 export const getProduct = () => {
     return (dispatch) => {
@@ -29,6 +29,34 @@ export const getProduct = () => {
 }
 
 export const createProduct = (dataProduct) => {
+
+    // dispatch({
+    //     type: `${CREATE_PRODUCT}_LOADING`
+    // });
+
+    // try {
+    //     const res = await axios({
+    //     method: 'POST',
+    //     url: 'https://localla-api.herokuapp.com/api/v1/product/',
+    //     data: dataProduct,
+    //     headers: {
+    //         'content-type': 'multipart/form-data',
+    //         'authorization': `${localStorage.getItem('access_token')}`
+    //     }})
+    //     console.log("data.. create", res);
+    //     dispatch({
+    //         type: `${CREATE_PRODUCT}_FULFILLED`,
+    //         payload: res
+    //     });
+    //     return dispatch(getProduct());
+    // } catch (error){
+    //     console.log("err.. create", error);
+    //     return dispatch({
+    //         type: `${CREATE_PRODUCT}_ERROR`,
+    //         error: error
+    //     })
+    // }
+
     return (dispatch) => {
         dispatch({
             type: `${CREATE_PRODUCT}_LOADING`
@@ -43,15 +71,44 @@ export const createProduct = (dataProduct) => {
                 'authorization': `${localStorage.getItem('access_token')}`
             }
         }).then((res) => {
-            console.log("data.. ", res);
+            console.log("data.. create", res);
             dispatch({
                 type: `${CREATE_PRODUCT}_FULFILLED`,
-                payload: res.data
+                payload: res
             });
             dispatch(getProduct());
         }).catch((err) => {
+            console.log("err.. create", err);
             dispatch({
                 type: `${CREATE_PRODUCT}_ERROR`,
+                error: err
+            })
+        })
+    }
+}
+
+export const deleteProduct = (idProduct) => {
+    return (dispatch) => {
+        dispatch({
+            type: `${DETELE_PRODUCT}_LOADING`
+        });
+
+        axios({
+            method: 'DELETE',
+            url: `https://localla-api.herokuapp.com/api/v1/product/${idProduct}`,
+            headers: {
+                'authorization': `${localStorage.getItem('access_token')}`
+            }
+        }).then((res) => {
+            console.log("data.. delete ", res);
+            dispatch({
+                type: `${DETELE_PRODUCT}_FULFILLED`,
+            });
+            dispatch(getProduct());
+        }).catch((err) => {
+            console.log("error.. delete ", err);
+            dispatch({
+                type: `${DETELE_PRODUCT}_ERROR`,
                 error: err.message
             })
         })
@@ -70,14 +127,19 @@ export const getDetailProduct = (idProduct) => {
             url: `https://localla-api.herokuapp.com/api/v1/product/${idProduct}`
         }).then((res) => {
             console.log("data.. ", res.data);
+            
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_FULFILLED`,
                 payload: res.data.data
             })
         }).catch((err) => {
+            console.log("error.. ", err);
+            // if (err.request.status === 404){
+                
+            // }
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_ERROR`,
-                error: err.message
+                error: err.request
             })
         })
     }

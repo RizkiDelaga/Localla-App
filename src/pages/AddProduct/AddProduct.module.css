@@ -10,6 +10,10 @@
 
 /* Button Decision Start */
 
+.display-button {
+    display: flex;
+}
+
 .btn-decision {
     border-radius: 16px;
     border: 2px solid #f6a833;
@@ -20,11 +24,6 @@
     font-weight: 500;
     padding: 5px 20px;
 }
-
-.display-button {
-    display: flex;
-}
-
 
 
 .btn-decision:hover {
@@ -82,6 +81,26 @@
 }
 
 /* Dropzone File End */
+
+
+/* Alert Start */
+
+.auth-alert {
+    position: fixed !important;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.failed-alert {
+    background-color: #e91c1c !important;
+  }
 
 @media (max-width: 360px) {
     .display-button {

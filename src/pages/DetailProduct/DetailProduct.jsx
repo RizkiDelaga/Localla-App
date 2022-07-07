@@ -7,6 +7,12 @@ import style from './DetailProduct.module.css';
 import { getDetailProduct } from '../../redux/Actions/productAction.js';
 
 import Image1 from '../../assets/images/image1.jpg';
+import Facebook_Icon from '../../assets/icons/Facebook_Icon.png';
+import Instagram_Icon from '../../assets/icons/Instagram_Icon.png';
+import Whatsapp_Icon from '../../assets/icons/Whatsapp_Icon.png';
+import Telegram_Icon from '../../assets/icons/Telegram_Icon.png';
+import Mail_Icon from '../../assets/icons/Mail_Icon.png';
+
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import CardUser from '../../components/CardUser/CardUser';
 
@@ -17,6 +23,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper";
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 function DetailProduct() {
   let { id } = useParams();
@@ -25,27 +32,33 @@ function DetailProduct() {
   const [modalShow, setModalShow] = React.useState(false);
 
   const dispatch = useDispatch();
-  const { isLoading: loadingProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
+  const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
   console.log("detailProduct.. ", detailProduct);
 
   React.useEffect(() => {
+    console.log("isPreviewProduct.. ", state);
+    console.log("loadingDetailProduct.. ", detailProduct.length <= 0);
+    getDetailProductHandler()
+    document.title = detailProduct.title || "Detail Product";
+  }, [loadingDetailProduct]);
+
+  const getDetailProductHandler = async() => {
     if (!state) {
-      console.log("isPreviewProduct.. ", state);
-      dispatch(getDetailProduct(id));
+      return dispatch(getDetailProduct(id));
     }
-    document.title = detailProduct.title;
-  }, []);
+  }
 
   return (
     <Fragment>
       <Navbar logo={true} backButton="/productlist" login={true} desktopMenu={true} transparentFade={true} />
-      {loadingProduct?
+      {loadingDetailProduct? 
       <div className="text-center" style={{marginTop: '100px'}}>
         <Spinner animation="border" />
-      </div> :
+      </div>
+      : detailProduct.length <= 0? navigate("/notfound") : 
       <Container style={{marginTop: '100px'}}>
         <Row>
-          <Col xl={8} lg={8} md={12} sm={12} xs={12} className={`mb-4`}>
+          <Col xl={8} lg={7} md={12} sm={12} xs={12} className={`mb-4`}>
             <Swiper
               navigation={true}
               mousewheel={{
@@ -83,6 +96,24 @@ function DetailProduct() {
             </Card>
           </Col>
           <Col>
+            <div className={`mb-3 ${style['share-product']}`}>
+              <p className='fw-bold m-0'>Share:</p>
+              <button className={`${style['share-btn']}`}>
+                <img src={Facebook_Icon} alt="" style={{height: '35px'}} />
+              </button>
+              <button className={`${style['share-btn']}`}>
+                <img src={Instagram_Icon} alt="" style={{height: '35px'}} />
+              </button>
+              <button className={`${style['share-btn']}`}>
+                <img src={Whatsapp_Icon} alt="" style={{height: '35px'}} />
+              </button>
+              <button className={`${style['share-btn']}`}>
+                <img src={Telegram_Icon} alt="" style={{height: '35px'}} />
+              </button>
+              <button className={`${style['share-btn']}`}>
+                <img src={Mail_Icon} alt="" style={{height: '35px'}} />
+              </button>
+            </div>
             <Card className={`p-2 mb-3 ${style['detail-product-card']}`}>
                 <Card.Body>
                   <h5>{state? state.title : detailProduct.title}</h5>
@@ -98,10 +129,10 @@ function DetailProduct() {
         </Row>
       </Container>}
 
-      {loadingProduct? null :
+      {loadingDetailProduct? null :
       <ModalPopUp
         detailProduct={detailProduct}
-        loadingProduct={loadingProduct}
+        loadingProduct={loadingDetailProduct}
         show={modalShow}
         onHide={() => {
           setModalShow(false);
@@ -131,7 +162,7 @@ function ModalPopUp(props) {
             <h6 style={{ textAlign: 'center', marginBottom: '20px'}}>Product Match</h6>
             <Row>
               <Col xs="4">
-                <img src={props.detailProduct? props.detailProduct.image_url.url : Image1} style={{width: '100%', maxWidth: 'max-content', height: '100%', minHeight: '75px', borderRadius: '12px', objectFit: 'cover'}} alt="" />
+                <img src={props.detailProduct? props.detailProduct.image_url.url[0] : Image1} style={{width: '100%', maxWidth: 'max-content', height: '100%', minHeight: '75px', borderRadius: '12px', objectFit: 'cover'}} alt="" />
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <h6 className={`mb-1`}>{props.detailProduct.title}</h6>
