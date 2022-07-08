@@ -1,14 +1,15 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import { Button, Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useDropzone } from 'react-dropzone';
-import style from './AddProduct.module.css';
-import Plus_Icon from '../../assets/icon/Plus_Icon.png';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/Navbar/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProduct } from '../../redux/Actions/productAction.js';
+import style from './AddProduct.module.css';
 
+import Navbar from '../../components/Navbar/Navbar';
+
+import Plus_Icon from '../../assets/icon/Plus_Icon.png';
 
 function AddProduct() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function AddProduct() {
   });
 
   const dispatch = useDispatch();
-  const { isLoading: loadingProduct, data: statusDataProduct, error: getErrorPostProduct } = useSelector((state) => state.product);
+  // const { isLoading: loadingProduct, data: statusDataProduct, error: getErrorPostProduct } = useSelector((state) => state.product);
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
     accept: {
@@ -53,16 +54,18 @@ function AddProduct() {
   const addProductHandler = () => {
       const formData = new FormData();
 
-      console.log("e.target.files[0].... ", dataProduct.image[0]);
-      console.log("dataProduct.image", dataProduct.image);
+      console.log("dataProduct... landng page", dataProduct);
       formData.append('title', dataProduct.title);
       formData.append('category', dataProduct.category);
       formData.append('description', dataProduct.description);
       formData.append('price', dataProduct.price);
       formData.append('status', dataProduct.status);
       files.map(file => {
+        console.log("file landingpage", file);
         formData.append('image', file);
       });
+      console.log("formData landingpage ", formData);
+
       dispatch(createProduct(formData));
   }
   
@@ -79,7 +82,7 @@ function AddProduct() {
           <Form onSubmit={(event) => {event.preventDefault()}}>
             <Form.Group className="mb-3">
               <Form.Label>Nama Produk</Form.Label>
-              <Form.Control type="text" placeholder="Nama Produk" className={`${style['input-form-style']}`} onChange={(e) => {
+              <Form.Control type="text" placeholder="Nama Produk" value={dataProduct.title} className={`${style['input-form-style']}`} onChange={(e) => {
               console.log("e.target.files", e.target.value);
               setDataProduct({...dataProduct, title: e.target.value})
             }}/>
@@ -87,7 +90,7 @@ function AddProduct() {
 
             <Form.Group className="mb-3">
               <Form.Label>Harga Produk</Form.Label>
-              <Form.Control type="text" placeholder="Rp 0,00" className={`${style['input-form-style']}`} controlId="exampleForm.ControlInput1" onChange={(e) => {
+              <Form.Control type="text" placeholder="Rp 0,00" value={dataProduct.price} className={`${style['input-form-style']}`} controlId="exampleForm.ControlInput1" onChange={(e) => {
               console.log("e.target.files", e.target.value);
               setDataProduct({...dataProduct, price: e.target.value})
             }}/>
@@ -95,21 +98,24 @@ function AddProduct() {
             
             <Form.Group className="mb-3" style={{width: '100% !important'}}>
               <Form.Label>Kategori</Form.Label>
-              <Form.Select aria-label="Default select example" className={`text-secondary ${style['input-form-style']}`} onChange={(e) => {
+              <Form.Select aria-label="Default select example" value={dataProduct.category} className={`text-secondary ${style['input-form-style']}`} onChange={(e) => {
               console.log("e.target.files", e.target.value);
               setDataProduct({...dataProduct, category: e.target.value})
             }}>
                 <option hidden>Pilih Kategori</option>
-                <option value="T-Shirt" style={{color: '#000'}}>T-Shirt</option>
-                <option value="Shoes" style={{color: '#000'}}>Shoes</option>
-                <option value="Pants" style={{color: '#000'}}>Pants</option>
-                <option value="Accessories" style={{color: '#000'}}>Accessories</option>
+                <option value="Kaos" style={{color: '#000'}}>Kaos</option>
+                <option value="Kemeja" style={{color: '#000'}}>Kemeja</option>
+                <option value="Pakaian Olahraga" style={{color: '#000'}}>Pakaian Olahraga</option>
+                <option value="Celana" style={{color: '#000'}}>Celana</option>
+                <option value="Sepatu" style={{color: '#000'}}>Sepatu</option>
+                <option value="Sandal" style={{color: '#000'}}>Sandal</option>
+                <option value="Tas" style={{color: '#000'}}>Tas</option>
               </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Deskripsi</Form.Label>
-              <Form.Control as="textarea" rows={3} placeholder="Contoh: Jalan Ikan Hiu 33" className={`${style['input-form-style']}`} onChange={(e) => {
+              <Form.Control as="textarea" rows={3} placeholder="Contoh: Jalan Ikan Hiu 33" value={dataProduct.description} className={`${style['input-form-style']}`} onChange={(e) => {
               console.log("e.target.files", e.target.value);
               setDataProduct({...dataProduct, description: e.target.value})
             }}/>
@@ -126,8 +132,11 @@ function AddProduct() {
                 </div>
               </div>
               <aside className={`d-block ${style['thumbs-container']}`}>
+                {files?
+                <>
                 {thumbs}
                 <ul>{filesName}</ul>
+                </> : null}
               </aside>
             </Form.Group>
             
@@ -136,6 +145,7 @@ function AddProduct() {
               <button type='submit' className={`${style['btn-decision']}`} onClick={() => {
                 console.log("dataProduct", dataProduct);
                 addProductHandler();
+                
                 // navigate("/productlist");
               }}>Terbitkan</button>
             </div>

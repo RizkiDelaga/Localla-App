@@ -1,18 +1,17 @@
-import React, { Fragment, useState } from 'react';
-import { Container, Row, Col, Spinner, Modal, Form, Button } from 'react-bootstrap';
+import React, { Fragment } from 'react';
+import { Row, Col, Spinner, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import CardProduct from '../../components/CardProduct/CardProduct';
-import Navbar from '../../components/Navbar/Navbar';
-import style from './Profile.module.css';
-import { Link, useNavigate, useParams } from "react-router-dom";
-
-import Search from '../../assets/icon/fi_search.png';
-import Default_PP_Icon from "../../assets/icon/Default_PP_Icon.png";
-import NoDataFound from '../../components/NoDataFound/NoDataFound';
-import { getProductBySellerId } from '../../redux/Actions/ProductSellerAction';
-import BottomNavigation from '../../components/BottomNavigation/BottomNavigation';
 import { getMyProfile, getUserProfileById } from '../../redux/Actions/ProfileAction';
+import { getProductBySellerId } from '../../redux/Actions/productAction';
+import { useNavigate, useParams } from "react-router-dom";
+import style from './Profile.module.css';
 
+import Navbar from '../../components/Navbar/Navbar';
+import BottomNavigation from '../../components/BottomNavigation/BottomNavigation';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
+
+import Default_PP_Icon from "../../assets/icon/Default_PP_Icon.png";
 
 function Profile() {
   const navigate = useNavigate();
@@ -24,15 +23,12 @@ function Profile() {
   const { isLoading: loadingDataProductSeller, data: dataProductSeller } = useSelector((state) => state.productBySellerId);
   const { isLoading: loadingDataUserProfileById, data: dataUserProfileById } = useSelector((state) => state.userProfileById);
 
-
   React.useEffect(() => {
     document.title = "Profile";
-    console.log("iiididid...", id !== undefined? id : "dataMyProfile.id");
     dispatchHandler()
-    console.log("loadingDataUserProfileById", dataMyProfile.id);
     dispatchHandler2()
 
-  }, [id]);
+  }, [loadingDataMyProfile, id]);
 
   const dispatchHandler = async() => {
     return await dispatch(id? getUserProfileById(id) : getMyProfile());
@@ -55,6 +51,7 @@ function Profile() {
                 <Col className='w-100'>
                     <h3 className={`${style['ellipsis-text']}`}>{id? dataUserProfileById.name : dataMyProfile.name}</h3>
                     <p className={`${style['ellipsis-text']}`}>{id? dataUserProfileById.city : dataMyProfile.city}, {id? dataUserProfileById.address : dataMyProfile.address}</p>
+                    {id? null :
                     <div className="d-flex align-items-center">
                         <button className={`w-100 me-3 ${style['edit-profile-button']}`} onClick={() => {navigate('/editprofile')}}>Edit Profil</button>
                         <button className={`${style['account-setting-button']}`} onClick={() => {setModalShow(true)}}>
@@ -63,7 +60,7 @@ function Profile() {
                                 <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
                             </svg>
                         </button>
-                    </div>
+                    </div>}
                 </Col>
             </Row>
         </section>
@@ -73,12 +70,11 @@ function Profile() {
             <div className="text-center mt-5">
                 <Spinner animation="border" />
             </div>
-            : dataProductSeller.length <= 0? <NoDataFound />
             : dataProductSeller.map((item) => {
                 return (
-                <Col xl='4' lg='4' md='4' sm='6' xs='6' className={`my-3 `} style={{width: "maxContent"}} key={item.id} >
-                    <CardProduct product={item} />
-                </Col>
+                    <Col xl='4' lg='4' md='4' sm='6' xs='6' className={`my-3`} style={{width: "maxContent"}} key={item.id} >
+                        <CardProduct product={item} />
+                    </Col>
                 )
             })}
         </Row>

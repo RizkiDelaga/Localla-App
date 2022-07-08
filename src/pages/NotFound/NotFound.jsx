@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
+
 import Navbar from '../../components/Navbar/Navbar';
 
 import Error404_Icon from '../../assets/images/404_Icon.png';

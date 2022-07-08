@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
-import { productReducer, detailProductReducer, productByCategoryReducer } from './productReducer';
-import { productBySellerIdReducer } from './ProductSellerReducer';
+import { productReducer, detailProductReducer, productByCategoryReducer, productBySellerIdReducer } from './productReducer';
 import { myProfileReducer, userProfilByIdeReducer } from "./ProfileReducer";
 
 export default combineReducers({

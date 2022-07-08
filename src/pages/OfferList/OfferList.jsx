@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
-import ProductOfferList from '../../components/ProductOfferList/ProductOfferList';
-import { Container, Card } from 'react-bootstrap';
-import style from './OfferList.module.css'
+import { Container } from 'react-bootstrap';
+import style from './OfferList.module.css';
+
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';
+import ProductOfferList from '../../components/ProductOfferList/ProductOfferList';
 
 
 function OfferList() {

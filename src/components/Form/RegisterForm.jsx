@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from "react";
-import style from "./Form.module.css";
 import { Form, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import style from "./Form.module.css";
 
 import fi_eye from '../../assets/icons/fi_eye.png';
-import axios from "axios";
 
 
 function RegisterForm() {

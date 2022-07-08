@@ -2,18 +2,17 @@ import React, { Fragment, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
-
+import { useParams } from 'react-router-dom';
+import { getProductByKey } from '../../redux/Actions/productAction';
 import style from './Search.module.css'
+
 import Navbar from '../../components/Navbar/Navbar';
 import CardProduct from '../../components/CardProduct/CardProduct';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getProductByKey } from '../../redux/Actions/productAction';
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 
 function Search() {
     let { key } = useParams();
-    const navigate = useNavigate();
 
     const dispatch = useDispatch();
     const { isLoading: loadingProductByCategory, data: productByCategory } = useSelector((state) => state.productByCategory);

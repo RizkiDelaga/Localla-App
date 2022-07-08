@@ -2,10 +2,11 @@ import React, {Fragment} from 'react';
 import {Container} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
-import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png'
 import style from './EditProfile.module.css';
+
 import Navbar from '../../components/Navbar/Navbar';
 
+import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png';
 
 function EditProfile() {
   const navigate = useNavigate();
