@@ -1,10 +1,14 @@
 import React, { Fragment } from 'react';
 import { Container, Row, Col, Modal, Button, Form, Spinner } from 'react-bootstrap';
+import { useDispatch, useSelector } from "react-redux";
+import { getDetailProduct } from '../../redux/Actions/productAction.js';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import style from './DetailProduct.module.css';
+
 import Card from 'react-bootstrap/Card';
 import Navbar from '../../components/Navbar/Navbar';
-import { useDispatch, useSelector } from "react-redux";
-import style from './DetailProduct.module.css';
-import { getDetailProduct } from '../../redux/Actions/productAction.js';
+import CardUser from '../../components/CardUser/CardUser';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 import Image1 from '../../assets/images/image1.jpg';
 import Facebook_Icon from '../../assets/icons/Facebook_Icon.png';
@@ -13,9 +17,6 @@ import Whatsapp_Icon from '../../assets/icons/Whatsapp_Icon.png';
 import Telegram_Icon from '../../assets/icons/Telegram_Icon.png';
 import Mail_Icon from '../../assets/icons/Mail_Icon.png';
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import CardUser from '../../components/CardUser/CardUser';
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -23,7 +24,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper";
-import NoDataFound from '../../components/NoDataFound/NoDataFound';
+
 
 function DetailProduct() {
   let { id } = useParams();
@@ -33,11 +34,8 @@ function DetailProduct() {
 
   const dispatch = useDispatch();
   const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
-  console.log("detailProduct.. ", detailProduct);
 
   React.useEffect(() => {
-    console.log("isPreviewProduct.. ", state);
-    console.log("loadingDetailProduct.. ", detailProduct.length <= 0);
     getDetailProductHandler()
     document.title = detailProduct.title || "Detail Product";
   }, [loadingDetailProduct]);
@@ -79,7 +77,6 @@ function DetailProduct() {
               {detailProduct? detailProduct.image_url.url.map((image) => {
                 return (
                   <SwiperSlide style={{width: '100%'}}>
-                    {console.log("image.. ", image)}
                     <div className={`${style['image-carousell']}`}>
                       <img src={detailProduct? image : Image1} alt="" style={{width: '100%', height: '100%', objectFit: "contain"}} />
                     </div>
@@ -186,7 +183,6 @@ function ModalPopUp(props) {
         </Modal.Body>
 
       <Modal.Footer className={`px-4 py-4 border-0`}>
-        {console.log("bidPrice.. ", bidPrice)}
         <Button className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === undefined} >Kirim</Button>
       </Modal.Footer>
     </Modal>
