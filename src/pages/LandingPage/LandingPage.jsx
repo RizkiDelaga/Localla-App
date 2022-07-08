@@ -74,28 +74,28 @@ function LandingPage() {
                 }}>
                 Pakaian Olahraga
               </ToggleButton>
-              <ToggleButton id="category-product-4" value={"Celana"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
+              <ToggleButton id="category-product-5" value={"Celana"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
                     dispatch(getProductByKey('Celana'))
                 }}>
                 {/* <img src={Search} className={`me-2`} alt=""/> */}
                 Celana
               </ToggleButton>
-              <ToggleButton id="category-product-4" value={"Sepatu"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
+              <ToggleButton id="category-product-6" value={"Sepatu"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
                     dispatch(getProductByKey('Sepatu'))
                 }}>
                 Sepatu
               </ToggleButton>
-              <ToggleButton id="category-product-4" value={"Sandal"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
+              <ToggleButton id="category-product-7" value={"Sandal"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
                     dispatch(getProductByKey('Sandal'))
                 }}>
                 Sandal
               </ToggleButton>
-              <ToggleButton id="category-product-4" value={"Tas"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
+              <ToggleButton id="category-product-8" value={"Tas"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
                     dispatch(getProductByKey('Tas'))
                 }}>
                 Tas
               </ToggleButton>
-              <ToggleButton id="category-product-4" value={"Aksesoris"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
+              <ToggleButton id="category-product-9" value={"Aksesoris"} className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`} onClick={() => {
                     dispatch(getProductByKey('Aksesoris'))
                 }}>
                 Aksesoris
