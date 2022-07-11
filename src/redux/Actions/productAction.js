@@ -1,8 +1,13 @@
 import axios from "axios";
 import {
-    GET_PRODUCT, CREATE_PRODUCT, DETELE_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_KEY, GET_PRODUCT_BY_SELLER_ID
+    GET_PRODUCT,
+    CREATE_PRODUCT,
+    DETELE_PRODUCT,
+    GET_DETAIL_PRODUCT,
+    GET_PRODUCT_BY_KEY,
+    GET_PRODUCT_BY_SELLER_ID,
+    EDIT_PRODUCT
 } from "../types";
-// import { Redirect } from 'react-router-dom';
 
 export const getProduct = () => {
     return (dispatch) => {
@@ -87,6 +92,38 @@ export const createProduct = (dataProduct) => {
     }
 }
 
+export const editProduct = (productID, dataProduct) => {
+
+    return (dispatch) => {
+        dispatch({
+            type: `${EDIT_PRODUCT}_LOADING`
+        });
+
+        axios({
+            method: 'PUT',
+            url: `https://localla-api.herokuapp.com/api/v1/product/${productID}`,
+            data: dataProduct,
+            headers: {
+                'content-type': 'multipart/form-data',
+                'authorization': `${localStorage.getItem('access_token')}`
+            }
+        }).then((res) => {
+            console.log("data.. create", res);
+            dispatch({
+                type: `${EDIT_PRODUCT}_FULFILLED`,
+                payload: res
+            });
+            dispatch(getProduct());
+        }).catch((err) => {
+            console.log("err.. create", err);
+            dispatch({
+                type: `${EDIT_PRODUCT}_ERROR`,
+                error: err
+            })
+        })
+    }
+}
+
 export const deleteProduct = (idProduct) => {
     return (dispatch) => {
         dispatch({
@@ -104,7 +141,7 @@ export const deleteProduct = (idProduct) => {
             dispatch({
                 type: `${DETELE_PRODUCT}_FULFILLED`,
             });
-            dispatch(getProductBySellerId());
+            // dispatch(getProductBySellerId());
         }).catch((err) => {
             console.log("error.. delete ", err);
             dispatch({
@@ -127,7 +164,7 @@ export const getDetailProduct = (idProduct) => {
             url: `https://localla-api.herokuapp.com/api/v1/product/${idProduct}`
         }).then((res) => {
             console.log("data.. ", res.data);
-            
+
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_FULFILLED`,
                 payload: res.data.data
@@ -135,7 +172,7 @@ export const getDetailProduct = (idProduct) => {
         }).catch((err) => {
             console.log("error.. ", err);
             // if (err.request.status === 404){
-                
+
             // }
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_ERROR`,
@@ -153,18 +190,18 @@ export const getProductByKey = (key) => {
         });
 
         axios.get(`https://localla-api.herokuapp.com/api/v1/product?q=${key}`)
-        .then((res) => {
-            console.log("data.. ", res);
-            dispatch({
-                type: `${GET_PRODUCT_BY_KEY}_FULFILLED`,
-                payload: res.data.data
-            });
-        }).catch((err) => {
-            dispatch({
-                type: `${GET_PRODUCT_BY_KEY}_ERROR`,
-                error: err.message
+            .then((res) => {
+                console.log("data.. ", res);
+                dispatch({
+                    type: `${GET_PRODUCT_BY_KEY}_FULFILLED`,
+                    payload: res.data.data
+                });
+            }).catch((err) => {
+                dispatch({
+                    type: `${GET_PRODUCT_BY_KEY}_ERROR`,
+                    error: err.message
+                })
             })
-        })
     }
 }
 

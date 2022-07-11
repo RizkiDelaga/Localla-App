@@ -1,4 +1,12 @@
-import { GET_PRODUCT, CREATE_PRODUCT, DETELE_PRODUCT, GET_DETAIL_PRODUCT, GET_PRODUCT_BY_KEY, GET_PRODUCT_BY_SELLER_ID } from '../types';
+import {
+    GET_PRODUCT,
+    CREATE_PRODUCT,
+    DETELE_PRODUCT,
+    GET_DETAIL_PRODUCT,
+    GET_PRODUCT_BY_KEY,
+    GET_PRODUCT_BY_SELLER_ID,
+    EDIT_PRODUCT
+} from '../types';
 
 const initialState = {
     data: [],
@@ -7,7 +15,11 @@ const initialState = {
 }
 
 export const productReducer = (state = initialState, action) => {
-    const { type, payload, error } = action;
+    const {
+        type,
+        payload,
+        error
+    } = action;
 
     switch (type) {
         case `${GET_PRODUCT}_LOADING`:
@@ -18,13 +30,13 @@ export const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: payload,
-                isLoading: false
+                    isLoading: false
             };
         case `${GET_PRODUCT}_ERROR`:
             return {
                 ...state,
                 isLoading: false,
-                error: error
+                    error: error
             };
 
         case `${CREATE_PRODUCT}_LOADING`:
@@ -35,16 +47,33 @@ export const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: payload,
-                isLoading: false
+                    isLoading: false
             };
         case `${CREATE_PRODUCT}_ERROR`:
             return {
                 ...state,
                 isLoading: false,
-                error: error
+                    error: error
             };
-                
-            
+
+        case `${EDIT_PRODUCT}_LOADING`:
+            return {
+                ...state,
+            };
+        case `${EDIT_PRODUCT}_FULFILLED`:
+            return {
+                ...state,
+                data: payload,
+                isLoading: false,
+            };
+        case `${EDIT_PRODUCT}_ERROR`:
+            return {
+                ...state,
+                isLoading: false,
+                error: error,
+            };
+
+
         case `${DETELE_PRODUCT}_LOADING`:
             return {
                 ...state,
@@ -58,8 +87,9 @@ export const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: error
+                error: error,
             };
+
         default:
             return {
                 ...state
@@ -68,7 +98,11 @@ export const productReducer = (state = initialState, action) => {
 };
 
 export const detailProductReducer = (state = initialState, action) => {
-    const { type, payload, error } = action;
+    const {
+        type,
+        payload,
+        error
+    } = action;
 
     switch (type) {
 
@@ -80,15 +114,15 @@ export const detailProductReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: payload,
-                isLoading: false
+                    isLoading: false
             };
         case `${GET_DETAIL_PRODUCT}_ERROR`:
             return {
                 ...state,
                 isLoading: false,
-                error: error
+                    error: error
             };
-                    
+
         default:
             return {
                 ...state
@@ -97,7 +131,11 @@ export const detailProductReducer = (state = initialState, action) => {
 };
 
 export const productByCategoryReducer = (state = initialState, action) => {
-    const { type, payload, error } = action;
+    const {
+        type,
+        payload,
+        error
+    } = action;
 
     switch (type) {
 
@@ -109,15 +147,15 @@ export const productByCategoryReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: payload,
-                isLoading: false
+                    isLoading: false
             };
         case `${GET_PRODUCT_BY_KEY}_ERROR`:
             return {
                 ...state,
                 isLoading: false,
-                error: error
+                    error: error
             };
-                    
+
         default:
             return {
                 ...state
@@ -126,7 +164,11 @@ export const productByCategoryReducer = (state = initialState, action) => {
 };
 
 export const productBySellerIdReducer = (state = initialState, action) => {
-    const { type, payload, error } = action;
+    const {
+        type,
+        payload,
+        error
+    } = action;
 
     switch (type) {
 
@@ -138,15 +180,15 @@ export const productBySellerIdReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: payload,
-                isLoading: false
+                    isLoading: false
             };
         case `${GET_PRODUCT_BY_SELLER_ID}_ERROR`:
             return {
                 ...state,
                 isLoading: false,
-                error: error
+                    error: error
             };
-                    
+
         default:
             return {
                 ...state

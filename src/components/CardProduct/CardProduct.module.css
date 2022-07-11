@@ -11,9 +11,8 @@
 }
 
 .card-product:hover {
-    position: relative;
+    transform: scale(1.075);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
-    bottom: 15px;
 }
 
 .img-container {
@@ -30,27 +29,36 @@
     overflow: hidden;
 }
 
-.product-action {
-    display: flex;
+.button-action {
+    display: flex !important;
 }
 
 .edit-product-button {
     width: 100%;
+    height: 40px;
     border: 2px solid #f6a833;
     background-color: #f6a833;
     color: white;
     border-radius: 4px;
     margin-right: 5px;
-    height: 30px;
 }
 
 .delete-product-button {
+    height: 40px;
     width: 100%;
     border: 2px solid red;
     background-color: red;
     color: white;
     border-radius: 4px;
-    height: 30px;
+}
+
+.cancel-product-button {
+    height: 40px;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: black;
+    border-radius: 4px;
 }
 
 .edit-product-button:hover {
@@ -65,9 +73,29 @@
     color: red;
 }
 
+.cancel-product-button:hover {
+    border: 2px solid #eeeeee;
+    background-color: #eeeeee;
+}
+
+/* Modal Start */
+
+.modal-centered {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-style {
+    border-radius: 16px !important;
+}
+
+/* Modal End */
+
 @media (max-width: 360px) {
-    .product-action {
-        flex-wrap: wrap;
+    .button-action {
+        flex-wrap: wrap !important;
     }
 
     .edit-product-button {

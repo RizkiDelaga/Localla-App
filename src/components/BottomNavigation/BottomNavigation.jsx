@@ -23,7 +23,7 @@ const BottomNavigation = () => {
     {
       img: plus,
       text: "Jual",
-      link: "/addproduct",
+      link: "/product/addproduct",
     },
     {
       img: list,
