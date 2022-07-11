@@ -28,6 +28,7 @@
     display: block;
     width: 120px;
     height: 120px;
+    object-fit: cover;
     min-height: max-content;
     max-height: max-content;
     max-width: 140px;

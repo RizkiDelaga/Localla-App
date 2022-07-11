@@ -11,7 +11,7 @@ import { getMyProfile } from '../../redux/Actions/ProfileAction';
 function CardUser(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("props.. ", props);
+  // console.log("props.. ", props);
 
   const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
 

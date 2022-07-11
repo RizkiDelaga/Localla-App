@@ -63,16 +63,16 @@
     height: fit-content;
     border-radius: 16px;
     border: 2px solid #f6a833;
-    background-color: rgb(255, 255, 255);
-    color: #f6a833;
+    background-color: #f6a833;
+    color: white;
     width: 158px;
     font-weight: 500;
-    padding: 5px 20px;
+    /* padding: 5px 20px; */
 }
 
 .btn-decision:hover {
-    background-color: #f6a833;
-    color: #ffffff;
+    background-color: white;
+    color: #f6a833;
 }
 
 /* Detail Product Card End */

@@ -4,6 +4,7 @@
     min-width: 100% !important;
     max-width: 270px !important;
     height: 100%;
+    min-height: 230px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,9 +17,7 @@
 
 /* Add Product Box End */   
 
-
 /* Radio Button Group Start */
-
 
 .text-category {
     display: none;

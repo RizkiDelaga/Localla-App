@@ -17,17 +17,24 @@ function IndexRoute() {
     <Fragment>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route exact path="Profile" element={<Profile />}>
-          <Route path=":id" element={<Profile />}/>
-        </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+
+        {/* User Route */}
+        {/* :id */}
+        <Route exact path="profile" element={<Profile />}>
+          <Route path=":id" element={<Profile />}/>
+        </Route>
         <Route path='editprofile' element={<EditProfile />}/>
-        <Route path='addproduct' element={<AddProduct />}/>
         <Route path='productlist' element={<ProductList />}/>
-        <Route path='product/:id' element={<DetailProduct />}/>
         <Route path='offerlist' element={<OfferList />}/>
+
+        {/* Product Route */}
+        <Route path='product/:id' element={<DetailProduct />}/>
+        <Route path='product/:productID/edit' element={<AddProduct />} />
+        <Route path='product/addproduct' element={<AddProduct />}/>
         <Route path='search/:key' element={<Search />}/>
+
         <Route path='*' element={<NotFound />}/>
         
       </Routes>
