@@ -24,6 +24,7 @@
 }
 
 .category-product-list {
+    width: 100%;
     background-color: #f9fafb !important;
     display: block !important;
     padding: 5px;

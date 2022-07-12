@@ -35,33 +35,6 @@ export const getProduct = () => {
 
 export const createProduct = (dataProduct) => {
 
-    // dispatch({
-    //     type: `${CREATE_PRODUCT}_LOADING`
-    // });
-
-    // try {
-    //     const res = await axios({
-    //     method: 'POST',
-    //     url: 'https://localla-api.herokuapp.com/api/v1/product/',
-    //     data: dataProduct,
-    //     headers: {
-    //         'content-type': 'multipart/form-data',
-    //         'authorization': `${localStorage.getItem('access_token')}`
-    //     }})
-    //     console.log("data.. create", res);
-    //     dispatch({
-    //         type: `${CREATE_PRODUCT}_FULFILLED`,
-    //         payload: res
-    //     });
-    //     return dispatch(getProduct());
-    // } catch (error){
-    //     console.log("err.. create", error);
-    //     return dispatch({
-    //         type: `${CREATE_PRODUCT}_ERROR`,
-    //         error: error
-    //     })
-    // }
-
     return (dispatch) => {
         dispatch({
             type: `${CREATE_PRODUCT}_LOADING`
@@ -81,7 +54,6 @@ export const createProduct = (dataProduct) => {
                 type: `${CREATE_PRODUCT}_FULFILLED`,
                 payload: res
             });
-            dispatch(getProduct());
         }).catch((err) => {
             console.log("err.. create", err);
             dispatch({
@@ -141,7 +113,6 @@ export const deleteProduct = (idProduct) => {
             dispatch({
                 type: `${DETELE_PRODUCT}_FULFILLED`,
             });
-            // dispatch(getProductBySellerId());
         }).catch((err) => {
             console.log("error.. delete ", err);
             dispatch({
@@ -171,9 +142,6 @@ export const getDetailProduct = (idProduct) => {
             })
         }).catch((err) => {
             console.log("error.. ", err);
-            // if (err.request.status === 404){
-
-            // }
             dispatch({
                 type: `${GET_DETAIL_PRODUCT}_ERROR`,
                 error: err.request

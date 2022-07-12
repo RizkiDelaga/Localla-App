@@ -16,6 +16,7 @@ import Box_Icon from '../../assets/icons/Box_Icon.png';
 import Heart_Icon from '../../assets/icons/Heart_Icon.png';
 import Dollar_Sign_Icon from '../../assets/icons/Dollar_Sign_Icon.png';
 import Chevron_Right_Icon from '../../assets/icons/Chevron_Right_Icon.png';
+import CardUser from '../../components/CardUser/CardUser';
 
 function ProductList() {
   const navigate = useNavigate();
@@ -34,28 +35,34 @@ function ProductList() {
     document.title = 'My Product List';
     dispatchMyprofile();
     dispatchMyProduct();
-  }, [loadingDataMyProfile, loadingProductSeller]);
+  }, [loadingDataMyProfile, loadingProductSeller, dispatch]);
 
   const dispatchMyprofile = async () => {
     return await dispatch(getMyProfile());
   };
 
   const dispatchMyProduct = async () => {
-    return await dispatch(getProductBySellerId(dataMyProfile.id));
+    return (await loadingDataMyProfile)
+      ? null
+      : dispatch(getProductBySellerId(dataMyProfile.id));
   };
 
   const productItems = (isLoading, listProduct) => {
-    return listProduct.length <= 0 ? (
-      <NoDataFound />
-    ) : isLoading ? (
+    return isLoading ? (
       <div className="text-center mt-5">
         <Spinner animation="border" />
       </div>
+    ) : listProduct.length <= 0 ? (
+      <NoDataFound />
     ) : (
       listProduct.map((item) => {
         return (
           <Col xl="3" lg="4" md="4" sm="6" xs="6" className={`my-2 px-2`}>
-            <CardProduct product={item} buttonAction={true} />
+            <CardProduct
+              product={item}
+              buttonAction={true}
+              dispatchMyProduct={dispatchMyProduct}
+            />
           </Col>
         );
       })
@@ -66,8 +73,10 @@ function ProductList() {
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
       <Container style={{ marginTop: '100px' }}>
-        <Row>
-          <Col lg={3} className={`p-0 py-2`}>
+        <h4 className="fw-bold mb-3">Daftar Jual Saya</h4>
+        <CardUser buttonAction={true} />
+        <Row className="mt-3">
+          <Col lg={3} className={`py-2`}>
             <div className={`${style['category-product-list']}`}>
               <ToggleButtonGroup
                 type="radio"
@@ -163,7 +172,8 @@ function ProductList() {
           <Col lg={9} className={`p-0`}>
             <Row className={`m-auto`}>
               {showAddProduct ? (
-                dataProductSeller.length >= 4 ? null : (
+                loadingProductSeller ? null : dataProductSeller.length >=
+                  4 ? null : (
                   <Col
                     xl="3"
                     lg="4"

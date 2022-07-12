@@ -29,6 +29,7 @@ function LoginForm() {
             console.log("respon..a  ", res);
             if (res.status === 200){
               localStorage.setItem("access_token", res.data.tokenAccess)
+              localStorage.setItem("myId", res.data.data.id)
             }
             if (res.data.data.role === "seller") {
               return navigate("/");

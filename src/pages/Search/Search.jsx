@@ -32,11 +32,11 @@ function Search() {
             <Container style={{marginTop: '100px'}}>
                 <h6>Hasil pencarian untuk <strong>"{key}"</strong></h6>
                 <Row>
-                    {productByCategory.length <= 0? <NoDataFound /> 
-                    : loadingProductByCategory? 
+                    {loadingProductByCategory? 
                     (<div className="text-center mt-5">
                         <Spinner animation="border" />
                     </div>)
+                    : productByCategory.length <= 0? <NoDataFound /> 
                     : productByCategory.map((item) => {
                         return (
                             <Col xl='2' lg='3' md='4' sm='6' xs='6' className={`my-3 px-2`} >

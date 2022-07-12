@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Spinner } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useDropzone } from 'react-dropzone';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,16 +17,24 @@ import Plus_Icon from '../../assets/icon/Plus_Icon.png';
 function AddProduct() {
   let { state } = useLocation();
   const navigate = useNavigate();
+  const [loadingUploadData, setLoadingUploadData] = useState(false);
   const [dataProduct, setDataProduct] = useState({
     title: '',
     category: '',
     description: '',
     price: '',
+    status: state ? state.status : 'available',
     image: [],
   });
 
   const dispatch = useDispatch();
-  // const { isLoading: loadingDetailProduct, data: dataDetailProduct} = useSelector((state) => state.detailProduct);
+  const { isLoading: loadingCreateProduct, data: dataCreateProduct } =
+    useSelector((state) => state.createProduct);
+
+  const { isLoading: loadingEditProduct, data: dataEditProduct } = useSelector(
+    (state) => state.editProduct
+  );
+
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -44,12 +52,25 @@ function AddProduct() {
     },
   });
 
+  const deleteImageItem = (file) => {
+    setFiles(files.filter((item) => item !== file));
+  };
+
   const filesName = files.map((file) => (
-    <li key={file.path}>
-      {file.path}{' '}
-      <Button variant="danger" className={`ms-3 py-0`} onClick={() => {}}>
-        Delete
-      </Button>
+    <li>
+      <div className="d-flex mb-2">
+        <p className={`m-0 ${style['text-ellipsis']}`}>
+          {console.log('file.. ', typeof file)}
+          {typeof file === 'string' ? file : file.path}
+        </p>
+        <Button
+          variant="danger"
+          className={`ms-3 py-0`}
+          onClick={() => deleteImageItem(file)}
+        >
+          Delete
+        </Button>
+      </div>
     </li>
   ));
 
@@ -57,7 +78,7 @@ function AddProduct() {
     <div className={`${style['thumb']}`} key={file.name}>
       <div className={`${style['thumb-inner']}`}>
         <img
-          src={file.preview}
+          src={typeof file === 'string' ? file : file.preview}
           className={`${style['img-preview']}`}
           onLoad={() => {
             URL.revokeObjectURL(file.preview);
@@ -87,7 +108,6 @@ function AddProduct() {
     state
       ? dispatch(editProduct(state.id, formData))
       : dispatch(createProduct(formData));
-    // navigate('/productlist');
   };
 
   React.useEffect(() => {
@@ -103,7 +123,7 @@ function AddProduct() {
         image: { ...state.image_url.url },
       });
     state && setFiles(state.image_url.url);
-    console.log('dataProduct landingpage', dataProduct);
+    console.log('files landingpage', files);
   }, []);
 
   return (
@@ -274,10 +294,37 @@ function AddProduct() {
                 onClick={() => {
                   console.log('dataProduct', dataProduct);
                   addProductHandler();
+                  setLoadingUploadData(true);
                 }}
               >
                 Terbitkan
               </button>
+              {console.log('state addproduct', state)}
+              {loadingUploadData ? (
+                (state ? loadingEditProduct : loadingCreateProduct) ? (
+                  <div className={`${style['loading-upload-data']}`}>
+                    <Spinner animation="border" />
+                  </div>
+                ) : (
+                  navigate('/productlist')
+                )
+              ) : null}
+
+              {/* {loadingUploadData ? (
+                state? loadingEditProduct?  (
+                  <div className={`${style['loading-upload-data']}`}>
+                    <Spinner animation="border" />
+                  </div>
+                ) : (
+                  navigate('/productlist')
+                ) : loadingCreateProduct? (
+                  <div className={`${style['loading-upload-data']}`}>
+                    <Spinner animation="border" />
+                  </div>
+                ) : (
+                  navigate('/productlist')
+                )
+              ) : null} */}
             </div>
           </Form>
         </section>
