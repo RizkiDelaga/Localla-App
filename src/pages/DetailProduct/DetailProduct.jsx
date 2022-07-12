@@ -65,15 +65,11 @@ function DetailProduct() {
   }, [loadingDetailProduct, loadingProductTransactionByID]);
 
   const getDetailProductHandler = async () => {
-    if (!state) {
-      return dispatch(getDetailProduct(id));
-    }
+    return dispatch(getDetailProduct(id));
   };
 
   const getDetailProductHandler2 = async () => {
-    if (!state) {
-      return dispatch(getProductTransactionByID(id));
-    }
+    return dispatch(getProductTransactionByID(id));
   };
 
   const transactionCheck = dataProductTransactionByID.find((transaction) => {
@@ -152,32 +148,57 @@ function DetailProduct() {
 
               <div className={`my-3 ${style['share-product']}`}>
                 <Row>
-                  <Col style={{overflowX: 'auto'}}>
-                    <div className={`d-flex align-items-center h-100 ${style['']}`}>
+                  <Col style={{ overflowX: 'auto' }}>
+                    <div
+                      className={`d-flex align-items-center h-100 ${style['']}`}
+                    >
                       <p className="m-0">Share:</p>
                       <button className={`${style['share-btn']}`}>
-                        <img src={Facebook_Icon} alt="" style={{ height: '25px' }} />
+                        <img
+                          src={Facebook_Icon}
+                          alt=""
+                          style={{ height: '25px' }}
+                        />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img src={Instagram_Icon} alt="" style={{ height: '25px' }} />
+                        <img
+                          src={Instagram_Icon}
+                          alt=""
+                          style={{ height: '25px' }}
+                        />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img src={Whatsapp_Icon} alt="" style={{ height: '25px' }} />
+                        <img
+                          src={Whatsapp_Icon}
+                          alt=""
+                          style={{ height: '25px' }}
+                        />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img src={Telegram_Icon} alt="" style={{ height: '25px' }} />
+                        <img
+                          src={Telegram_Icon}
+                          alt=""
+                          style={{ height: '25px' }}
+                        />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img src={Mail_Icon} alt="" style={{ height: '25px' }} />
+                        <img
+                          src={Mail_Icon}
+                          alt=""
+                          style={{ height: '25px' }}
+                        />
                       </button>
                     </div>
                   </Col>
-                  <Col xs='auto' className={`d-flex justify-content-end align-items-center`}>
+                  <Col
+                    xs="auto"
+                    className={`d-flex justify-content-end align-items-center`}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
                       height="100%"
-                      fill={detailProduct.id? "red" : "black"}
+                      fill={detailProduct.id ? 'red' : 'black'}
                       class="bi bi-heart-fill"
                       viewBox="0 0 16 16"
                     >
@@ -186,7 +207,7 @@ function DetailProduct() {
                         d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
                       />
                     </svg>
-                    <p className='m-0 ms-1'>Disukai ({detailProduct.id})</p>
+                    <p className="m-0 ms-1">Disukai ({detailProduct.id})</p>
                   </Col>
                 </Row>
               </div>
@@ -208,7 +229,9 @@ function DetailProduct() {
                   >
                     {state ? state.category : detailProduct.category}
                   </Card.Text>
-                  <h6 className={`mt-3 mb-4 fw-bold fs-5 ${style['secondary-text-color']}`}>
+                  <h6
+                    className={`mt-3 mb-4 fw-bold fs-5 ${style['secondary-text-color']}`}
+                  >
                     Rp{' '}
                     {new Intl.NumberFormat('de-DE').format(
                       parseInt(state ? state.price : detailProduct.price)
