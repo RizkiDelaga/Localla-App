@@ -1,4 +1,18 @@
+.loading-upload-data {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Input Form Start */
+
 .input-form-style {
     min-height: 48px !important;
     width: 100% !important;
@@ -80,6 +94,12 @@
     height: 100%;
 }
 
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Dropzone File End */
 
 
@@ -101,6 +121,9 @@
 .failed-alert {
     background-color: #e91c1c !important;
   }
+
+/* Alert End */
+
 
 @media (max-width: 360px) {
     .display-button {

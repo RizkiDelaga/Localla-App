@@ -1,17 +1,21 @@
 import React, { Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteProduct } from '../../redux/Actions/productAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import style from './CardProduct.module.css';
 
 import Default_Product_Image from '../../assets/images/image1.jpg';
 import Remove_Icon from '../../assets/icons/Remove_Icon.png';
 import { Button, Modal } from 'react-bootstrap';
 
-function CardProduct({ product, buttonAction }) {
+function CardProduct({ product, buttonAction, dispatchMyProduct }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
+
+  // const { isLoading: loadingEditProduct, data: editProductData } = useSelector(
+  //   (state) => state.product
+  // );
 
   return (
     <Fragment>
@@ -22,17 +26,38 @@ function CardProduct({ product, buttonAction }) {
             className={`${style['img-container']}`}
             alt=""
           />
+          <div className={`mt-2 ${style['liked-by']}`}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="100%"
+              fill="red"
+              class="bi bi-heart-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+              />
+            </svg>
+            <p className="m-0 ps-1 fw-bold" style={{ fontSize: '12px' }}>
+              {product.id}
+            </p>
+          </div>
           <div className={`my-2`}>
-            <h6 className={`m-0 ${style['product-title']}`}>
+            <h6 className={`m-0 fw-6 fw-bold ${style['product-title']}`}>
               {product ? product.title : 'Lorem ipsum dolor sit'}
             </h6>
             <p
               className={`m-0 py-2 text-secondary`}
-              style={{ fontSize: '14px' }}
+              style={{ fontSize: '14px', overflow: 'hidden' }}
             >
               {product ? product.category : 'Category'}
             </p>
-            <h6 className={`m-0 fs-6`}>
+            <h6
+              className={`m-0 fs-6 fw-bold`}
+              style={{ color: '#f6a833', overflow: 'hidden' }}
+            >
               Rp{' '}
               {new Intl.NumberFormat('de-DE').format(
                 parseInt(product ? product.price : 125000)
@@ -44,7 +69,9 @@ function CardProduct({ product, buttonAction }) {
           <div className={`mt-3 ${style['button-action']}`}>
             <button
               className={`mt-2 ${style['edit-product-button']}`}
-              onClick={() => {navigate(`/product/${product.id}/edit`, {state: product})}}
+              onClick={() => {
+                navigate(`/product/${product.id}/edit`, { state: product });
+              }}
             >
               Edit
             </button>
@@ -96,9 +123,11 @@ function CardProduct({ product, buttonAction }) {
             </button>
             <button
               className={`mt-2 mx-1 px-3 ${style['delete-product-button']}`}
-              onClick={() => {
-                dispatch(deleteProduct(product.id));
-                setModalShow(false);
+              onClick={async () => {
+                await dispatch(deleteProduct(product.id));
+                // setTimeout(dispatchMyProduct(), 4000);
+                // navigate('/productlist');
+                // setModalShow(false);
               }}
             >
               Hapus

@@ -8,7 +8,7 @@ import EditProfile from "../pages/EditProfile/EditProfile";
 import AddProduct from "../pages/AddProduct/AddProduct";
 import ProductList from '../pages/ProductList/ProductList';
 import DetailProduct from '../pages/DetailProduct/DetailProduct';
-import NotFound from '../pages/NotFound/NotFound';
+import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import Profile from '../pages/Profile/Profile';
 import Search from '../pages/Search/Search';
 
@@ -35,7 +35,7 @@ function IndexRoute() {
         <Route path='product/addproduct' element={<AddProduct />}/>
         <Route path='search/:key' element={<Search />}/>
 
-        <Route path='*' element={<NotFound />}/>
+        <Route path='*' element={<PageNotFound />}/>
         
       </Routes>
     </Fragment>

@@ -173,6 +173,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                             </Dropdown.Item>
                             <Dropdown.Item className={`border-top d-flex align-items-center ${style['list-notif']}`} onClick={() => {
                               localStorage.removeItem("access_token")
+                              localStorage.removeItem("myId")
                               navigate("/")
                               }}><p className='m-0 w-100'>Keluar</p>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
