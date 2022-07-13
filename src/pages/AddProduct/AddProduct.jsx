@@ -36,7 +36,7 @@ function AddProduct() {
     },
     onDrop: (acceptedFiles) => {
       setFiles([
-        ...files,
+        ...(files.length < 4 ? files : null),
         ...acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),

@@ -56,13 +56,6 @@ function RegisterForm() {
       const res = await axios({
         method: 'GET',
         url: 'https://localla-api.herokuapp.com/api/v1/auth/google',
-        mode: 'no-cors',
-        headers: {
-          'Access-Control-Allow-Credentials': 'true',
-          'Access-Control-Allow-Headers': 'content-type',
-          'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-          'Access-Control-Allow-Origin': '*',
-        },
       });
       console.log('respon..a register google auth ', res);
       if (res.status === 201) {

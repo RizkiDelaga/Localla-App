@@ -10,7 +10,7 @@ function NoDataFound() {
   return (
     <Fragment>
         <div className="text-center" >
-            <img src={No_Data_Image} alt="" className='w-100 my-5' style={{maxWidth: '400px'}} />
+            <img src={No_Data_Image} alt="" className='w-100' style={{maxWidth: '400px'}} />
         </div>
     </Fragment>
   );

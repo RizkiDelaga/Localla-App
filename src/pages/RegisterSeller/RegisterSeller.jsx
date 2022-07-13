@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import style from './RegisterSeller.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
@@ -9,14 +10,58 @@ import Navbar from '../../components/Navbar/Navbar';
 import Plus_Icon from '../../assets/icon/Plus_Icon.png';
 import fi_eye from '../../assets/icons/fi_eye.png';
 import Google_Icon from '../../assets/icons/Google_Icon.png';
+import { getMyProfile } from '../../redux/Actions/ProfileAction';
 
 function RegisterSeller() {
+  const dispatch = useDispatch();
   const [shopName, setShopName] = useState('');
+  const [files, setFiles] = useState([]);
+  const { getRootProps, getInputProps } = useDropzone({
+    multiple: false,
+    maxFiles: 1,
+    accept: {
+      'image/*': [],
+    },
+    onDrop: (acceptedFiles) => {
+      setFiles([
+        ...acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        ),
+      ]);
+    },
+  });
+  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
+
+  React.useEffect(() => {
+    document.title = 'Registrasi Seller';
+    dispatch(getMyProfile());
+    loadingDataMyProfile ? console.log('loadingDataMyProfile') : refreshForm();
+
+    console.log('dataMyProfile.. register', dataMyProfile);
+  }, [loadingDataMyProfile]);
+
+  const dispatchHandler = async () => {
+    return await dispatch(getMyProfile());
+  };
+
+  const refreshForm = () => {
+    if (dataMyProfile && dataMyProfile.nameShop && dataMyProfile.imageShop) {
+      setShopName(dataMyProfile.nameShop);
+      setFiles([dataMyProfile.imageShop]);
+    } else {
+      setShopName('');
+      setFiles([]);
+    }
+  };
 
   const submitHandler = async () => {
     const formData = new FormData();
     formData.append('nameShop', shopName);
-    formData.append('image', files[0]);
+    if (files[0] !== dataMyProfile.imageShop) {
+      formData.append('image', files[0]);
+    }
 
     try {
       const res = await axios({
@@ -35,25 +80,6 @@ function RegisterSeller() {
       console.log('error..  ', error);
     }
   };
-
-  const [files, setFiles] = useState([]);
-  const { getRootProps, getInputProps } = useDropzone({
-    multiple: false,
-    maxFiles: 1,
-    accept: {
-      'image/*': [],
-    },
-    onDrop: (acceptedFiles) => {
-      setFiles([
-        ...files,
-        ...acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        ),
-      ]);
-    },
-  });
 
   const deleteImageItem = (file) => {
     setFiles(files.filter((item) => item !== file));
@@ -90,7 +116,7 @@ function RegisterSeller() {
 
   return (
     <Fragment>
-      <Navbar logo={true} backButton="/productlist" normalTitle="Buka Toko" />
+      <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
 
       <Container className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
@@ -98,16 +124,15 @@ function RegisterSeller() {
             className={`px-3 ${style['']}`}
             onSubmit={(event) => {
               event.preventDefault();
-              //   submitHandler();
             }}
           >
-            <h4 className={`mb-5 text-center`}>Informasi Toko</h4>
+            <h5 className={`mb-5 text-center`}>Informasi Toko</h5>
             <Form.Group className="mb-3">
               <Form.Label>Nama Toko</Form.Label>
               <Form.Control
                 className={`${style['input-field']}`}
                 type="text"
-                placeholder="Shop Name"
+                placeholder="Nama Toko"
                 value={shopName}
                 onChange={(e) => {
                   setShopName(e.target.value);

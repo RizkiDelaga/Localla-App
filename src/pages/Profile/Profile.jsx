@@ -29,15 +29,18 @@ function Profile() {
 
   React.useEffect(() => {
     document.title = 'Profile';
-    dispatchHandler();
-    dispatchHandler2();
-  }, [loadingDataMyProfile, id]);
+    dispatchUserID();
+    dispatchProductSeller();
+  }, [loadingDataMyProfile, loadingDataUserProfileById, id]);
 
-  const dispatchHandler = async () => {
+  const dispatchUserID = async () => {
     return await dispatch(id ? getUserProfileById(id) : getMyProfile());
   };
-  const dispatchHandler2 = async () => {
-    return await dispatch(getProductBySellerId(id ? id : dataMyProfile.id));
+
+  const dispatchProductSeller = async () => {
+    return (await loadingDataMyProfile) && loadingDataUserProfileById
+      ? null
+      : dispatch(getProductBySellerId(id ? id : dataMyProfile.id));
   };
 
   return (
@@ -68,13 +71,14 @@ function Profile() {
             {id ? null : (
               <div className="d-flex align-items-center">
                 <button
-                  className={`w-100 me-3 ${style['edit-profile-button']}`}
+                  className={`w-100 me-3 ${style['action-edit-button']}`}
                   onClick={() => {
                     navigate('/editprofile');
                   }}
                 >
-                  Edit Profil
+                  Edit Toko
                 </button>
+
                 <button
                   className={`${style['account-setting-button']}`}
                   onClick={() => {
@@ -83,7 +87,7 @@ function Profile() {
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="100%"
+                    width="20"
                     height="100%"
                     fill="currentColor"
                     class="bi bi-gear"
@@ -106,7 +110,15 @@ function Profile() {
           </div>
         ) : dataProductSeller.length <= 0 ? (
           <>
-            <button>Buka Toko Sekarang</button>
+            {id ? null : (
+              <button
+                onClick={() => {
+                  navigate('/registerseller');
+                }}
+              >
+                Buka Toko Sekarang
+              </button>
+            )}
             <NoDataFound />
           </>
         ) : (
@@ -153,6 +165,27 @@ function ModalPopUp(props) {
           }}
         >
           <p className="m-0 w-100">Ubah Password</p>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-chevron-right"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+            />
+          </svg>
+        </div>
+        <div
+          className={`${style['account-setting-item']}`}
+          onClick={() => {
+            navigate('/editprofile');
+          }}
+        >
+          <p className="m-0 w-100">Edit Profile</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
