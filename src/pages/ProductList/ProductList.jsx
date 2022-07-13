@@ -35,7 +35,9 @@ function ProductList() {
     document.title = 'My Product List';
     dispatchMyprofile();
     dispatchMyProduct();
-  }, [loadingDataMyProfile, loadingProductSeller, dispatch]);
+  }, [loadingDataMyProfile, loadingProductSeller]);
+// }, [loadingDataMyProfile, loadingProductSeller, dispatch]);
+
 
   const dispatchMyprofile = async () => {
     return await dispatch(getMyProfile());

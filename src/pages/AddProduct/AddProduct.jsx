@@ -98,12 +98,28 @@ function AddProduct() {
     formData.append('description', dataProduct.description);
     formData.append('price', dataProduct.price);
     formData.append('status', dataProduct.status);
-    files.map((file) => {
-      console.log('file landingpage', file);
-      formData.append('image', file);
-    });
-    console.log('formData landingpage ', formData);
-    console.log('formData landingpage ', formData);
+    // files.map((file) => {
+    //   console.log('file landingpage', file);
+    //   formData.append('image', file);
+    // });
+
+    files
+      .filter((file) => typeof file !== 'string')
+      .map((item, index) => {
+        console.log('file landingpage', item);
+        formData.append(`image`, item);
+      });
+
+    files
+      .filter((file) => typeof file === 'string')
+      .map((item, index) => {
+        console.log('file landingpage', item);
+        formData.append(`image${index + 1}`, item);
+      });
+
+    console.log('formData addproduct files ', files[0]);
+    console.log('formData addproduct files ', typeof files[0]);
+    console.log('formData addproduct ', formData);
 
     state
       ? dispatch(editProduct(state.id, formData))
@@ -113,18 +129,32 @@ function AddProduct() {
   React.useEffect(() => {
     console.log('state landingpage', state);
     document.title = state ? 'Edit Product' : 'Add Product';
+    refreshForm();
+  }, []);
 
-    state &&
+  const refreshForm = () => {
+    if (state) {
       setDataProduct({
         title: state.title,
         category: state.category,
         description: state.description,
         price: state.price,
+        status: state.status,
         image: { ...state.image_url.url },
       });
-    state && setFiles(state.image_url.url);
-    console.log('files landingpage', files);
-  }, []);
+      setFiles(state.image_url.url);
+    } else {
+      setDataProduct({
+        title: '',
+        category: '',
+        description: '',
+        price: '',
+        status: 'available',
+        image: [],
+      });
+      setFiles([]);
+    }
+  };
 
   return (
     <Fragment>
@@ -143,6 +173,9 @@ function AddProduct() {
           className={`my-5`}
           style={{ width: '100%', maxWidth: '800px' }}
         >
+          <div className="text-end">
+            <button onClick={() => refreshForm()}>Refresh</button>
+          </div>
           <Form
             onSubmit={(event) => {
               event.preventDefault();
@@ -278,10 +311,7 @@ function AddProduct() {
                 onClick={() => {
                   navigate('/product/preview', {
                     state: {
-                      description: 'Lorem ipsum',
-                      title: 'asd saa dasd',
-                      category: 'baju',
-                      price: 213138,
+                      dataProduct, files,
                     },
                   });
                 }}
