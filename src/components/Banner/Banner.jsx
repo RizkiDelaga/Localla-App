@@ -1,30 +1,52 @@
-import React from "react";
-import { Container } from "react-bootstrap";
+import React, { useState } from "react";
+import { Carousel } from "react-bootstrap";
+import shop from "../../assets/images/shop.jpg";
+import shopping from "../../assets/images/shopping.jpg";
+import shop1 from "../../assets/images/shop1.jpg";
 import styles from "./Banner.module.css";
-import gift from "../../assets/images/png_gift.png";
-import img1 from "../../assets/images/Rectangle 137.png";
 
 const Banner = () => {
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
+
   return (
-    <Container
-      fluid
-      className={`d-flex align-items-center justify-content-center ${styles.banner}`}
-    >
-      <div className={`${styles.box} ${styles.box1}`}></div>
-      <div className={`${styles.box2}`}>
-        <div className={styles["banner-text"]}>
-          <h2 style={{ fontWeight: "700" }}>Bulan Ramadhan Banyak diskon!</h2>
-          <p style={{ fontWeight: "400", margin: "0" }}>Diskon Hingga</p>
-          <p style={{ fontWeight: "500", color: "#FA2C5A", fontSize: "32px" }}>
-            60%
-          </p>
-        </div>
-        <img src={gift} alt="" className={styles.img1} />
-        <img src={img1} alt="" className={styles.img2} />
-      </div>
-      <div className={`${styles.box} ${styles.box3}`}></div>
-      <div className={`${styles["banner-fade"]}`} />
-    </Container>
+    <Carousel activeIndex={index} onSelect={handleSelect}>
+      <Carousel.Item className={styles["banner-img"]}>
+        <img className="d-block w-100" src={shop} alt="First slide" />
+        <Carousel.Caption
+          className={styles["banner-caption"]}
+          style={{ textAlign: "left" }}
+        >
+          <h3>Local with standart International</h3>
+          <p>Localla offering local brand with international quality</p>
+          <button className={styles["banner-btn"]}>Get Started</button>
+        </Carousel.Caption>
+      </Carousel.Item>
+
+      <Carousel.Item className={styles["banner-img"]}>
+        <img className="d-block w-100" src={shopping} alt="Second slide" />
+        <Carousel.Caption className={styles["banner-caption"]}>
+          <h3>Think Globally Act Locally</h3>
+          <p>Globalization must be grow up with localization</p>
+          <button className={styles["banner-btn"]}>Get Started</button>
+        </Carousel.Caption>
+      </Carousel.Item>
+
+      <Carousel.Item className={styles["banner-img"]}>
+        <img className="d-block w-100" src={shop1} alt="Third slide" />
+        <Carousel.Caption
+          className={styles["banner-caption"]}
+          style={{ textAlign: "left" }}
+        >
+          <h3>Support your Local</h3>
+          <p>Put your money where your house is</p>
+          <button className={styles["banner-btn"]}>Get Started</button>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
   );
 };
 
