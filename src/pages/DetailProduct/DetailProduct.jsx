@@ -1,15 +1,5 @@
 import React, { Fragment } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Modal,
-  Button,
-  Form,
-  Spinner,
-  OverlayTrigger,
-  Tooltip,
-} from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Form, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailProduct } from '../../redux/Actions/productAction.js';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -35,10 +25,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper';
-import {
-  createProductTransaction,
-  getProductTransactionByID,
-} from '../../redux/Actions/TransactionAction.js';
+import { createProductTransaction, getProductTransactionByID } from '../../redux/Actions/TransactionAction.js';
 
 function DetailProduct() {
   let { id } = useParams();
@@ -47,16 +34,11 @@ function DetailProduct() {
   const [modalShow, setModalShow] = React.useState(false);
 
   const dispatch = useDispatch();
-  const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector(
-    (state) => state.detailProduct
+  const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
+  const { isLoading: loadingTransaction, data: dataTransaction } = useSelector((state) => state.productTransaction);
+  const { isLoading: loadingProductTransactionByID, data: dataProductTransactionByID } = useSelector(
+    (state) => state.productTransactionByID
   );
-  const { isLoading: loadingTransaction, data: dataTransaction } = useSelector(
-    (state) => state.productTransaction
-  );
-  const {
-    isLoading: loadingProductTransactionByID,
-    data: dataProductTransactionByID,
-  } = useSelector((state) => state.productTransactionByID);
 
   React.useEffect(() => {
     getDetailProductHandler();
@@ -74,30 +56,19 @@ function DetailProduct() {
 
   const transactionCheck = dataProductTransactionByID.find((transaction) => {
     // console.log("id", localStorage.getItem('myId'))
-    return (
-      transaction.user_id === Number(localStorage.getItem('myId')) &&
-      transaction.status === 'pending'
-    );
+    return transaction.user_id === Number(localStorage.getItem('myId')) && transaction.status === 'pending';
   })
     ? true
     : false;
 
   const isMyProduct = () => {
     console.log('detailProduct.user_id', detailProduct.user_id);
-    return detailProduct.user_id === Number(localStorage.getItem('myId'))
-      ? true
-      : false;
+    return detailProduct.user_id === Number(localStorage.getItem('myId')) ? true : false;
   };
 
   return (
     <Fragment>
-      <Navbar
-        logo={true}
-        backButton="/productlist"
-        login={true}
-        desktopMenu={true}
-        transparentFade={true}
-      />
+      <Navbar logo={true} backButton="/productlist" desktopMenu={true} transparentFade={true} />
       {loadingDetailProduct ? (
         <div className="text-center" style={{ marginTop: '100px' }}>
           <Spinner animation="border" />
@@ -147,52 +118,31 @@ function DetailProduct() {
               </Swiper>
 
               <div className={`my-3 ${style['share-product']}`}>
-                <Row>
-                  <Col style={{ overflowX: 'auto' }}>
-                    <div
-                      className={`d-flex align-items-center h-100 ${style['']}`}
-                    >
+                <Row className="justify-content-center">
+                  <Col className="p-0 ps-3 me-3" style={{ overflowX: 'auto', minWidth: '120px' }}>
+                    <div className={`d-flex align-items-center h-100 py-1 ${style['']}`}>
                       <p className="m-0">Share:</p>
                       <button className={`${style['share-btn']}`}>
-                        <img
-                          src={Facebook_Icon}
-                          alt=""
-                          style={{ height: '25px' }}
-                        />
+                        <img src={Facebook_Icon} alt="" style={{ height: '25px' }} />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img
-                          src={Instagram_Icon}
-                          alt=""
-                          style={{ height: '25px' }}
-                        />
+                        <img src={Instagram_Icon} alt="" style={{ height: '25px' }} />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img
-                          src={Whatsapp_Icon}
-                          alt=""
-                          style={{ height: '25px' }}
-                        />
+                        <img src={Whatsapp_Icon} alt="" style={{ height: '25px' }} />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img
-                          src={Telegram_Icon}
-                          alt=""
-                          style={{ height: '25px' }}
-                        />
+                        <img src={Telegram_Icon} alt="" style={{ height: '25px' }} />
                       </button>
                       <button className={`${style['share-btn']}`}>
-                        <img
-                          src={Mail_Icon}
-                          alt=""
-                          style={{ height: '25px' }}
-                        />
+                        <img src={Mail_Icon} alt="" style={{ height: '25px' }} />
                       </button>
                     </div>
                   </Col>
                   <Col
                     xs="auto"
-                    className={`d-flex justify-content-end align-items-center`}
+                    className={`d-flex justify-content-center align-items-center py-1`}
+                    style={{ width: 'fit-content' }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -223,19 +173,11 @@ function DetailProduct() {
               <Card className={`p-2 mb-3 ${style['detail-product-card']}`}>
                 <Card.Body>
                   <h5>{state ? state.title : detailProduct.title}</h5>
-                  <Card.Text
-                    className={`m-0 text-secondary`}
-                    style={{ fontSize: '14px' }}
-                  >
+                  <Card.Text className={`m-0 text-secondary`} style={{ fontSize: '14px' }}>
                     {state ? state.category : detailProduct.category}
                   </Card.Text>
-                  <h6
-                    className={`mt-3 mb-4 fw-bold fs-5 ${style['secondary-text-color']}`}
-                  >
-                    Rp{' '}
-                    {new Intl.NumberFormat('de-DE').format(
-                      parseInt(state ? state.price : detailProduct.price)
-                    )}
+                  <h6 className={`mt-3 mb-4 fw-bold fs-5 ${style['secondary-text-color']}`}>
+                    Rp {new Intl.NumberFormat('de-DE').format(parseInt(state ? state.price : detailProduct.price))}
                   </h6>
 
                   <div className="d-flex align-items-center">
@@ -267,18 +209,11 @@ function DetailProduct() {
                         placement={'left'}
                         overlay={
                           <Tooltip id={`tooltip-${'left'}`}>
-                            Cek <strong>notifikasi</strong> untuk melihat
-                            tawaranmu.
+                            Cek <strong>notifikasi</strong> untuk melihat tawaranmu.
                           </Tooltip>
                         }
                       >
-                        <img
-                          src={Info_Icon}
-                          className="ms-2"
-                          width={25}
-                          height={25}
-                          alt=""
-                        />
+                        <img src={Info_Icon} className="ms-2" width={25} height={25} alt="" />
                       </OverlayTrigger>
                     ) : null}
                   </div>
@@ -338,23 +273,14 @@ function ModalPopUp(props) {
         <Modal.Body className={`mx-4 p-0`}>
           <h6>Masukkan Harga Tawarmu</h6>
           <p className={`text-secondary m-0`}>
-            Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan
-            segera dihubungi penjual.
+            Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual.
           </p>
-          <div
-            className={`mt-3 d-flex flex-column justify-content-center ${style['match-product-detail']}`}
-          >
-            <h6 style={{ textAlign: 'center', marginBottom: '20px' }}>
-              Product Match
-            </h6>
+          <div className={`mt-3 d-flex flex-column justify-content-center ${style['match-product-detail']}`}>
+            <h6 style={{ textAlign: 'center', marginBottom: '20px' }}>Product Match</h6>
             <Row>
               <Col xs="4">
                 <img
-                  src={
-                    props.detailProduct
-                      ? props.detailProduct.image_url.url[0]
-                      : Image1
-                  }
+                  src={props.detailProduct ? props.detailProduct.image_url.url[0] : Image1}
                   style={{
                     width: '100%',
                     maxWidth: 'max-content',
@@ -368,24 +294,15 @@ function ModalPopUp(props) {
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <h6 className={`mb-1`}>{props.detailProduct.title}</h6>
-                <p
-                  className={`text-secondary my-0`}
-                  style={{ fontSize: '14px' }}
-                >
-                  Rp{' '}
-                  {new Intl.NumberFormat('de-DE').format(
-                    parseInt(props.detailProduct.price)
-                  )}
+                <p className={`text-secondary my-0`} style={{ fontSize: '14px' }}>
+                  Rp {new Intl.NumberFormat('de-DE').format(parseInt(props.detailProduct.price))}
                 </p>
               </Col>
             </Row>
           </div>
 
           <div className={`mt-3`}>
-            <p
-              className={`m-0`}
-              style={{ fontSize: '14px', fontWeight: '500' }}
-            >
+            <p className={`m-0`} style={{ fontSize: '14px', fontWeight: '500' }}>
               Harga Tawar
             </p>
             <Form.Control
@@ -402,11 +319,7 @@ function ModalPopUp(props) {
         </Modal.Body>
 
         <Modal.Footer className={`px-4 py-4 border-0`}>
-          <Button
-            type="submit"
-            className={`m-0 ${style['modal-button-action']}`}
-            disabled={bidPrice === undefined}
-          >
+          <Button type="submit" className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === undefined}>
             Kirim
           </Button>
         </Modal.Footer>

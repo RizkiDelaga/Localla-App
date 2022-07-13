@@ -4,10 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useDropzone } from 'react-dropzone';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createProduct,
-  editProduct,
-} from '../../redux/Actions/productAction.js';
+import { createProduct, editProduct } from '../../redux/Actions/productAction.js';
 import style from './AddProduct.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
@@ -28,12 +25,9 @@ function AddProduct() {
   });
 
   const dispatch = useDispatch();
-  const { isLoading: loadingCreateProduct, data: dataCreateProduct } =
-    useSelector((state) => state.createProduct);
+  const { isLoading: loadingCreateProduct, data: dataCreateProduct } = useSelector((state) => state.createProduct);
 
-  const { isLoading: loadingEditProduct, data: dataEditProduct } = useSelector(
-    (state) => state.editProduct
-  );
+  const { isLoading: loadingEditProduct, data: dataEditProduct } = useSelector((state) => state.editProduct);
 
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
@@ -63,11 +57,7 @@ function AddProduct() {
           {console.log('file.. ', typeof file)}
           {typeof file === 'string' ? file : file.path}
         </p>
-        <Button
-          variant="danger"
-          className={`ms-3 py-0`}
-          onClick={() => deleteImageItem(file)}
-        >
+        <Button variant="danger" className={`ms-3 py-0`} onClick={() => deleteImageItem(file)}>
           Delete
         </Button>
       </div>
@@ -121,9 +111,7 @@ function AddProduct() {
     console.log('formData addproduct files ', typeof files[0]);
     console.log('formData addproduct ', formData);
 
-    state
-      ? dispatch(editProduct(state.id, formData))
-      : dispatch(createProduct(formData));
+    state ? dispatch(editProduct(state.id, formData)) : dispatch(createProduct(formData));
   };
 
   React.useEffect(() => {
@@ -158,23 +146,25 @@ function AddProduct() {
 
   return (
     <Fragment>
-      <Navbar
-        logo={true}
-        backButton="/productlist"
-        normalTitle="Lengkapi Detail Produk"
-      />
+      <Navbar logo={true} backButton="/productlist" normalTitle="Lengkapi Detail Produk" />
 
-      <Container
-        fluid
-        className={`d-flex justify-content-center`}
-        style={{ marginTop: '90px' }}
-      >
-        <section
-          className={`my-5`}
-          style={{ width: '100%', maxWidth: '800px' }}
-        >
-          <div className="text-end">
-            <button onClick={() => refreshForm()}>Refresh</button>
+      <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '90px' }}>
+        <section className={`my-5`} style={{ width: '100%', maxWidth: '800px' }}>
+          <div className="d-flex justify-content-end">
+            <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="20"
+                fill="currentColor"
+                class="bi bi-arrow-clockwise"
+                viewBox="0 0 16 16"
+              >
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+              </svg>
+              <p className="m-0 ms-1">Refresh</p>
+            </button>
           </div>
           <Form
             onSubmit={(event) => {
@@ -279,21 +269,12 @@ function AddProduct() {
                 className={`d-flex justify-content-center align-items-center ${style['dropzone-box']}`}
               >
                 <input {...getInputProps()} required />
-                <div
-                  className={`p-2 text-center text-secondary ${style['dropzone-area']}`}
-                >
-                  <img
-                    src={Plus_Icon}
-                    className={`mb-3`}
-                    style={{ width: '40%' }}
-                    alt=""
-                  />
+                <div className={`p-2 text-center text-secondary ${style['dropzone-area']}`}>
+                  <img src={Plus_Icon} className={`mb-3`} style={{ width: '40%' }} alt="" />
                   <p>Tambah Foto</p>
                 </div>
               </div>
-              <Form.Text className="text-muted d-block m-0">
-                Maksimal 4 foto
-              </Form.Text>
+              <Form.Text className="text-muted d-block m-0">Maksimal 4 foto</Form.Text>
               <aside className={`d-block ${style['thumbs-container']}`}>
                 {files ? (
                   <>
@@ -311,7 +292,8 @@ function AddProduct() {
                 onClick={() => {
                   navigate('/product/preview', {
                     state: {
-                      dataProduct, files,
+                      dataProduct,
+                      files,
                     },
                   });
                 }}
