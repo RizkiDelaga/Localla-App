@@ -19,7 +19,7 @@ const AuthLayout = (props) => {
           md={6}
           sm={12}
           xs={12}
-          className={`px-0 py-5 d-flex flex-column mt-auto mb-auto align-items-center`}
+          className={`d-flex flex-column align-items-center justify-content-center`} style={{height: '100vh', overflowY: 'auto'}}
         >
           {props.children}
         </Col>

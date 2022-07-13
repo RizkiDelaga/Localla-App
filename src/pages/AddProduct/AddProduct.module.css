@@ -11,6 +11,17 @@
     align-items: center;
 }
 
+.refresh-button {
+    border-radius: 8px;
+    /* border: 2px solid #f6a833; */
+    border: none;
+    background-color: rgb(35, 192, 35);
+    /* height: 48px; */
+    color: white;
+    font-weight: 500;
+    padding: 5px 10px;
+}
+
 /* Input Form Start */
 
 .input-form-style {

@@ -68,7 +68,6 @@ function LandingPage() {
         logo={true}
         search={true}
         mobileMenu={true}
-        login={true}
         desktopMenu={true}
         transparentFade={true}
       />

@@ -12,7 +12,7 @@ function PageNotFound() {
 
   return (
     <Fragment>
-        <Navbar logo={true} search={true} mobileMenu={true} login={true} desktopMenu={true} />
+        <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
 
         <div className="text-center" style={{position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
             <h1>Error</h1>

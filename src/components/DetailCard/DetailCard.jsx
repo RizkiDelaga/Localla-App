@@ -14,7 +14,7 @@ function DetailCard() {
 
   return (
     <Fragment>
-      <Navbar logo={true} backButton="/productlist" login={true} desktopMenu={true} transparentFade={true} />
+      <Navbar logo={true} backButton="/productlist" desktopMenu={true} transparentFade={true} />
       <Container style={{marginTop: '100px'}}>
         <Row>
           <Col className={`mb-4`}>

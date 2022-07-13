@@ -25,28 +25,22 @@ function ProductList() {
   const [loadProductSeller, setLoadProductSeller] = useState(true);
 
   const dispatch = useDispatch();
-  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector(
-    (state) => state.myProfile
-  );
-  const { isLoading: loadingProductSeller, data: dataProductSeller } =
-    useSelector((state) => state.productBySellerId);
+  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
+  const { isLoading: loadingProductSeller, data: dataProductSeller } = useSelector((state) => state.productBySellerId);
 
   React.useEffect(() => {
     document.title = 'My Product List';
     dispatchMyprofile();
     dispatchMyProduct();
   }, [loadingDataMyProfile, loadingProductSeller]);
-// }, [loadingDataMyProfile, loadingProductSeller, dispatch]);
-
+  // }, [loadingDataMyProfile, loadingProductSeller, dispatch]);
 
   const dispatchMyprofile = async () => {
     return await dispatch(getMyProfile());
   };
 
   const dispatchMyProduct = async () => {
-    return (await loadingDataMyProfile)
-      ? null
-      : dispatch(getProductBySellerId(dataMyProfile.id));
+    return (await loadingDataMyProfile) ? null : dispatch(getProductBySellerId(dataMyProfile.id));
   };
 
   const productItems = (isLoading, listProduct) => {
@@ -60,11 +54,7 @@ function ProductList() {
       listProduct.map((item) => {
         return (
           <Col xl="3" lg="4" md="4" sm="6" xs="6" className={`my-2 px-2`}>
-            <CardProduct
-              product={item}
-              buttonAction={true}
-              dispatchMyProduct={dispatchMyProduct}
-            />
+            <CardProduct product={item} buttonAction={true} dispatchMyProduct={dispatchMyProduct} />
           </Col>
         );
       })
@@ -98,15 +88,8 @@ function ProductList() {
                     setShowAddProduct(true);
                   }}
                 >
-                  <div
-                    className={`d-flex justify-content-center align-items-center`}
-                  >
-                    <img
-                      src={Box_Icon}
-                      className={`me-2`}
-                      style={{ width: '25px' }}
-                      alt=""
-                    />
+                  <div className={`d-flex justify-content-center align-items-center`}>
+                    <img src={Box_Icon} className={`me-2`} style={{ width: '25px' }} alt="" />
                     <p className={`m-0`}>Semua Produk</p>
                   </div>
                   <img
@@ -124,15 +107,8 @@ function ProductList() {
                     setShowAddProduct(false);
                   }}
                 >
-                  <div
-                    className={`d-flex justify-content-center align-items-center`}
-                  >
-                    <img
-                      src={Heart_Icon}
-                      className={`me-2`}
-                      style={{ width: '25px' }}
-                      alt=""
-                    />
+                  <div className={`d-flex justify-content-center align-items-center`}>
+                    <img src={Heart_Icon} className={`me-2`} style={{ width: '25px' }} alt="" />
                     <p className={`m-0`}>Diminati</p>
                   </div>
                   <img
@@ -150,15 +126,8 @@ function ProductList() {
                     setShowAddProduct(false);
                   }}
                 >
-                  <div
-                    className={`d-flex justify-content-center align-items-center`}
-                  >
-                    <img
-                      src={Dollar_Sign_Icon}
-                      className={`me-2`}
-                      style={{ width: '25px' }}
-                      alt=""
-                    />
+                  <div className={`d-flex justify-content-center align-items-center`}>
+                    <img src={Dollar_Sign_Icon} className={`me-2`} style={{ width: '25px' }} alt="" />
                     <p className={`m-0`}>Terjual</p>
                   </div>
                   <img
@@ -174,28 +143,15 @@ function ProductList() {
           <Col lg={9} className={`p-0`}>
             <Row className={`m-auto`}>
               {showAddProduct ? (
-                loadingProductSeller ? null : dataProductSeller.length >=
-                  4 ? null : (
-                  <Col
-                    xl="3"
-                    lg="4"
-                    md="4"
-                    sm="6"
-                    xs="6"
-                    className={`my-3 px-2`}
-                  >
+                loadingProductSeller ? null : dataProductSeller.length >= 4 ? null : (
+                  <Col xl="3" lg="4" md="4" sm="6" xs="6" className={`my-3 px-2`}>
                     <div
                       className={`p-2 text-center text-secondary ${style['add-product-box']}`}
                       onClick={() => {
                         navigate('/product/addproduct');
                       }}
                     >
-                      <img
-                        src={Plus_Icon}
-                        className={`mb-3`}
-                        alt=""
-                        style={{ width: '30%' }}
-                      />
+                      <img src={Plus_Icon} className={`mb-3`} alt="" style={{ width: '30%' }} />
                       <p>Tambah Produk</p>
                     </div>
                   </Col>

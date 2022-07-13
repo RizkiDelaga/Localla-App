@@ -11,6 +11,7 @@ import DetailProduct from '../pages/DetailProduct/DetailProduct';
 import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import Profile from '../pages/Profile/Profile';
 import Search from '../pages/Search/Search';
+import RegisterSeller from '../pages/RegisterSeller/RegisterSeller';
 
 function IndexRoute() {
   return (
@@ -19,6 +20,7 @@ function IndexRoute() {
         <Route path="/" element={<LandingPage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="registerseller" element={<RegisterSeller />} />
 
         {/* User Route */}
         {/* :id */}
