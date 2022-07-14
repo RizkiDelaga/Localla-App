@@ -48,7 +48,15 @@ function Profile() {
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
       <div className={`${style['background-image-layer']}`} style={{ marginTop: '70px' }}>
         <img
-          src={id ? dataUserProfileById.image : dataMyProfile ? dataMyProfile.image : Default_PP_Icon}
+          src={
+            id
+              ? dataUserProfileById.image === null
+                ? Default_PP_Icon
+                : dataUserProfileById.image
+              : dataMyProfile.image === null
+              ? Default_PP_Icon
+              : dataMyProfile.image
+          }
           className={`${style['background-image']}`}
           alt=""
         />
@@ -56,8 +64,17 @@ function Profile() {
       <section className="d-flex justify-content-center" style={{ marginTop: '-100px' }}>
         <Row className={`mx-3 ${style['profile-card']}`}>
           <Col xs="auto" className="d-flex justify-content-center">
+            {console.log('dataMyProfile', dataMyProfile.image)}
             <img
-              src={id ? dataUserProfileById.image : dataMyProfile ? dataMyProfile.image : Default_PP_Icon}
+              src={
+                id
+                  ? dataUserProfileById.image === null
+                    ? Default_PP_Icon
+                    : dataUserProfileById.image
+                  : dataMyProfile.image === null
+                  ? Default_PP_Icon
+                  : dataMyProfile.image
+              }
               className={`rounded-circle ${style['profile-picture']}`}
               alt=""
             />
