@@ -87,10 +87,6 @@ function RegisterSeller() {
     }
   };
 
-  const deleteImageItem = (file) => {
-    setFiles(files.filter((item) => item !== file));
-  };
-
   const filesName = files.map((file) => (
     <li>
       <div className="d-flex mb-2">
@@ -98,14 +94,20 @@ function RegisterSeller() {
           {console.log('file.. ', typeof file)}
           {typeof file === 'string' ? file : file.path}
         </p>
-        <Button variant="danger" className={`ms-3 py-0`} onClick={() => deleteImageItem(file)}>
+        <Button
+          variant="danger"
+          className={`ms-3 py-0`}
+          onClick={() => {
+            setFiles(files.filter((item) => item !== file));
+          }}
+        >
           Delete
         </Button>
       </div>
     </li>
   ));
 
-  const thumbs = files.map((file) => (
+  const imagePreview = files.map((file) => (
     <div className={`${style['thumb']}`} key={file.name}>
       <div className={`${style['thumb-inner']}`}>
         <img
@@ -126,6 +128,7 @@ function RegisterSeller() {
 
       <Container className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
+          <h5 className={`mb-5 text-center`}>Informasi Toko</h5>
           <div className="d-flex justify-content-end">
             <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
               <svg
@@ -147,7 +150,6 @@ function RegisterSeller() {
               event.preventDefault();
             }}
           >
-            <h5 className={`mb-5 text-center`}>Informasi Toko</h5>
             <Form.Group className="mb-3">
               <Form.Label>Nama Toko</Form.Label>
               <Form.Control
@@ -181,7 +183,7 @@ function RegisterSeller() {
               <aside className={`d-block ${style['thumbs-container']}`}>
                 {files ? (
                   <>
-                    {thumbs}
+                    {imagePreview}
                     <ul>{filesName}</ul>
                   </>
                 ) : null}
