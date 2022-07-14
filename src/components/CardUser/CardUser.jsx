@@ -27,9 +27,9 @@ function CardUser({ userDetail, buttonAction }) {
     <Fragment>
       <div className={`d-flex ${style.CardUser}`}>
         <div className='d-flex justify-content-center align-items-center w-100 h-100' style={{cursor: 'pointer'}} onClick={() => {navigate(`/profile/${userDetail ? userDetail.user_id : dataMyProfile.id}`)}}>
-            <img src={userDetail? userDetail.owner.image : dataMyProfile.image} alt="" className={`me-3 ${style.imgUser}`}/>
+            <img src={userDetail? userDetail.owner.imageShop : dataMyProfile.image} alt="" className={`me-3 ${style.imgUser}`}/>
             <div className={`${style.userInfoText}`}>
-                <h5>{userDetail? userDetail.owner.name : dataMyProfile.name}</h5>
+                <h5>{userDetail? userDetail.owner.nameShop : dataMyProfile.nameShop}</h5>
                 <p className='m-0' style={{fontSize: '14px'}}>{userDetail? userDetail.owner.city : dataMyProfile.city}</p>
             </div>
         </div>
