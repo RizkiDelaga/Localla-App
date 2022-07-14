@@ -64,7 +64,7 @@ function AddProduct() {
         <Button
           variant="danger"
           className={`ms-3 py-0`}
-          onClick={(file) => {
+          onClick={() => {
             setFiles(files.filter((item) => item !== file));
           }}
         >
