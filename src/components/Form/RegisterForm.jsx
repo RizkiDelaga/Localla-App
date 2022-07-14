@@ -38,6 +38,7 @@ function RegisterForm() {
         setDataRegistrasi({
           name: '',
           email: '',
+          phone: '',
           password: '',
         });
       }
@@ -89,7 +90,7 @@ function RegisterForm() {
           submitHandler();
         }}
       >
-        <h3 className={`fw-bold mb-5 text-center`}>Daftar</h3>
+        <h3 className={`fw-bold mb-3 text-center`} style={{marginBottom: '250px'}}>Daftar</h3>
         {showAlert ? (
           <Alert
             className={`${style['auth-alert']} ${
@@ -134,6 +135,24 @@ function RegisterForm() {
         />
         <Form.Text className="text-muted d-block m-0">Email harus valid</Form.Text>
 
+        <Form.Label className="fw-bolder mt-3">No Telepon</Form.Label>
+        <Form.Control
+          className={`${style['input-field']}`}
+          type="text"
+          placeholder="081234567890"
+          value={dataRegistrasi.phone}
+          pattern="^[0-9]+$"
+          title="No Telepon harus angka"
+          onChange={(e) => {
+            setDataRegistrasi({
+              ...dataRegistrasi,
+              phone: e.target.value,
+            });
+          }}
+          required
+        />
+        <Form.Text className="text-muted d-block m-0">Nomer telepon harus valid</Form.Text>
+
         <Form.Label className="fw-bolder mt-3">Password</Form.Label>
         <div className={`${style['password-holder']}`}>
           <input
@@ -175,7 +194,7 @@ function RegisterForm() {
             Masuk di sini
           </Link>
         </p>
-        <p className="my-3 fw-bold">atau</p>
+        <p className="my-2 fw-bold">atau</p>
         {/* <a href="https://localla-api.herokuapp.com/api/v1/auth/google"> */}
         <button
           className={`${style['login-with-google']}`}

@@ -263,7 +263,6 @@ function AddProduct() {
                     description: e.target.value,
                   });
                 }}
-                required
               />
             </Form.Group>
 
