@@ -15,28 +15,36 @@ function AddProduct() {
   let { state } = useLocation();
   const navigate = useNavigate();
   const [loadingUploadData, setLoadingUploadData] = useState(false);
+  const [error, setError] = useState('');
   const [dataProduct, setDataProduct] = useState({
     title: '',
     category: '',
     description: '',
     price: '',
     status: state ? state.status : 'available',
-    image: [],
   });
 
   const dispatch = useDispatch();
   const { isLoading: loadingCreateProduct, data: dataCreateProduct } = useSelector((state) => state.createProduct);
-
   const { isLoading: loadingEditProduct, data: dataEditProduct } = useSelector((state) => state.editProduct);
 
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
+    multiple: false,
+    maxFiles: 1,
+    maxSize: 10000,
     accept: {
       'image/*': [],
     },
-    onDrop: (acceptedFiles) => {
-      setFiles([
-        ...files,
+    onDrop: (acceptedFiles, fileRejections) => {
+      console.log('fileRejections..  ', fileRejections);
+      if (fileRejections.length) {
+        return setError('(Tidak sesuai format ketentuan)');
+      }
+      setError('');
+      console.log('acceptedFiles..  ', acceptedFiles);
+      return setFiles([
+        ...(files.length < 4 ? files : null),
         ...acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
@@ -46,10 +54,6 @@ function AddProduct() {
     },
   });
 
-  const deleteImageItem = (file) => {
-    setFiles(files.filter((item) => item !== file));
-  };
-
   const filesName = files.map((file) => (
     <li>
       <div className="d-flex mb-2">
@@ -57,14 +61,20 @@ function AddProduct() {
           {console.log('file.. ', typeof file)}
           {typeof file === 'string' ? file : file.path}
         </p>
-        <Button variant="danger" className={`ms-3 py-0`} onClick={() => deleteImageItem(file)}>
+        <Button
+          variant="danger"
+          className={`ms-3 py-0`}
+          onClick={(file) => {
+            setFiles(files.filter((item) => item !== file));
+          }}
+        >
           Delete
         </Button>
       </div>
     </li>
   ));
 
-  const thumbs = files.map((file) => (
+  const imagePreview = files.map((file) => (
     <div className={`${style['thumb']}`} key={file.name}>
       <div className={`${style['thumb-inner']}`}>
         <img
@@ -79,19 +89,14 @@ function AddProduct() {
     </div>
   ));
 
-  const addProductHandler = () => {
+  const submitHandler = () => {
     const formData = new FormData();
 
-    console.log('dataProduct... landng page', dataProduct);
     formData.append('title', dataProduct.title);
     formData.append('category', dataProduct.category);
     formData.append('description', dataProduct.description);
     formData.append('price', dataProduct.price);
     formData.append('status', dataProduct.status);
-    // files.map((file) => {
-    //   console.log('file landingpage', file);
-    //   formData.append('image', file);
-    // });
 
     files
       .filter((file) => typeof file !== 'string')
@@ -107,16 +112,16 @@ function AddProduct() {
         formData.append(`image${index + 1}`, item);
       });
 
-    console.log('formData addproduct files ', files[0]);
-    console.log('formData addproduct files ', typeof files[0]);
-    console.log('formData addproduct ', formData);
+    // console.log('formData addproduct files ', files[0]);
+    // console.log('formData addproduct files ', typeof files[0]);
+    // console.log('formData addproduct ', formData);
 
     state ? dispatch(editProduct(state.id, formData)) : dispatch(createProduct(formData));
   };
 
   React.useEffect(() => {
-    console.log('state landingpage', state);
-    document.title = state ? 'Edit Product' : 'Add Product';
+    // console.log('state landingpage', state);
+    document.title = state ? 'Edit Produk' : 'Tambah Produk';
     refreshForm();
   }, []);
 
@@ -146,10 +151,11 @@ function AddProduct() {
 
   return (
     <Fragment>
-      <Navbar logo={true} backButton="/productlist" normalTitle="Lengkapi Detail Produk" />
+      <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
 
-      <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '90px' }}>
-        <section className={`my-5`} style={{ width: '100%', maxWidth: '800px' }}>
+      <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
+        <section style={{ width: '100%', maxWidth: '800px' }}>
+          <h5 className={`mb-5 text-center`}>{state ? 'Edit Produk' : 'Tambah Produk'}</h5>
           <div className="d-flex justify-content-end">
             <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
               <svg
@@ -169,7 +175,7 @@ function AddProduct() {
           <Form
             onSubmit={(event) => {
               event.preventDefault();
-              addProductHandler();
+              submitHandler();
             }}
           >
             <Form.Group className="mb-3">
@@ -274,11 +280,13 @@ function AddProduct() {
                   <p>Tambah Foto</p>
                 </div>
               </div>
-              <Form.Text className="text-muted d-block m-0">Maksimal 4 foto</Form.Text>
+              <Form.Text className="text-muted d-block m-0">
+                Minimal 1 foto dan maksimal 4 foto (max 5 MB per foto) <strong className="text-danger">{error}</strong>
+              </Form.Text>
               <aside className={`d-block ${style['thumbs-container']}`}>
                 {files ? (
                   <>
-                    {thumbs}
+                    {imagePreview}
                     <ul>{filesName}</ul>
                   </>
                 ) : null}
@@ -305,12 +313,13 @@ function AddProduct() {
                 className={`${style['btn-decision']}`}
                 onClick={() => {
                   console.log('dataProduct', dataProduct);
-                  addProductHandler();
+                  submitHandler();
                   setLoadingUploadData(true);
                 }}
               >
                 Terbitkan
               </button>
+
               {console.log('state addproduct', state)}
               {loadingUploadData ? (
                 (state ? loadingEditProduct : loadingCreateProduct) ? (
@@ -321,22 +330,6 @@ function AddProduct() {
                   navigate('/productlist')
                 )
               ) : null}
-
-              {/* {loadingUploadData ? (
-                state? loadingEditProduct?  (
-                  <div className={`${style['loading-upload-data']}`}>
-                    <Spinner animation="border" />
-                  </div>
-                ) : (
-                  navigate('/productlist')
-                ) : loadingCreateProduct? (
-                  <div className={`${style['loading-upload-data']}`}>
-                    <Spinner animation="border" />
-                  </div>
-                ) : (
-                  navigate('/productlist')
-                )
-              ) : null} */}
             </div>
           </Form>
         </section>
