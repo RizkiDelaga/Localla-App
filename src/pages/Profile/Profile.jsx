@@ -1,17 +1,25 @@
-import React, { Fragment } from 'react';
-import { Row, Col, Spinner, Modal } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import CardProduct from '../../components/CardProduct/CardProduct';
-import { getMyProfile, getUserProfileById } from '../../redux/Actions/ProfileAction';
-import { getProductBySellerId } from '../../redux/Actions/productAction';
-import { useNavigate, useParams } from 'react-router-dom';
-import style from './Profile.module.css';
+import React, { Fragment, useState } from "react";
+import axios from "axios";
+import { Row, Col, Spinner, Modal, Button, Form } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
-import Navbar from '../../components/Navbar/Navbar';
-import BottomNavigation from '../../components/BottomNavigation/BottomNavigation';
-import NoDataFound from '../../components/NoDataFound/NoDataFound';
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import CardProduct from "../../components/CardProduct/CardProduct";
+import {
+  getMyProfile,
+  getUserProfileById,
+} from "../../redux/Actions/ProfileAction";
+import { getProductBySellerId } from "../../redux/Actions/productAction";
+import { useNavigate, useParams } from "react-router-dom";
+import fi_eye from "../../assets/icons/fi_eye.png";
+import style from "./Profile.module.css";
 
-import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png';
+import Navbar from "../../components/Navbar/Navbar";
+import BottomNavigation from "../../components/BottomNavigation/BottomNavigation";
+import NoDataFound from "../../components/NoDataFound/NoDataFound";
+
+import Default_PP_Icon from "../../assets/icon/Default_PP_Icon.png";
 
 function Profile() {
   const navigate = useNavigate();
@@ -19,16 +27,16 @@ function Profile() {
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
 
-  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
-  const { isLoading: loadingDataProductSeller, data: dataProductSeller } = useSelector(
-    (state) => state.productBySellerId
+  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector(
+    (state) => state.myProfile
   );
-  const { isLoading: loadingDataUserProfileById, data: dataUserProfileById } = useSelector(
-    (state) => state.userProfileById
-  );
+  const { isLoading: loadingDataProductSeller, data: dataProductSeller } =
+    useSelector((state) => state.productBySellerId);
+  const { isLoading: loadingDataUserProfileById, data: dataUserProfileById } =
+    useSelector((state) => state.userProfileById);
 
   React.useEffect(() => {
-    document.title = 'Profile';
+    document.title = "Profile";
     dispatchUserID();
     dispatchProductSeller();
   }, [loadingDataMyProfile, loadingDataUserProfileById, id]);
@@ -46,7 +54,10 @@ function Profile() {
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-      <div className={`${style['background-image-layer']}`} style={{ marginTop: '70px' }}>
+      <div
+        className={`${style["background-image-layer"]}`}
+        style={{ marginTop: "70px" }}
+      >
         <img
           src={
             id
@@ -57,14 +68,29 @@ function Profile() {
               ? Default_PP_Icon
               : dataMyProfile.image
           }
-          className={`${style['background-image']}`}
+          className={`${style["background-image"]}`}
           alt=""
         />
       </div>
-      <section className="d-flex justify-content-center" style={{ marginTop: '-100px' }}>
-        <Row className={`mx-3 ${style['profile-card']}`}>
+      <section
+        className="d-flex justify-content-center"
+        style={{ marginTop: "-100px" }}
+      >
+        <ToastContainer
+          style={{ textAlign: "center" }}
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Row className={`mx-3 ${style["profile-card"]}`}>
           <Col xs="auto" className="d-flex justify-content-center">
-            {console.log('dataMyProfile', dataMyProfile.image)}
+            {console.log("dataMyProfile", dataMyProfile.image)}
             <img
               src={
                 id
@@ -75,29 +101,31 @@ function Profile() {
                   ? Default_PP_Icon
                   : dataMyProfile.image
               }
-              className={`rounded-circle ${style['profile-picture']}`}
+              className={`rounded-circle ${style["profile-picture"]}`}
               alt=""
             />
           </Col>
           <Col className="w-100">
-            <h3 className={`${style['ellipsis-text']}`}>{id ? dataUserProfileById.name : dataMyProfile.name}</h3>
-            <p className={`${style['ellipsis-text']}`}>
-              {id ? dataUserProfileById.city : dataMyProfile.city},{' '}
+            <h3 className={`${style["ellipsis-text"]}`}>
+              {id ? dataUserProfileById.name : dataMyProfile.name}
+            </h3>
+            <p className={`${style["ellipsis-text"]}`}>
+              {id ? dataUserProfileById.city : dataMyProfile.city},{" "}
               {id ? dataUserProfileById.address : dataMyProfile.address}
             </p>
             {id ? null : (
               <div className="d-flex align-items-center">
                 <button
-                  className={`w-100 me-3 ${style['action-edit-button']}`}
+                  className={`w-100 me-3 ${style["action-edit-button"]}`}
                   onClick={() => {
-                    navigate('/editprofile');
+                    navigate("/editprofile");
                   }}
                 >
                   Edit Toko
                 </button>
 
                 <button
-                  className={`${style['account-setting-button']}`}
+                  className={`${style["account-setting-button"]}`}
                   onClick={() => {
                     setModalShow(true);
                   }}
@@ -120,7 +148,10 @@ function Profile() {
         </Row>
       </section>
 
-      <Row className={`mx-auto mt-5 pt-3`} style={{ maxWidth: '800px', borderTop: '1px solid black' }}>
+      <Row
+        className={`mx-auto mt-5 pt-3`}
+        style={{ maxWidth: "800px", borderTop: "1px solid black" }}
+      >
         {loadingDataProductSeller ? (
           <div className="text-center mt-5">
             <Spinner animation="border" />
@@ -130,7 +161,7 @@ function Profile() {
             {id ? null : (
               <button
                 onClick={() => {
-                  navigate('/registerseller');
+                  navigate("/registerseller");
                 }}
               >
                 Buka Toko Sekarang
@@ -141,7 +172,16 @@ function Profile() {
         ) : (
           dataProductSeller.map((item) => {
             return (
-              <Col xl="4" lg="4" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
+              <Col
+                xl="4"
+                lg="4"
+                md="4"
+                sm="6"
+                xs="6"
+                className={`my-3`}
+                style={{ width: "maxContent" }}
+                key={item.id}
+              >
                 <CardProduct product={item} />
               </Col>
             );
@@ -162,63 +202,244 @@ function Profile() {
 
 function ModalPopUp(props) {
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
+  const [newPassword, newPasswordChange] = useState({
+    password: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const changePasswordHandler = async () => {
+    setLoading(true);
+
+    if (newPassword.newPassword !== newPassword.confirmPassword) {
+      alert("Password tidak sama");
+    }
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: `https://localla-api.herokuapp.com/api/v1/user/updatepassword`,
+        data: {
+          password: newPassword.password,
+          new_password: newPassword.newPassword,
+          confirm_new_password: newPassword.confirmPassword,
+        },
+        headers: {
+          Authorization: `${localStorage.getItem("access_token")}`,
+        },
+      });
+      if (res.status === 200) {
+        setSuccessAlert(true);
+        newPasswordChange({
+          password: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setShow(false);
+        setLoading(false);
+        toast.warn("Password Berhasil Diganti", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          icon: false,
+        });
+      }
+    } catch (err) {
+      console.log(err.response);
+      setLoading(false);
+      setErrorAlert(true);
+      toast.error(err.response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        icon: false,
+      });
+    }
+  };
 
   return (
-    <Modal
-      {...props}
-      aria-labelledby="contained-modal-title-vcenter"
-      dialogClassName={`${style['modal-size']}`}
-      contentClassName={`${style['modal-style']}`}
-      className={`${style['modal-centered']}`}
-    >
-      <Modal.Body className={`mx-3 my-4 p-0`}>
-        <div className="text-center mb-3">
-          <h5 className="fw-bold">Pengaturan Akun</h5>
-        </div>
-        <div
-          className={`${style['account-setting-item']}`}
-          onClick={() => {
-            navigate('/profilea/1');
-          }}
-        >
-          <p className="m-0 w-100">Ubah Password</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            class="bi bi-chevron-right"
-            viewBox="0 0 16 16"
+    <>
+      <Modal
+        {...props}
+        aria-labelledby="contained-modal-title-vcenter"
+        dialogClassName={`${style["modal-size"]}`}
+        contentClassName={`${style["modal-style"]}`}
+        className={`${style["modal-centered"]}`}
+      >
+        <Modal.Body className={`mx-3 my-4 p-0`}>
+          <div className="text-center mb-3">
+            <h5 className="fw-bold">Pengaturan Akun</h5>
+          </div>
+          <div
+            className={`${style["account-setting-item"]}`}
+            onClick={handleShow}
           >
-            <path
-              fill-rule="evenodd"
-              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-            />
-          </svg>
-        </div>
-        <div
-          className={`${style['account-setting-item']}`}
-          onClick={() => {
-            navigate('/editprofile');
-          }}
-        >
-          <p className="m-0 w-100">Edit Profile</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            class="bi bi-chevron-right"
-            viewBox="0 0 16 16"
+            <p className="m-0 w-100">Ubah Password</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-chevron-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
+          </div>
+          <div
+            className={`${style["account-setting-item"]}`}
+            onClick={() => {
+              navigate("/editprofile");
+            }}
           >
-            <path
-              fill-rule="evenodd"
-              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-            />
-          </svg>
-        </div>
-      </Modal.Body>
-    </Modal>
+            <p className="m-0 w-100">Edit Profile</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-chevron-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Label className="fw-bolder mt-3">Password Lama</Form.Label>
+            <div className={`${style["password-holder"]}`}>
+              <input
+                className={`${style["password-input"]}`}
+                type={showPassword ? "text" : "password"}
+                placeholder="Masukkan password lama"
+                onChange={(e) => {
+                  newPasswordChange({
+                    ...newPassword,
+                    password: e.target.value,
+                  });
+                }}
+                required
+              />
+              <button
+                className={`${style["password-toggler"]}`}
+                type="button"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                <img src={fi_eye} alt="" />
+              </button>
+            </div>
+
+            <Form.Label className="fw-bolder mt-3">Password Baru</Form.Label>
+            <div className={`${style["password-holder"]}`}>
+              <input
+                className={`${style["password-input"]}`}
+                type={showPassword ? "text" : "password"}
+                placeholder="Masukkan password baru"
+                onChange={(e) => {
+                  newPasswordChange({
+                    ...newPassword,
+                    newPassword: e.target.value,
+                  });
+                }}
+                required
+              />
+              <button
+                className={`${style["password-toggler"]}`}
+                type="button"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                <img src={fi_eye} alt="" />
+              </button>
+            </div>
+
+            <Form.Label className="fw-bolder mt-3">
+              Konfirmasi Password Baru{" "}
+            </Form.Label>
+            <div className={`${style["password-holder"]}`}>
+              <input
+                className={`${style["password-input"]}`}
+                type={showPassword ? "text" : "password"}
+                placeholder="Konfirmasi password baru"
+                onChange={(e) => {
+                  newPasswordChange({
+                    ...newPassword,
+                    confirmPassword: e.target.value,
+                  });
+                }}
+                required
+              />
+              <button
+                className={`${style["password-toggler"]}`}
+                type="button"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                <img src={fi_eye} alt="" />
+              </button>
+            </div>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          {loading ? (
+            <Spinner animation="border" variant="primary" />
+          ) : (
+            <>
+              <Button
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  color: "#f6a833",
+                }}
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                onClick={changePasswordHandler}
+                style={{ backgroundColor: "#f6a833", border: "none" }}
+              >
+                Save Changes
+              </Button>{" "}
+            </>
+          )}
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 
