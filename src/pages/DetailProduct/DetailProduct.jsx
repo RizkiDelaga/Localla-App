@@ -25,7 +25,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper';
-import { createProductTransaction, getProductTransactionByID } from '../../redux/Actions/TransactionAction.js';
+import { createTransaction, getTransactionByProductID } from '../../redux/Actions/TransactionAction.js';
 
 function DetailProduct() {
   let { id } = useParams();
@@ -35,34 +35,36 @@ function DetailProduct() {
 
   const dispatch = useDispatch();
   const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
-  const { isLoading: loadingTransaction, data: dataTransaction } = useSelector((state) => state.productTransaction);
-  const { isLoading: loadingProductTransactionByID, data: dataProductTransactionByID } = useSelector(
-    (state) => state.productTransactionByID
+  const { isLoading: loadingCreateTransaction, data: dataCreateTransaction } = useSelector(
+    (state) => state.createTransaction
+  );
+  const { isLoading: loadingTransactionByProductID, data: dataTransactionByProductID } = useSelector(
+    (state) => state.transactionByProductID
   );
 
   React.useEffect(() => {
     getDetailProductHandler();
     document.title = detailProduct.title || 'Detail Product';
     getDetailProductHandler2();
-  }, [loadingDetailProduct, loadingProductTransactionByID]);
+  }, [loadingDetailProduct, loadingTransactionByProductID]);
 
   const getDetailProductHandler = async () => {
     return dispatch(getDetailProduct(id));
   };
 
   const getDetailProductHandler2 = async () => {
-    return dispatch(getProductTransactionByID(id));
+    return dispatch(getTransactionByProductID(id));
   };
 
-  const transactionCheck = dataProductTransactionByID.find((transaction) => {
-    // console.log("id", localStorage.getItem('myId'))
+  const transactionCheck = dataTransactionByProductID.find((transaction) => {
+    console.log('transaction.status', transaction.status);
     return transaction.user_id === Number(localStorage.getItem('myId')) && transaction.status === 'pending';
   })
     ? true
     : false;
 
   const isMyProduct = () => {
-    console.log('detailProduct.user_id', detailProduct.user_id);
+    console.log('detailProduct.user_id', detailProduct);
     return detailProduct.user_id === Number(localStorage.getItem('myId')) ? true : false;
   };
 
@@ -176,7 +178,7 @@ function DetailProduct() {
                   <Card.Text className={`m-0 text-secondary`} style={{ fontSize: '14px' }}>
                     {state ? state.category : detailProduct.category}
                   </Card.Text>
-                  <h6 className={`mt-3 mb-4 fw-bold fs-5 ${style['secondary-text-color']}`}>
+                  <h6 className={`mt-3 mb-4 fw-bold fs-5 ${style['main-text-color']}`}>
                     Rp {new Intl.NumberFormat('de-DE').format(parseInt(state ? state.price : detailProduct.price))}
                   </h6>
 
@@ -229,7 +231,7 @@ function DetailProduct() {
                   ) : null}
                 </Card.Body>
               </Card>
-              <CardUser userDetail={state ? state : detailProduct} />
+              <CardUser sellerDetail={state ? state : detailProduct} />
             </Col>
           </Row>
         </Container>
@@ -265,7 +267,7 @@ function ModalPopUp(props) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          dispatch(createProductTransaction(bidPrice, props.detailProduct.id));
+          dispatch(createTransaction(bidPrice, props.detailProduct.id));
           props.onHide();
         }}
       >

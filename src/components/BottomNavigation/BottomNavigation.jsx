@@ -18,7 +18,7 @@ const BottomNavigation = () => {
     {
       img: bell,
       text: "Notifikasi",
-      link: "/offerlist",
+      link: "/product/transaction",
     },
     {
       img: plus,

@@ -1,5 +1,7 @@
-.product-offer-card {
+.transaction-card {
     /* background-color: rgb(223, 0, 0); */
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 15%);
 }
 
 .flex-condition {
@@ -8,13 +10,13 @@
     align-items: center;
 }
 
+
 .btnDecision {
-    flex-wrap: wrap;
     border-radius: 50px;
     border: 2px solid #f6a833;
     background-color: rgb(255, 255, 255);
     color: #f6a833;
-    width: 158px;
+    width: 100%;
     font-weight: 500;
     padding: 5px 20px;
 }
@@ -81,6 +83,10 @@
 @media (max-width: 400px) {
     .btnDecision {
         width: 100%;
+    }
+
+    .button-action {
+        flex-wrap: wrap;
     }
 }
 

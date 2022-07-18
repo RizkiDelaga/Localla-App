@@ -12,6 +12,9 @@ import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import Profile from '../pages/Profile/Profile';
 import Search from '../pages/Search/Search';
 import RegisterSeller from '../pages/RegisterSeller/RegisterSeller';
+import MyTransaction from '../pages/MyTransaction/MyTransaction';
+import InformasiPenawar from '../pages/InformasiPenawar/InformasiPenawar';
+import DetailMyTransaction from '../pages/DetailMyTransaction/DetailMyTransaction';
 
 function IndexRoute() {
   return (
@@ -20,7 +23,7 @@ function IndexRoute() {
         <Route path="/" element={<LandingPage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="registerseller" element={<RegisterSeller />} />
+        <Route path="mystore" element={<RegisterSeller />} />
 
         {/* User Route */}
         {/* :id */}
@@ -29,10 +32,15 @@ function IndexRoute() {
         </Route>
         <Route path='editprofile' element={<EditProfile />}/>
         <Route path='productlist' element={<ProductList />}/>
-        <Route path='offerlist' element={<OfferList />}/>
+        {/* <Route path='offerlist' element={<OfferList />}/> */}
+        <Route path='MyTransaction' element={<MyTransaction />}/>
+        <Route path='MyTransaction/detailtransaction' element={<DetailMyTransaction />}/>
 
         {/* Product Route */}
         <Route path='product/:id' element={<DetailProduct />}/>
+        <Route path='product/transaction' element={<OfferList />}/>
+        <Route path='product/transaction/:idproduct' element={<OfferList />}/>
+        <Route path='product/transaction/:idproduct/:idtransaction' element={<InformasiPenawar />}/>
         <Route path='product/:productID/edit' element={<AddProduct />} />
         <Route path='product/addproduct' element={<AddProduct />}/>
         <Route path='search/:key' element={<Search />}/>

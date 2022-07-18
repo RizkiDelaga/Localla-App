@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Container, Dropdown, Button, Form } from 'react-bootstrap';
+import { Container, Dropdown, Button, Form, Tab, Tabs } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import style from './Navbar.module.css';
 
@@ -96,7 +96,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                         <div
                           className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}
                           onClick={() => {
-                            navigate('/offerlist');
+                            navigate('/product/transaction');
                           }}
                         >
                           Notifikasi
@@ -253,42 +253,35 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                       </Button>
                     </Dropdown.Toggle>
                     <Dropdown.Menu className={`${style['dropdown-notification-menu']}`}>
-                      <Dropdown.Item
-                        className={`${style['list-notif']} p-0`}
-                        onClick={() => {
-                          navigate('/offerlist');
-                        }}
+                      <Tabs
+                        defaultActiveKey="history Transaksi"
+                        id="fill-tab-example"
+                        className={`mb-2 ${style['coloredTab']}`}
+                        fill
                       >
-                        <ProductOfferList />
-                      </Dropdown.Item>
-                      <hr />
-                      <Dropdown.Item
-                        className={`${style['list-notif']} p-0`}
-                        onClick={() => {
-                          navigate('/offerlist');
-                        }}
-                      >
-                        <ProductOfferList />
-                      </Dropdown.Item>
-                      <hr />
-                      <Dropdown.Item
-                        className={`${style['list-notif']} p-0`}
-                        onClick={() => {
-                          navigate('/offerlist');
-                        }}
-                      >
-                        <ProductOfferList />
-                      </Dropdown.Item>
-                      <hr />
-                      <Dropdown.Item
-                        className={`${style['list-notif']} p-0`}
-                        onClick={() => {
-                          navigate('/offerlist');
-                        }}
-                      >
-                        <ProductOfferList />
-                      </Dropdown.Item>
-                      <hr />
+                        <Tab eventKey="history Transaksi" title="Transaksi">
+                          <button
+                            className={`mb-2 w-100 border-0 ${style['button-more-transaction']}`}
+                            onClick={() => {
+                              navigate('/MyTransaction');
+                            }}
+                          >
+                            Lihat semua transaksi
+                          </button>
+                          <ProductOfferList dispatchType={'my transaction'} directionTo={'/MyTransaction/detailtransaction'} />
+                        </Tab>
+                        <Tab eventKey="entry offer" title="Produk yang ditawar">
+                          <button
+                            className={`mb-2 w-100 border-0 ${style['button-more-transaction']}`}
+                            onClick={() => {
+                              navigate('/product/transaction');
+                            }}
+                          >
+                            Lihat semua tawaran
+                          </button>
+                          <ProductOfferList dispatchType={'transaction for seller'} isSeller={true} />
+                        </Tab>
+                      </Tabs>
                     </Dropdown.Menu>
                   </Dropdown>
 
