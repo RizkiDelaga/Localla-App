@@ -32,7 +32,9 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import {
   createProductTransaction,
+  createTransaction,
   getProductTransactionByID,
+  getTransactionByProductID,
 } from "../../redux/Actions/TransactionAction.js";
 import ShareButtons from "../../components/ShareButtons/ShareButtons.jsx";
 
