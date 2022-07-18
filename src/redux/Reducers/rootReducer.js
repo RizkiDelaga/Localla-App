@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { productReducer, createProductReducer, editProductReducer, detailProductReducer, productByCategoryReducer, productBySellerIdReducer } from './productReducer';
 import { myProfileReducer, userProfilByIdeReducer } from "./ProfileReducer";
-import { productTransactionReducer, productTransactionByIDReducer } from "./TransactionReducer";
+import { createTransactionReducer, updateTransactionReducer, allTransactionForSellerReducer, myTransactionReducer, transactionByProductIDReducer } from "./TransactionReducer";
 
 export default combineReducers({
     product: productReducer,
@@ -12,6 +12,9 @@ export default combineReducers({
     productByCategory: productByCategoryReducer,
     myProfile: myProfileReducer,
     userProfileById: userProfilByIdeReducer,
-    productTransaction: productTransactionReducer,
-    productTransactionByID: productTransactionByIDReducer,
+    createTransaction: createTransactionReducer,
+    updateTransaction: updateTransactionReducer,
+    allTransactionForSeller: allTransactionForSellerReducer,
+    myTransaction: myTransactionReducer,
+    transactionByProductID: transactionByProductIDReducer,
 });

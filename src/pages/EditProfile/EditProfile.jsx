@@ -12,6 +12,7 @@ import Plus_Icon from '../../assets/icon/Plus_Icon.png';
 import { useDropzone } from 'react-dropzone';
 import { getMyProfile } from '../../redux/Actions/ProfileAction';
 import axios from 'axios';
+import { listArea } from '../../utils/listArea';
 
 function EditProfile() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function EditProfile() {
   const [inputImageError, setInputImageError] = useState('');
   const [dataProfile, setDataProfile] = useState({
     name: '',
+    province: '',
     city: '',
     phone: '',
     address: '',
@@ -28,7 +30,7 @@ function EditProfile() {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     maxFiles: 1,
-    maxSize: 10000,
+    maxSize: 1000000,
     accept: {
       'image/*': [],
     },
@@ -49,26 +51,6 @@ function EditProfile() {
     },
   });
   const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
-
-  // const filesName = files.map((file) => (
-  //   <li>
-  //     <div className="d-flex mb-2">
-  //       <p className={`m-0 ${style['text-ellipsis']}`}>
-  //         {console.log('file.. ', typeof file)}
-  //         {typeof file === 'string' ? file : file.path}
-  //       </p>
-  //       <Button
-  //         variant="danger"
-  //         className={`ms-3 py-0`}
-  //         onClick={() => {
-  //           setFiles(files.filter((item) => item !== file));
-  //         }}
-  //       >
-  //         Delete
-  //       </Button>
-  //     </div>
-  //   </li>
-  // ));
 
   const imagePreview = files.map((file) => (
     <div className={`d-flex align-items-end`} style={{ cursor: 'pointer' }} key={file.name}>
@@ -104,11 +86,13 @@ function EditProfile() {
     if (dataMyProfile) {
       setDataProfile({
         name: dataMyProfile.name,
+        province: dataMyProfile.province,
         city: dataMyProfile.city,
         phone: dataMyProfile.phone,
         address: dataMyProfile.address,
       });
       if (dataMyProfile.image !== null) {
+        console.log('dataMyProfile.image', dataMyProfile.image);
         setFiles([dataMyProfile.image]);
       } else {
         setFiles([Plus_Icon]);
@@ -117,21 +101,22 @@ function EditProfile() {
     } else {
       setDataProfile({
         name: '',
+        province: '',
         city: '',
         phone: '',
         address: '',
       });
-      setFiles([]);
+      // setFiles([]);
     }
   };
 
   const submitHandler = async () => {
     const formData = new FormData();
     formData.append('name', dataProfile.name);
+    formData.append('province', dataProfile.province);
     formData.append('city', dataProfile.city);
     formData.append('phone', dataProfile.phone);
     formData.append('address', dataProfile.address);
-    // formData.append('imageBackground', backgroundImage);
     if (files[0] !== dataMyProfile.image) {
       formData.append('image', files[0]);
     }
@@ -148,6 +133,7 @@ function EditProfile() {
       });
       if (res.status === 200) {
         console.log('Register Successfully!');
+        navigate('/profile');
       }
     } catch (error) {
       console.log('error..  ', error);
@@ -157,6 +143,7 @@ function EditProfile() {
   const disableButtonCondition = () => {
     if (
       dataMyProfile.name === dataProfile.name &&
+      dataMyProfile.province === dataProfile.province &&
       dataMyProfile.city === dataProfile.city &&
       dataMyProfile.phone === dataProfile.phone &&
       dataMyProfile.address === dataProfile.address &&
@@ -166,6 +153,7 @@ function EditProfile() {
     }
     if (
       dataProfile.name === '' &&
+      dataProfile.province === '' &&
       dataProfile.city === '' &&
       dataProfile.phone === '' &&
       dataProfile.address === '' &&
@@ -183,6 +171,7 @@ function EditProfile() {
       <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
         <section style={{ width: '100%', maxWidth: '800px' }}>
           <h5 className={`mb-5 text-center`}>Edit Profil</h5>
+
           <Form
             onSubmit={(event) => {
               event.preventDefault();
@@ -214,6 +203,25 @@ function EditProfile() {
             </Form.Group>
 
             <Form.Group className="mb-3" style={{ width: '100% !important' }}>
+              <Form.Label>Provinsi</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                className={`text-secondary ${style['input-form-style']}`}
+                value={dataProfile.province}
+                onChange={(e) => {
+                  setDataProfile({ ...dataProfile, province: e.target.value });
+                }}
+                required
+              >
+                <option hidden>Pilih Provinsi</option>
+                {listArea.map((province) => (
+                  <option value={province.province}>{province.province}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            {console.log('dataProfile.province', dataProfile.province)}
+
+            <Form.Group className="mb-3" style={{ width: '100% !important' }}>
               <Form.Label>Kota</Form.Label>
               <Form.Select
                 aria-label="Default select example"
@@ -222,18 +230,15 @@ function EditProfile() {
                 onChange={(e) => {
                   setDataProfile({ ...dataProfile, city: e.target.value });
                 }}
+                disabled={dataProfile.province === undefined}
                 required
               >
                 <option hidden>Pilih Kota</option>
-                <option value="1" style={{ color: '#000' }}>
-                  One
-                </option>
-                <option value="2" style={{ color: '#000' }}>
-                  Two
-                </option>
-                <option value="3" style={{ color: '#000' }}>
-                  Three
-                </option>
+                {listArea
+                  .filter((item) => {
+                    return item.province === dataProfile.province;
+                  })
+                  .map((province) => province.city.map((city) => <option value={city}>{city}</option>))}
               </Form.Select>
             </Form.Group>
 
@@ -267,6 +272,22 @@ function EditProfile() {
               />
             </Form.Group>
           </Form>
+          <div className="d-flex justify-content-end">
+            <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="20"
+                fill="currentColor"
+                class="bi bi-arrow-clockwise"
+                viewBox="0 0 16 16"
+              >
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+              </svg>
+              <p className="m-0 ms-1">Reset</p>
+            </button>
+          </div>
 
           <div className="d-flex mt-4">
             <Button

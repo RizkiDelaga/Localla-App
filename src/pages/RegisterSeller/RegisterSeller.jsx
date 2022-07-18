@@ -9,9 +9,11 @@ import style from './RegisterSeller.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 
 import Plus_Icon from '../../assets/icon/Plus_Icon.png';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterSeller() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [shopName, setShopName] = useState('');
   const [files, setFiles] = useState([]);
   const [error, setError] = useState('');
@@ -81,6 +83,7 @@ function RegisterSeller() {
       });
       if (res.status === 200) {
         console.log('Register Successfully!');
+        navigate('/productlist');
       }
     } catch (error) {
       console.log('error..  ', error);
@@ -122,6 +125,17 @@ function RegisterSeller() {
     </div>
   ));
 
+  const disableButtonCondition = () => {
+    console.log('cek file.. ', dataMyProfile.imageShop === files[0]);
+    if (dataMyProfile.nameShop === shopName && dataMyProfile.imageShop === files[0]) {
+      return true;
+    }
+    if (shopName === '' && files.length === 0) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Fragment>
       <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
@@ -129,22 +143,7 @@ function RegisterSeller() {
       <Container className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
           <h5 className={`mb-5 text-center`}>Informasi Toko</h5>
-          <div className="d-flex justify-content-end">
-            <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="20"
-                fill="currentColor"
-                class="bi bi-arrow-clockwise"
-                viewBox="0 0 16 16"
-              >
-                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-              </svg>
-              <p className="m-0 ms-1">Refresh</p>
-            </button>
-          </div>
+
           <Form
             onSubmit={(event) => {
               event.preventDefault();
@@ -198,10 +197,27 @@ function RegisterSeller() {
                 setBackgroundImage(e.target.value);
               }}
             /> */}
+            <div className="d-flex justify-content-end my-4">
+              <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="100%"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-arrow-clockwise"
+                  viewBox="0 0 16 16"
+                >
+                  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                </svg>
+                <p className="m-0 ms-1">Reset</p>
+              </button>
+            </div>
 
             <button
               type="submit"
-              className={`mt-3 ${style['register-button']}`}
+              className={`${style['register-button']}`}
+              disabled={disableButtonCondition()}
               onClick={() => {
                 console.log(shopName, '   data file.. ', files);
                 submitHandler();

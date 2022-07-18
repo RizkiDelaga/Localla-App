@@ -35,10 +35,7 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
               class="bi bi-heart-fill"
               viewBox="0 0 16 16"
             >
-              <path
-                fill-rule="evenodd"
-                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-              />
+              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
             </svg>
             <p className="m-0 ps-1 fw-bold" style={{ fontSize: '12px' }}>
               {product.id}
@@ -48,20 +45,11 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
             <h6 className={`m-0 fw-6 fw-bold ${style['product-title']}`}>
               {product ? product.title : 'Lorem ipsum dolor sit'}
             </h6>
-            <p
-              className={`m-0 py-2 text-secondary`}
-              style={{ fontSize: '14px', overflow: 'hidden' }}
-            >
+            <p className={`m-0 py-2 text-secondary`} style={{ fontSize: '14px', overflow: 'hidden' }}>
               {product ? product.category : 'Category'}
             </p>
-            <h6
-              className={`m-0 fs-6 fw-bold`}
-              style={{ color: '#f6a833', overflow: 'hidden' }}
-            >
-              Rp{' '}
-              {new Intl.NumberFormat('de-DE').format(
-                parseInt(product ? product.price : 125000)
-              )}
+            <h6 className={`m-0 fs-6 fw-bold`} style={{ color: '#f6a833', overflow: 'hidden' }}>
+              Rp {new Intl.NumberFormat('de-DE').format(parseInt(product ? product.price : 125000))}
             </h6>
           </div>
         </Link>
@@ -104,10 +92,7 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
             alt=""
           />
-          <p className="m-0">
-            Product yang telah dihapus tidak bisa dikembalikan lagi, termasuk
-            histori transaksi
-          </p>
+          <p className="m-0">Product yang telah dihapus tidak bisa dikembalikan lagi, termasuk histori transaksi</p>
         </Modal.Body>
 
         <Modal.Footer className={`px-5 py-4 border-0`}>
@@ -125,9 +110,9 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
               className={`mt-2 mx-1 px-3 ${style['delete-product-button']}`}
               onClick={async () => {
                 await dispatch(deleteProduct(product.id));
-                // setTimeout(dispatchMyProduct(), 4000);
                 // navigate('/productlist');
-                // setModalShow(false);
+                window.location.reload();
+                setModalShow(false);
               }}
             >
               Hapus

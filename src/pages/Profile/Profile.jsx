@@ -61,12 +61,12 @@ function Profile() {
         <img
           src={
             id
-              ? dataUserProfileById.image === null
+              ? dataUserProfileById.imageBackground === null
                 ? Default_PP_Icon
-                : dataUserProfileById.image
-              : dataMyProfile.image === null
+                : dataUserProfileById.imageBackground
+              : dataMyProfile.imageBackground === null
               ? Default_PP_Icon
-              : dataMyProfile.image
+              : dataMyProfile.imageBackground
           }
           className={`${style["background-image"]}`}
           alt=""
@@ -90,38 +90,36 @@ function Profile() {
         />
         <Row className={`mx-3 ${style["profile-card"]}`}>
           <Col xs="auto" className="d-flex justify-content-center">
-            {console.log("dataMyProfile", dataMyProfile.image)}
+            {/* {console.log('dataMyProfile', dataMyProfile.image)} */}
             <img
               src={
                 id
-                  ? dataUserProfileById.image === null
+                  ? dataUserProfileById.imageShop === null
                     ? Default_PP_Icon
-                    : dataUserProfileById.image
-                  : dataMyProfile.image === null
+                    : dataUserProfileById.imageShop
+                  : dataMyProfile.imageShop === null
                   ? Default_PP_Icon
-                  : dataMyProfile.image
+                  : dataMyProfile.imageShop
               }
               className={`rounded-circle ${style["profile-picture"]}`}
               alt=""
             />
           </Col>
           <Col className="w-100">
-            <h3 className={`${style["ellipsis-text"]}`}>
-              {id ? dataUserProfileById.name : dataMyProfile.name}
-            </h3>
-            <p className={`${style["ellipsis-text"]}`}>
-              {id ? dataUserProfileById.city : dataMyProfile.city},{" "}
-              {id ? dataUserProfileById.address : dataMyProfile.address}
+            <h3 className={`${style['ellipsis-text']}`}>{id ? dataUserProfileById.nameShop : dataMyProfile.nameShop}</h3>
+            <p className={`${style['ellipsis-text']}`}>
+              {id ? dataUserProfileById.province : dataMyProfile.province},{' '}
+              {id ? dataUserProfileById.city : dataMyProfile.city}
             </p>
             {id ? null : (
               <div className="d-flex align-items-center">
                 <button
                   className={`w-100 me-3 ${style["action-edit-button"]}`}
                   onClick={() => {
-                    navigate("/editprofile");
+                    navigate('/mystore');
                   }}
                 >
-                  Edit Toko
+                  {dataMyProfile.nameShop && dataMyProfile.imageShop ? 'Edit Toko' : 'Buka Toko'}
                 </button>
 
                 <button
@@ -161,7 +159,7 @@ function Profile() {
             {id ? null : (
               <button
                 onClick={() => {
-                  navigate("/registerseller");
+                  navigate('/mystore')
                 }}
               >
                 Buka Toko Sekarang

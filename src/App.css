@@ -1,5 +1,11 @@
+.main-text-color {
+    color: #f6a833 !important;
+}
+
 /* Overwriting Radio Buttons Group Style */
-.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .show>.btn-primary.dropdown-toggle {
+.btn-check:active+.btn-primary,
+.btn-check:checked+.btn-primary,
+.show>.btn-primary.dropdown-toggle {
     color: #ffffff !important;
     background-color: #f6a833 !important;
     border-color: #f6a833 !important;
@@ -23,3 +29,37 @@ a {
     top: 50% !important;
     transform: translateY(-50%) !important;
 }
+
+.nav-link {
+    background-color: transparent !important;
+    color: #000000 !important;
+}
+
+/* Accordion Start*/
+
+.accordion-button {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0px 20px !important;
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: #00000000 !important;
+}
+
+.accordion-button::after {
+    display: none;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #212529 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.accordion-item {
+    border: none !important;
+}
+
+/* Accordion End*/
