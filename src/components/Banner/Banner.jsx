@@ -1,30 +1,63 @@
-import React from "react";
-import { Container } from "react-bootstrap";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Autoplay, Navigation } from "swiper";
+
+import shop from "../../assets/images/shop.jpg";
+import shop1 from "../../assets/images/shop1.jpg";
+import shopping from "../../assets/images/shopping.jpg";
+
 import styles from "./Banner.module.css";
-import gift from "../../assets/images/png_gift.png";
-import img1 from "../../assets/images/Rectangle 137.png";
 
 const Banner = () => {
   return (
-    <Container
-      fluid
-      className={`d-flex align-items-center justify-content-center ${styles.banner}`}
+    <Swiper
+      navigation={true}
+      mousewheel={{
+        invert: true,
+      }}
+      rewind={true}
+      autoplay={{
+        delay: 5000,
+        disableOnInteraction: false,
+      }}
+      modules={[Autoplay, Navigation]}
+      className={`${styles["swipper"]}`}
     >
-      <div className={`${styles.box} ${styles.box1}`}></div>
-      <div className={`${styles.box2}`}>
-        <div className={styles["banner-text"]}>
-          <h2 style={{ fontWeight: "700" }}>Bulan Ramadhan Banyak diskon!</h2>
-          <p style={{ fontWeight: "400", margin: "0" }}>Diskon Hingga</p>
-          <p style={{ fontWeight: "500", color: "#FA2C5A", fontSize: "32px" }}>
-            60%
-          </p>
+      <SwiperSlide style={{ width: "100%" }}>
+        <div style={{ position: "relative" }}>
+          <div className={styles["swiper-caption"]}>
+            <h3>Local With International Quality</h3>
+            <p>Localla offering local brand with international quality</p>
+            <button className={styles["banner-btn"]}>Shopping Now</button>
+          </div>
+          <img className={styles["swiper-img"]} alt="" src={shop} />
         </div>
-        <img src={gift} alt="" className={styles.img1} />
-        <img src={img1} alt="" className={styles.img2} />
-      </div>
-      <div className={`${styles.box} ${styles.box3}`}></div>
-      <div className={`${styles["banner-fade"]}`} />
-    </Container>
+      </SwiperSlide>
+      <SwiperSlide style={{ width: "100%" }}>
+        <div style={{ position: "relative" }}>
+          <div className={styles["swiper-caption1"]}>
+            <h3>Think Globally Act Locally</h3>
+            <p>Globalization must be grow up with localization</p>
+            <button className={styles["banner-btn"]}>Shopping Now</button>
+          </div>
+          <img className={styles["swiper-img"]} alt="" src={shop1} />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide style={{ width: "100%" }}>
+        <div style={{ position: "relative" }}>
+          <div className={styles["swiper-caption"]}>
+            <h3>Support Your Local</h3>
+            <p>Put your money where your house is</p>
+            <button className={styles["banner-btn"]}>Shopping Now</button>
+          </div>
+          <img className={styles["swiper-img"]} alt="" src={shopping} />
+        </div>
+      </SwiperSlide>
+    </Swiper>
   );
 };
 
