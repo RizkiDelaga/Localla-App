@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import style from './MyTransaction.module.css';
 
 import Default_Product_Image from '../../assets/images/image1.jpg';
 import { Container } from 'react-bootstrap';
