@@ -1,42 +1,34 @@
-import React, { Fragment } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Modal,
-  Button,
-  Form,
-  Spinner,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { getDetailProduct } from "../../redux/Actions/productAction.js";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import style from "./DetailProduct.module.css";
+import React, { Fragment } from 'react';
+import { Container, Row, Col, Modal, Button, Form, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDetailProduct } from '../../redux/Actions/productAction.js';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
+import style from './DetailProduct.module.css';
 
-import Card from "react-bootstrap/Card";
-import Navbar from "../../components/Navbar/Navbar";
-import CardUser from "../../components/CardUser/CardUser";
-import NoDataFound from "../../components/NoDataFound/NoDataFound";
+import Card from 'react-bootstrap/Card';
+import Navbar from '../../components/Navbar/Navbar';
+import CardUser from '../../components/CardUser/CardUser';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
-import Image1 from "../../assets/images/image1.jpg";
-import Info_Icon from "../../assets/icons/Info_Icon.png";
+import Image1 from '../../assets/images/image1.jpg';
+import Info_Icon from '../../assets/icons/Info_Icon.png';
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Autoplay, Pagination, Navigation } from "swiper";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Autoplay, Pagination, Navigation } from 'swiper';
 import {
   createProductTransaction,
   createTransaction,
   getProductTransactionByID,
   getTransactionByProductID,
-} from "../../redux/Actions/TransactionAction.js";
-import ShareButtons from "../../components/ShareButtons/ShareButtons.jsx";
+} from '../../redux/Actions/TransactionAction.js';
+import ShareButtons from '../../components/ShareButtons/ShareButtons.jsx';
 
 function DetailProduct() {
   let { id } = useParams();
@@ -55,7 +47,7 @@ function DetailProduct() {
 
   React.useEffect(() => {
     getDetailProductHandler();
-    document.title = detailProduct.title || "Detail Product";
+    document.title = detailProduct.title || 'Detail Product';
     getDetailProductHandler2();
   }, [loadingDetailProduct, loadingTransactionByProductID]);
 
@@ -81,20 +73,15 @@ function DetailProduct() {
 
   return (
     <Fragment>
-      <Navbar
-        logo={true}
-        backButton="/productlist"
-        desktopMenu={true}
-        transparentFade={true}
-      />
+      <Navbar logo={true} backButton="/productlist" desktopMenu={true} transparentFade={true} />
       {loadingDetailProduct ? (
-        <div className="text-center" style={{ marginTop: "100px" }}>
+        <div className="text-center" style={{ marginTop: '100px' }}>
           <Spinner animation="border" />
         </div>
       ) : detailProduct.length <= 0 ? (
-        navigate("/notfound")
+        navigate('/notfound')
       ) : (
-        <Container style={{ marginTop: "100px" }}>
+        <Container style={{ marginTop: '100px' }}>
           <Row>
             <Col xl={8} lg={7} md={12} sm={12} xs={12} className={`mb-4`}>
               <Swiper
@@ -112,23 +99,25 @@ function DetailProduct() {
                   clickable: true,
                 }}
                 modules={[Pagination, Autoplay, Navigation]}
-                className={`${style["swipper"]}`}
+                className={`${style['swipper']}`}
               >
                 {detailProduct
                   ? detailProduct.image_url.url.map((image) => {
                       return (
-                        <SwiperSlide style={{ width: "100%" }}>
-                          <div className={`${style["image-carousell"]}`}>
-                            <img
-                              src={detailProduct ? image : Image1}
-                              alt=""
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "contain",
-                              }}
-                            />
-                          </div>
+                        <SwiperSlide className="d-flex justify-content-center" style={{ width: '100%' }}>
+                          <Zoom>
+                            <div className={`${style['image-carousell']}`}>
+                              <img
+                                src={detailProduct ? image : Image1}
+                                alt=""
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'contain',
+                                }}
+                              />
+                            </div>
+                          </Zoom>
                         </SwiperSlide>
                       );
                     })
@@ -142,7 +131,7 @@ function DetailProduct() {
                 title={detailProduct.title}
               />
 
-              <Card className={`mt-3 p-2 ${style["description-card"]}`}>
+              <Card className={`mt-3 p-2 ${style['description-card']}`}>
                 <Card.Body>
                   <h5 className={`mb-4`}>Deskripsi</h5>
                   <p>{state ? state.description : detailProduct.description}</p>
@@ -150,13 +139,10 @@ function DetailProduct() {
               </Card>
             </Col>
             <Col>
-              <Card className={`p-2 mb-3 ${style["detail-product-card"]}`}>
+              <Card className={`p-2 mb-3 ${style['detail-product-card']}`}>
                 <Card.Body>
                   <h5>{state ? state.title : detailProduct.title}</h5>
-                  <Card.Text
-                    className={`m-0 text-secondary`}
-                    style={{ fontSize: "14px" }}
-                  >
+                  <Card.Text className={`m-0 text-secondary`} style={{ fontSize: '14px' }}>
                     {state ? state.category : detailProduct.category}
                   </Card.Text>
 
@@ -166,51 +152,44 @@ function DetailProduct() {
 
                   <div className="d-flex align-items-center">
                     <button
-                      className={`${style["btn-decision"]}`}
+                      className={`${style['btn-decision']}`}
                       onClick={() => {
                         state
-                          ? navigate("/productlist")
-                          : localStorage.getItem("access_token")
+                          ? navigate('/productlist')
+                          : localStorage.getItem('access_token')
                           ? isMyProduct()
-                            ? navigate("/productlist")
+                            ? navigate('/productlist')
                             : setModalShow(true)
-                          : navigate("/login");
+                          : navigate('/login');
                       }}
                       disabled={transactionCheck}
                     >
                       {state
-                        ? "Terbitkan"
+                        ? 'Terbitkan'
                         : isMyProduct()
-                        ? "Atur Produk"
+                        ? 'Atur Produk'
                         : transactionCheck
-                        ? "Pending"
-                        : "Nego Sekarang"}
+                        ? 'Pending'
+                        : 'Nego Sekarang'}
                     </button>
 
                     {transactionCheck ? (
                       <OverlayTrigger
-                        key={"left"}
-                        placement={"left"}
+                        key={'left'}
+                        placement={'left'}
                         overlay={
-                          <Tooltip id={`tooltip-${"left"}`}>
-                            Cek <strong>notifikasi</strong> untuk melihat
-                            tawaranmu.
+                          <Tooltip id={`tooltip-${'left'}`}>
+                            Cek <strong>notifikasi</strong> untuk melihat tawaranmu.
                           </Tooltip>
                         }
                       >
-                        <img
-                          src={Info_Icon}
-                          className="ms-2"
-                          width={25}
-                          height={25}
-                          alt=""
-                        />
+                        <img src={Info_Icon} className="ms-2" width={25} height={25} alt="" />
                       </OverlayTrigger>
                     ) : null}
                   </div>
                   {state ? (
                     <button
-                      className={`mt-2 ${style["btn-decision"]}`}
+                      className={`mt-2 ${style['btn-decision']}`}
                       onClick={() => {
                         navigate(-1);
                       }}
@@ -248,9 +227,9 @@ function ModalPopUp(props) {
     <Modal
       {...props}
       aria-labelledby="contained-modal-title-vcenter"
-      dialogClassName={`${style["modal-size"]}`}
-      contentClassName={`${style["modal-style"]}`}
-      className={`${style["modal-centered"]}`}
+      dialogClassName={`${style['modal-size']}`}
+      contentClassName={`${style['modal-style']}`}
+      className={`${style['modal-centered']}`}
       onExited={() => setBidPrice(undefined)}
     >
       <form
@@ -264,58 +243,40 @@ function ModalPopUp(props) {
         <Modal.Body className={`mx-4 p-0`}>
           <h6>Masukkan Harga Tawarmu</h6>
           <p className={`text-secondary m-0`}>
-            Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan
-            segera dihubungi penjual.
+            Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual.
           </p>
-          <div
-            className={`mt-3 d-flex flex-column justify-content-center ${style["match-product-detail"]}`}
-          >
-            <h6 style={{ textAlign: "center", marginBottom: "20px" }}>
-              Product Match
-            </h6>
+          <div className={`mt-3 d-flex flex-column justify-content-center ${style['match-product-detail']}`}>
+            <h6 style={{ textAlign: 'center', marginBottom: '20px' }}>Product Match</h6>
             <Row>
               <Col xs="4">
                 <img
-                  src={
-                    props.detailProduct
-                      ? props.detailProduct.image_url.url[0]
-                      : Image1
-                  }
+                  src={props.detailProduct ? props.detailProduct.image_url.url[0] : Image1}
                   style={{
-                    width: "100%",
-                    maxWidth: "max-content",
-                    height: "100%",
-                    minHeight: "75px",
-                    borderRadius: "12px",
-                    objectFit: "cover",
+                    width: '100%',
+                    maxWidth: 'max-content',
+                    height: '100%',
+                    minHeight: '75px',
+                    borderRadius: '12px',
+                    objectFit: 'cover',
                   }}
                   alt=""
                 />
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <h6 className={`mb-1`}>{props.detailProduct.title}</h6>
-                <p
-                  className={`text-secondary my-0`}
-                  style={{ fontSize: "14px" }}
-                >
-                  Rp{" "}
-                  {new Intl.NumberFormat("de-DE").format(
-                    parseInt(props.detailProduct.price)
-                  )}
+                <p className={`text-secondary my-0`} style={{ fontSize: '14px' }}>
+                  Rp {new Intl.NumberFormat('de-DE').format(parseInt(props.detailProduct.price))}
                 </p>
               </Col>
             </Row>
           </div>
 
           <div className={`mt-3`}>
-            <p
-              className={`m-0`}
-              style={{ fontSize: "14px", fontWeight: "500" }}
-            >
+            <p className={`m-0`} style={{ fontSize: '14px', fontWeight: '500' }}>
               Harga Tawar
             </p>
             <Form.Control
-              className={`${style["input-price"]}`}
+              className={`${style['input-price']}`}
               type="text"
               placeholder="Rp 0,00"
               pattern="[0-9]*"
@@ -328,11 +289,7 @@ function ModalPopUp(props) {
         </Modal.Body>
 
         <Modal.Footer className={`px-4 py-4 border-0`}>
-          <Button
-            type="submit"
-            className={`m-0 ${style["modal-button-action"]}`}
-            disabled={bidPrice === undefined}
-          >
+          <Button type="submit" className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === undefined}>
             Kirim
           </Button>
         </Modal.Footer>
