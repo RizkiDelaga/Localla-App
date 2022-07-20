@@ -17,7 +17,7 @@ import BottomNavigation from '../../components/BottomNavigation/BottomNavigation
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png';
-import ChangePassword from "../../components/ChangePassword/ChangePassword";
+import ChangePassword from '../../components/ChangePassword/ChangePassword';
 
 function Profile() {
   const navigate = useNavigate();
@@ -59,43 +59,43 @@ function Profile() {
   const handleChangeBackground = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append('image', image);
     try {
       const res = await axios({
-        method: "put",
-        url: "https://localla-api.herokuapp.com/api/v1/user/image",
+        method: 'put',
+        url: 'https://localla-api.herokuapp.com/api/v1/user/image',
         data: formData,
         headers: {
-          "content-type": "multipart/form-data",
-          Authorization: `${localStorage.getItem("access_token")}`,
+          'content-type': 'multipart/form-data',
+          Authorization: `${localStorage.getItem('access_token')}`,
         },
       });
 
       if (res.status === 200) {
-        toast.warn("Change background success", {
-          position: "top-center",
+        toast.warn('Change background success', {
+          position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: 'colored',
           icon: false,
         });
         dispatchUserID();
         window.location.reload();
       }
     } catch (error) {
-      toast.error("Please select a valid image", {
-        position: "top-center",
+      toast.error('Please select a valid image', {
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: 'colored',
         icon: false,
       });
     }
@@ -103,12 +103,12 @@ function Profile() {
 
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Header style={{ backgroundColor: "#f6a833" }} as="h3">
+      <Popover.Header style={{ backgroundColor: '#f6a833' }} as="h3">
         Change Background
       </Popover.Header>
       <Popover.Body>
         <input type="file" name="image" onChange={handleImage} required />
-        <button className={style["btn-bg"]} onClick={handleChangeBackground}>
+        <button className={style['btn-bg']} onClick={handleChangeBackground}>
           Change
         </button>
       </Popover.Body>
@@ -117,15 +117,8 @@ function Profile() {
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-      <div
-        className={`${style["background-image-layer"]}`}
-        style={{ marginTop: "70px" }}
-      >
-        <OverlayTrigger
-          trigger="click"
-          placement="bottom-start"
-          overlay={popover}
-        >
+      <div className={`${style['background-image-layer']}`} style={{ marginTop: '70px' }}>
+        <OverlayTrigger trigger="click" placement="bottom-start" overlay={popover}>
           <img
             src={
               id
@@ -136,7 +129,7 @@ function Profile() {
                 ? Default_PP_Icon
                 : dataMyProfile.imageBackground
             }
-            className={`${style["background-image"]}`}
+            className={`${style['background-image']}`}
             alt=""
           />
         </OverlayTrigger>
@@ -183,12 +176,10 @@ function Profile() {
                 <button
                   className={`w-100 me-3 ${style['action-edit-button']}`}
                   onClick={() => {
-                    navigate("/mystore");
+                    navigate('/mystore');
                   }}
                 >
-                  {dataMyProfile.nameShop && dataMyProfile.imageShop
-                    ? "Edit Toko"
-                    : "Buka Toko"}
+                  {dataMyProfile.nameShop && dataMyProfile.imageShop ? 'Edit Toko' : 'Buka Toko'}
                 </button>
 
                 <button
@@ -392,7 +383,7 @@ function ModalPopUp(props) {
           </div>
         </Modal.Body>
       </Modal>
-      
+
       <Modal
         show={show}
         onHide={handleClose}
@@ -526,6 +517,15 @@ function ModalPopUp(props) {
           )}
         </Modal.Footer>
       </Modal>
+
+      {/* <ChangePassword
+        show={show}
+        handleClose={handleClose}
+        changePasswordHandler={changePasswordHandler}
+        loading={loading}
+        newPassword={newPassword}
+        newPasswordChange={newPasswordChange}
+      /> */}
     </>
   );
 }
