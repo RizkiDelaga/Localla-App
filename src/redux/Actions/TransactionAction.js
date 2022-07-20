@@ -28,6 +28,7 @@ export const createTransaction = (bidPrice, productID) => {
                 type: `${CREATE_TRANSACTION}_FULFILLED`,
                 payload: res.data.data
             });
+            dispatch(getTransactionByProductID(productID))
         }).catch((err) => {
             console.log("err.. transaction ", err);
             dispatch({

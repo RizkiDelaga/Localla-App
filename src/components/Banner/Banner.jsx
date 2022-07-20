@@ -1,21 +1,21 @@
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Autoplay, Navigation } from "swiper";
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper style
+import 'swiper/css';
+import 'swiper/css/pagination';
+// import 'swiper/css/navigation';
+import { Pagination, Autoplay } from 'swiper';
 
-import shop from "../../assets/images/shop.jpg";
-import shop1 from "../../assets/images/shop1.jpg";
-import shopping from "../../assets/images/shopping.jpg";
+import shop from '../../assets/images/shop.jpg';
+import shop1 from '../../assets/images/shop1.jpg';
+import shopping from '../../assets/images/shopping.jpg';
 
-import styles from "./Banner.module.css";
+import style from './Banner.module.css';
+import { Container } from 'react-bootstrap';
 
 const Banner = () => {
   return (
     <Swiper
-      navigation={true}
       mousewheel={{
         invert: true,
       }}
@@ -24,37 +24,41 @@ const Banner = () => {
         delay: 5000,
         disableOnInteraction: false,
       }}
-      modules={[Autoplay, Navigation]}
-      className={`${styles["swipper"]}`}
+      pagination={{
+        dynamicBullets: true,
+        clickable: true,
+      }}
+      modules={[Pagination, Autoplay]}
+      className={`${style['swipper']}`}
     >
-      <SwiperSlide style={{ width: "100%" }}>
-        <div style={{ position: "relative" }}>
-          <div className={styles["swiper-caption"]}>
+      <SwiperSlide style={{ width: '100%' }}>
+        <div>
+          <div className={style['center-item']}>
             <h3>Local With International Quality</h3>
             <p>Localla offering local brand with international quality</p>
-            <button className={styles["banner-btn"]}>Shopping Now</button>
+            <button className={style['banner-btn']}>Shopping Now</button>
           </div>
-          <img className={styles["swiper-img"]} alt="" src={shop} />
+          <img className={style['swiper-img']} alt="" src={shop} />
         </div>
       </SwiperSlide>
-      <SwiperSlide style={{ width: "100%" }}>
-        <div style={{ position: "relative" }}>
-          <div className={styles["swiper-caption1"]}>
+      <SwiperSlide style={{ width: '100%' }}>
+        <Container>
+          <div className={style['left-item']}>
             <h3>Think Globally Act Locally</h3>
             <p>Globalization must be grow up with localization</p>
-            <button className={styles["banner-btn"]}>Shopping Now</button>
+            <button className={style['banner-btn']}>Shopping Now</button>
           </div>
-          <img className={styles["swiper-img"]} alt="" src={shop1} />
-        </div>
+        </Container>
+        <img className={style['swiper-img']} alt="" src={shop1} />
       </SwiperSlide>
-      <SwiperSlide style={{ width: "100%" }}>
-        <div style={{ position: "relative" }}>
-          <div className={styles["swiper-caption"]}>
+      <SwiperSlide style={{ width: '100%' }}>
+        <div>
+          <div className={style['center-item']}>
             <h3>Support Your Local</h3>
             <p>Put your money where your house is</p>
-            <button className={styles["banner-btn"]}>Shopping Now</button>
+            <button className={style['banner-btn']}>Shopping Now</button>
           </div>
-          <img className={styles["swiper-img"]} alt="" src={shopping} />
+          <img className={style['swiper-img']} alt="" src={shopping} />
         </div>
       </SwiperSlide>
     </Swiper>

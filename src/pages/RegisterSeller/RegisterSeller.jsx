@@ -16,7 +16,10 @@ function RegisterSeller() {
   const navigate = useNavigate();
   const [shopName, setShopName] = useState('');
   const [files, setFiles] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState({
+    shopName: '',
+    image: '',
+  });
   // const [backgroundImage, setBackgroundImage] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -28,9 +31,12 @@ function RegisterSeller() {
     onDrop: (acceptedFiles, fileRejections) => {
       console.log('fileRejections..  ', fileRejections);
       if (fileRejections.length) {
-        return setError('(File type not supported or file size too large)');
+        return setError({ ...error, image: '(File tidak support atau size terlalu besar)' });
       }
-      setError('');
+      setError({
+        ...error,
+        image: '',
+      });
       console.log('acceptedFiles..  ', acceptedFiles);
       return setFiles([
         ...acceptedFiles.map((file) =>
@@ -65,6 +71,12 @@ function RegisterSeller() {
 
   const submitHandler = async () => {
     const formData = new FormData();
+    if (shopName === '') {
+      return setError({ ...error, shopName: '(Nama produk tidak boleh kosong)' });
+    } else if (files.length === 0) {
+      return setError({ ...error, image: '(Gambar produk tidak boleh kosong)' });
+    }
+
     formData.append('nameShop', shopName);
     // formData.append('imageBackground', backgroundImage);
     if (files[0] !== dataMyProfile.imageShop) {
@@ -127,10 +139,11 @@ function RegisterSeller() {
 
   const disableButtonCondition = () => {
     console.log('cek file.. ', dataMyProfile.imageShop === files[0]);
-    if (dataMyProfile.nameShop === shopName && dataMyProfile.imageShop === files[0]) {
-      return true;
-    }
-    if (shopName === '' && files.length === 0) {
+    if (
+      dataMyProfile.nameShop === shopName ||
+      (shopName === '' && dataMyProfile.imageShop === files[0]) ||
+      files.length === 0
+    ) {
       return true;
     }
     return false;
@@ -161,6 +174,9 @@ function RegisterSeller() {
                 }}
                 required
               />
+              <Form.Text className="text-muted d-block m-0">
+                <strong className="text-danger">{error.shopName}</strong>
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -177,7 +193,7 @@ function RegisterSeller() {
                 </div>
               </div>
               <Form.Text className="text-muted d-block m-0">
-                Maksimal 5 MB <strong className="text-danger">{error}</strong>
+                Maksimal 5 MB <strong className="text-danger">{error.image}</strong>
               </Form.Text>
               <aside className={`d-block ${style['thumbs-container']}`}>
                 {files ? (

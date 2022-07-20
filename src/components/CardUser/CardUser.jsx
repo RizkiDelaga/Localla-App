@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { Container } from 'react-bootstrap';
 import style from './CardUser.module.css';
 
 import Image1 from '../../assets/images/image1.jpg';
@@ -10,17 +9,14 @@ import { getMyProfile } from '../../redux/Actions/ProfileAction';
 function CardUser({ userDetail, sellerDetail, buttonAction }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log(". ", props);
 
   const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
 
   React.useEffect(() => {
-    dispatchHandler();
+    if (!userDetail || !sellerDetail) {
+      dispatch(getMyProfile());
+    }
   }, [loadingDataMyProfile]);
-
-  const dispatchHandler = async () => {
-    return await dispatch(getMyProfile());
-  };
 
   return (
     <Fragment>
@@ -40,7 +36,7 @@ function CardUser({ userDetail, sellerDetail, buttonAction }) {
                 ? userDetail.image_url.url[0]
                 : sellerDetail
                 ? sellerDetail.owner.imageShop
-                : dataMyProfile.image
+                : dataMyProfile.imageShop
             }
             alt=""
             className={`me-3 ${style.imgUser}`}
@@ -50,7 +46,7 @@ function CardUser({ userDetail, sellerDetail, buttonAction }) {
               {userDetail ? userDetail.status : sellerDetail ? sellerDetail.owner.nameShop : dataMyProfile.nameShop}
             </h5>
             <p className="m-0" style={{ fontSize: '14px' }}>
-              {userDetail ? userDetail.status : sellerDetail ? sellerDetail.owner.province : dataMyProfile.province}, {' '}
+              {userDetail ? userDetail.status : sellerDetail ? sellerDetail.owner.province : dataMyProfile.province},{' '}
               {userDetail ? userDetail.status : sellerDetail ? sellerDetail.owner.city : dataMyProfile.city}
             </p>
           </div>

@@ -142,12 +142,12 @@
     border-radius: 100% !important;
 }
 
-.list-notif:focus {
+.list-item:focus {
     background-color: #f6a833 !important;
     color: #ffffff !important;
 }
 
-.list-notif:hover {
+.list-item:hover {
     background-color: #f6a833 !important;
     color: #ffffff !important;
 }

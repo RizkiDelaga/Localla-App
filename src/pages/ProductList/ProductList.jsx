@@ -158,7 +158,12 @@ function ProductList() {
                 )
               ) : null}
               {changeCategory === 'All Product'
-                ? productItems(loadingProductSeller, dataProductSeller)
+                ? productItems(
+                    loadingProductSeller,
+                    dataProductSeller.filter((e) => {
+                      return e.status === 'available';
+                    })
+                  )
                 : changeCategory === 'Interested'
                 ? productItems(
                     loadingProductSeller,
@@ -170,7 +175,7 @@ function ProductList() {
                 ? productItems(
                     loadingProductSeller,
                     dataProductSeller.filter((e) => {
-                      return e.status === 'true';
+                      return e.status === 'sold';
                     })
                   )
                 : null}

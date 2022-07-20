@@ -1,12 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  ToggleButton,
-  ToggleButtonGroup,
-  Spinner,
-} from 'react-bootstrap';
+import { Container, Row, Col, ToggleButton, ToggleButtonGroup, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct, getProductByKey } from '../../redux/Actions/productAction';
@@ -24,11 +17,10 @@ function LandingPage() {
   const [changeCategory, setChangeCategory] = useState('All Product');
 
   const dispatch = useDispatch();
-  const { isLoading: loadingProduct, data: dataProduct } = useSelector(
-    (state) => state.product
+  const { isLoading: loadingProduct, data: dataProduct } = useSelector((state) => state.product);
+  const { isLoading: loadingProductByCategory, data: dataProductByCategory } = useSelector(
+    (state) => state.productByCategory
   );
-  const { isLoading: loadingProductByCategory, data: dataProductByCategory } =
-    useSelector((state) => state.productByCategory);
 
   React.useEffect(() => {
     document.title = 'Localla | Home';
@@ -45,16 +37,7 @@ function LandingPage() {
     ) : (
       listProduct.map((item) => {
         return (
-          <Col
-            xl="2"
-            lg="3"
-            md="4"
-            sm="6"
-            xs="6"
-            className={`my-3`}
-            style={{ width: 'maxContent' }}
-            key={item.id}
-          >
+          <Col xl="2" lg="3" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
             <CardProduct product={item} />
           </Col>
         );
@@ -64,13 +47,7 @@ function LandingPage() {
 
   return (
     <Fragment>
-      <Navbar
-        logo={true}
-        search={true}
-        mobileMenu={true}
-        desktopMenu={true}
-        transparentFade={true}
-      />
+      <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} transparentFade={true} />
       <Banner />
       <Container className="p-0 my-5">
         <div className={`${style['horizontal-scroll']}`}>
@@ -191,23 +168,68 @@ function LandingPage() {
 
         <Row className={`mx-auto mt-3`}>
           {changeCategory === 'All Product'
-            ? productItems(loadingProduct, dataProduct)
+            ? productItems(
+                loadingProduct,
+                dataProduct.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Kaos'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Kemeja'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Pakaian Olahraga'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Celana'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Sepatu'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Sandal'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Tas'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : changeCategory === 'Aksesoris'
-            ? productItems(loadingProductByCategory, dataProductByCategory)
+            ? productItems(
+                loadingProductByCategory,
+                dataProductByCategory.filter((e) => {
+                  return e.status === 'available';
+                })
+              )
             : null}
         </Row>
       </Container>

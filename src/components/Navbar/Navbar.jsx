@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Container, Dropdown, Button, Form, Tab, Tabs } from 'react-bootstrap';
+import { Container, Dropdown, Button, Form, Tab, Tabs, Collapse } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import style from './Navbar.module.css';
 
@@ -16,6 +16,10 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
   const [show, setShow] = useState(false);
   const [searchingKey, setSearchingKey] = useState();
   const [navbarTransparent, setNavbarTransparent] = useState(false);
+  const [openSubMenu, setOpenSubMenu] = useState({
+    notification: false,
+    myAccount: false,
+  });
 
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
@@ -95,12 +99,32 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                       <section>
                         <div
                           className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}
-                          onClick={() => {
-                            navigate('/product/transaction');
-                          }}
+                          onClick={() => setOpenSubMenu({ ...openSubMenu, notification: !openSubMenu.notification })}
+                          aria-controls="example-collapse-text"
+                          aria-expanded={openSubMenu.notification}
                         >
                           Notifikasi
                         </div>
+                        <Collapse in={openSubMenu.notification}>
+                          <div id="example-collapse-text">
+                            <div
+                              className={`d-flex align-items-center ps-2 ms-3 ${style['mobile-menu']}`}
+                              onClick={() => {
+                                navigate('/MyTransaction');
+                              }}
+                            >
+                              Transaksi saya
+                            </div>
+                            <div
+                              className={`d-flex align-items-center ps-2 ms-3 ${style['mobile-menu']}`}
+                              onClick={() => {
+                                navigate('/product/transaction');
+                              }}
+                            >
+                              Produk yang ditawar
+                            </div>
+                          </div>
+                        </Collapse>
                         <div
                           className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}
                           onClick={() => {
@@ -111,12 +135,32 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                         </div>
                         <div
                           className={`d-flex align-items-center ps-2 ${style['mobile-menu']}`}
-                          onClick={() => {
-                            navigate('/profile');
-                          }}
+                          onClick={() => setOpenSubMenu({ ...openSubMenu, myAccount: !openSubMenu.myAccount })}
+                          aria-controls="example-collapse-text"
+                          aria-expanded={openSubMenu.myAccount}
                         >
                           Akun Saya
                         </div>
+                        <Collapse in={openSubMenu.myAccount}>
+                          <div id="example-collapse-text">
+                            <div
+                              className={`d-flex align-items-center ps-2 ms-3 ${style['mobile-menu']}`}
+                              onClick={() => {
+                                navigate('/profile');
+                              }}
+                            >
+                              Profil
+                            </div>
+                            <div
+                              className={`d-flex align-items-center ps-2 ms-3 ${style['mobile-menu']}`}
+                              onClick={() => {
+                                navigate('/mywishlist');
+                              }}
+                            >
+                              Daftar keinginan
+                            </div>
+                          </div>
+                        </Collapse>
                       </section>
                       <section className="d-flex justify-content-end">
                         <button
@@ -143,9 +187,6 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                       <p className="m-0">Masuk</p>
                     </Button>
                   )}
-                  {/* {login?
-                          
-                        : null} */}
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
@@ -268,7 +309,10 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                           >
                             Lihat semua transaksi
                           </button>
-                          <ProductOfferList dispatchType={'my transaction'} directionTo={'/MyTransaction/detailtransaction'} />
+                          <ProductOfferList
+                            dispatchType={'my transaction'}
+                            directionTo={'/MyTransaction/detailtransaction'}
+                          />
                         </Tab>
                         <Tab eventKey="entry offer" title="Produk yang ditawar">
                           <button
@@ -306,16 +350,16 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                     </Dropdown.Toggle>
                     <Dropdown.Menu className={`${style['dropdown-profile-menu']}`}>
                       <Dropdown.Item
-                        className={`d-flex align-items-center ${style['list-notif']}`}
+                        className={`d-flex align-items-center ${style['list-item']}`}
                         onClick={() => {
                           navigate('/profile');
                         }}
                       >
-                        <p className="m-0 w-100">Profil</p>
+                        <p className="m-0 w-100 me-3">Profil</p>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
+                          width="20"
+                          height="100%"
                           fill="currentColor"
                           class="bi bi-person"
                           viewBox="0 0 16 16"
@@ -324,18 +368,36 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                         </svg>
                       </Dropdown.Item>
                       <Dropdown.Item
-                        className={`border-top d-flex align-items-center ${style['list-notif']}`}
+                        className={`d-flex align-items-center ${style['list-item']}`}
+                        onClick={() => {
+                          navigate('/mywishlist');
+                        }}
+                      >
+                        <p className="m-0 w-100 me-3">Daftar keinginan</p>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="100%"
+                          fill="currentColor"
+                          class="bi bi-heart"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                        </svg>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className={`border-top d-flex align-items-center ${style['list-item']}`}
                         onClick={() => {
                           localStorage.removeItem('access_token');
                           localStorage.removeItem('myId');
                           navigate('/');
                         }}
                       >
-                        <p className="m-0 w-100">Keluar</p>
+                        <p className="m-0 w-100 me-3">Keluar</p>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
+                          width="20"
+                          height="100%"
                           fill="currentColor"
                           class="bi bi-box-arrow-right"
                           viewBox="0 0 16 16"

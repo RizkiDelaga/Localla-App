@@ -1,7 +1,3 @@
-.conditional-margin {
-    margin-top: 100px;
-}
-
 /* Carousell Start */
 
 .image-carousell {
@@ -123,9 +119,3 @@
 }
 
 /* Modal End */
-
-@media (max-width: 780px) {
-    .conditional-margin {
-        margin-top: 0px !important;
-    }
-  }
