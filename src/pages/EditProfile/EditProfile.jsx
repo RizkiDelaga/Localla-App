@@ -261,7 +261,7 @@ function EditProfile() {
               <Form.Label>No Handphone</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="contoh: +628123456789"
+                placeholder="contoh: 08123456789"
                 className={`${style['input-form-style']}`}
                 controlId="exampleForm.ControlInput1"
                 value={dataProfile.phone}

@@ -113,6 +113,7 @@ export const deleteProduct = (idProduct) => {
             dispatch({
                 type: `${DETELE_PRODUCT}_FULFILLED`,
             });
+            dispatch(getProductBySellerId(localStorage.getItem('myId')));
         }).catch((err) => {
             console.log("error.. delete ", err);
             dispatch({

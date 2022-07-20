@@ -90,7 +90,9 @@ function RegisterForm() {
           submitHandler();
         }}
       >
-        <h3 className={`fw-bold mb-3 text-center`} style={{marginBottom: '250px'}}>Daftar</h3>
+        <h3 className={`fw-bold mb-3 text-center`} style={{ marginBottom: '250px' }}>
+          Daftar
+        </h3>
         {showAlert ? (
           <Alert
             className={`${style['auth-alert']} ${

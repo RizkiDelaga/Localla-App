@@ -37,7 +37,9 @@ function Search() {
                         <Spinner animation="border" />
                     </div>)
                     : productByCategory.length <= 0? <NoDataFound /> 
-                    : productByCategory.map((item) => {
+                    : productByCategory.filter((e) => {
+                        return e.status === 'available';
+                      }).map((item) => {
                         return (
                             <Col xl='2' lg='3' md='4' sm='6' xs='6' className={`my-3 px-2`} >
                                 <CardProduct product={item} />

@@ -5,23 +5,29 @@ import { useDropzone } from 'react-dropzone';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProduct, editProduct } from '../../redux/Actions/productAction.js';
-import style from './AddProduct.module.css';
+import style from './ProductForm.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 
 import Plus_Icon from '../../assets/icon/Plus_Icon.png';
 
-function AddProduct() {
+function ProductForm() {
   let { state } = useLocation();
   const navigate = useNavigate();
   const [loadingUploadData, setLoadingUploadData] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState({
+    title: '',
+    category: '',
+    description: '',
+    price: '',
+    image: '',
+  });
   const [dataProduct, setDataProduct] = useState({
     title: '',
     category: '',
     description: '',
     price: '',
-    status: state ? state.status : 'available',
+    status: '',
   });
 
   const dispatch = useDispatch();
@@ -39,9 +45,12 @@ function AddProduct() {
     onDrop: (acceptedFiles, fileRejections) => {
       console.log('fileRejections..  ', fileRejections);
       if (fileRejections.length) {
-        return setError('(Tidak sesuai format ketentuan)');
+        return setError({ ...error, image: '(Tidak sesuai format ketentuan)' });
       }
-      setError('');
+      setError({
+        ...error,
+        image: '',
+      });
       console.log('acceptedFiles..  ', acceptedFiles);
       return setFiles([
         ...(files.length < 4 ? files : null),
@@ -59,7 +68,7 @@ function AddProduct() {
       <div className="d-flex mb-2">
         <p className={`m-0 ${style['text-ellipsis']}`}>
           {console.log('file.. ', typeof file)}
-          {typeof file === 'string' ? file : file.path}
+          {typeof file === 'string' ? file : file.path || file.name}
         </p>
         <Button
           variant="danger"
@@ -78,7 +87,7 @@ function AddProduct() {
     <div className={`${style['thumb']}`} key={file.name}>
       <div className={`${style['thumb-inner']}`}>
         <img
-          src={typeof file === 'string' ? file : file.preview}
+          src={typeof file === 'string' ? file : file.preview || URL.createObjectURL(file)}
           className={`${style['img-preview']}`}
           onLoad={() => {
             URL.revokeObjectURL(file.preview);
@@ -91,32 +100,51 @@ function AddProduct() {
 
   const submitHandler = () => {
     const formData = new FormData();
+    console.log('files..123 ', files.length <= 0);
+    console.log('dataProduct.status ', dataProduct.status);
+    if (dataProduct.title === '') {
+      setError({ ...error, title: '(Nama produk tidak boleh kosong)' });
+    } else if (dataProduct.price === '' || dataProduct.price.toString().match(/^[0-9]+$/) === null) {
+      setError({ ...error, price: '(Harga tidak sesuai dengan format. Contoh: 125000)' });
+    } else if (dataProduct.category === '') {
+      setError({ ...error, category: '(Kategori tidak boleh kosong)' });
+    } else if (files.length <= 0) {
+      setError({ ...error, image: '(Gambar produk tidak boleh kosong)' });
+    } else {
+      formData.append('title', dataProduct.title);
+      formData.append('category', dataProduct.category);
+      formData.append('description', dataProduct.description);
+      formData.append('price', dataProduct.price);
+      formData.append('status', dataProduct.status);
 
-    formData.append('title', dataProduct.title);
-    formData.append('category', dataProduct.category);
-    formData.append('description', dataProduct.description);
-    formData.append('price', dataProduct.price);
-    formData.append('status', dataProduct.status);
+      files
+        .filter((file) => typeof file !== 'string')
+        .map((item, index) => {
+          console.log('file landingpage', item);
+          formData.append(`image`, item);
+        });
 
-    files
-      .filter((file) => typeof file !== 'string')
-      .map((item, index) => {
-        console.log('file landingpage', item);
-        formData.append(`image`, item);
-      });
-
-    files
-      .filter((file) => typeof file === 'string')
-      .map((item, index) => {
-        console.log('file landingpage', item);
-        formData.append(`image${index + 1}`, item);
-      });
-
-    state ? dispatch(editProduct(state.id, formData)) : dispatch(createProduct(formData));
+      files
+        .filter((file) => typeof file === 'string')
+        .map((item, index) => {
+          console.log('file landingpage', item);
+          formData.append(`image${index + 1}`, item);
+        });
+      if (state) {
+        if (state.id) {
+          dispatch(editProduct(state.id, formData));
+        } else if (!state.id) {
+          dispatch(createProduct(formData));
+        }
+      } else {
+        dispatch(createProduct(formData));
+      }
+      // state ? dispatch(editProduct(state.id, formData)) : dispatch(createProduct(formData));
+      setLoadingUploadData(true);
+    }
   };
 
   React.useEffect(() => {
-    // console.log('state landingpage', state);
     document.title = state ? 'Edit Produk' : 'Tambah Produk';
     refreshForm();
   }, []);
@@ -124,14 +152,13 @@ function AddProduct() {
   const refreshForm = () => {
     if (state) {
       setDataProduct({
-        title: state.title,
-        category: state.category,
-        description: state.description,
-        price: state.price,
-        status: state.status,
-        image: { ...state.image_url.url },
+        title: state.id ? state.title : state.dataProduct.title,
+        category: state.id ? state.category : state.dataProduct.category,
+        description: state.id ? state.description : state.dataProduct.description,
+        price: state.id ? state.price : state.dataProduct.price,
+        status: state.id ? state.status : state.dataProduct.status,
       });
-      setFiles(state.image_url.url);
+      setFiles(state.id ? state.image_url.url : state.files);
     } else {
       setDataProduct({
         title: '',
@@ -152,8 +179,12 @@ function AddProduct() {
         state.title === dataProduct.title &&
         state.category === dataProduct.category &&
         state.description === dataProduct.description &&
-        state.price === dataProduct.price &&
-        state.image_url.url.length === files.length
+        (state.price === dataProduct.price || dataProduct.price.match(/^[0-9]+$/) === null) &&
+        (state.image_url.url.map((element, index) => {
+          return element === files[index];
+        }) ||
+          files.length === 0)
+        // (state.image_url.url.length === files.length || files.length === 0)
       ) {
         return true;
       }
@@ -176,14 +207,9 @@ function AddProduct() {
 
       <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
         <section style={{ width: '100%', maxWidth: '800px' }}>
-          <h5 className={`mb-5 text-center`}>{state ? 'Edit Produk' : 'Tambah Produk'}</h5>
+          <h5 className={`mb-5 text-center`}>Lengkapi Data Produk</h5>
 
-          <Form
-            onSubmit={(event) => {
-              event.preventDefault();
-              submitHandler();
-            }}
-          >
+          <Form>
             <Form.Group className="mb-3">
               <Form.Label>Nama Produk</Form.Label>
               <Form.Control
@@ -194,9 +220,13 @@ function AddProduct() {
                 onChange={(e) => {
                   console.log('e.target.files', e.target.value);
                   setDataProduct({ ...dataProduct, title: e.target.value });
+                  setError({ ...error, title: '' });
                 }}
                 required
               />
+              <Form.Text className="text-muted d-block m-0">
+                <strong className="text-danger">{error.title}</strong>
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -206,15 +236,18 @@ function AddProduct() {
                 className={`${style['input-form-style']}`}
                 placeholder="Harga produk. Cth: 125000"
                 value={dataProduct.price}
-                pattern="[0-9]*"
+                pattern="^[0-9]+$"
                 title="Harga harus berupa angka. Cth: 125000"
-                controlId="exampleForm.ControlInput1"
                 onChange={(e) => {
                   console.log('e.target.files', e.target.value);
                   setDataProduct({ ...dataProduct, price: e.target.value });
+                  setError({ ...error, price: '' });
                 }}
                 required
               />
+              <Form.Text className="text-muted d-block m-0">
+                <strong className="text-danger">{error.price}</strong>
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3" style={{ width: '100% !important' }}>
@@ -226,6 +259,7 @@ function AddProduct() {
                 onChange={(e) => {
                   console.log('e.target.files', e.target.value);
                   setDataProduct({ ...dataProduct, category: e.target.value });
+                  setError({ ...error, category: '' });
                 }}
                 required
               >
@@ -252,6 +286,9 @@ function AddProduct() {
                   Tas
                 </option>
               </Form.Select>
+              <Form.Text className="text-muted d-block m-0">
+                <strong className="text-danger">{error.category}</strong>
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -286,7 +323,8 @@ function AddProduct() {
                 </div>
               </div>
               <Form.Text className="text-muted d-block m-0">
-                Minimal 1 foto dan maksimal 4 foto (max 5 MB per foto) <strong className="text-danger">{error}</strong>
+                Minimal 1 foto dan maksimal 4 foto (max 5 MB per foto){' '}
+                <strong className="text-danger">{error.image}</strong>
               </Form.Text>
               <aside className={`d-block ${style['thumbs-container']}`}>
                 {files ? (
@@ -297,6 +335,33 @@ function AddProduct() {
                 ) : null}
               </aside>
             </Form.Group>
+
+            <Form.Group className="mb-3" style={{ width: '100% !important' }}>
+              <Form.Label>Status Product</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                value={dataProduct.status}
+                className={`text-secondary ${style['input-form-style']}`}
+                onChange={(e) => {
+                  console.log('e.target.files', e.target.value);
+                  setDataProduct({ ...dataProduct, status: e.target.value });
+                  // setError({ ...error, category: '' });
+                }}
+                required
+              >
+                <option value="available" style={{ color: '#000' }}>
+                  available
+                </option>
+                {state ? (
+                  state.id ? (
+                    <option value="sold" style={{ color: '#000' }}>
+                      sold
+                    </option>
+                  ) : null
+                ) : null}
+              </Form.Select>
+            </Form.Group>
+
             <div className="d-flex justify-content-end">
               <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
                 <svg
@@ -335,16 +400,15 @@ function AddProduct() {
                 onClick={() => {
                   console.log('dataProduct', dataProduct);
                   submitHandler();
-                  setLoadingUploadData(true);
                 }}
-                disabled={disableButtonCondition()}
+                // disabled={disableButtonCondition()}
               >
                 Terbitkan
               </button>
 
               {console.log('state addproduct', state)}
               {loadingUploadData ? (
-                (state ? loadingEditProduct : loadingCreateProduct) ? (
+                (state ? (state.id ? loadingEditProduct : loadingCreateProduct) : loadingCreateProduct) ? (
                   <div className={`${style['loading-upload-data']}`}>
                     <Spinner animation="border" />
                   </div>
@@ -360,4 +424,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default ProductForm;

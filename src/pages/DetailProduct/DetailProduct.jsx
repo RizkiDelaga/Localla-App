@@ -32,15 +32,11 @@ import ShareButtons from '../../components/ShareButtons/ShareButtons.jsx';
 
 function DetailProduct() {
   let { id } = useParams();
-  const { state } = useLocation();
   const navigate = useNavigate();
   const [modalShow, setModalShow] = React.useState(false);
 
   const dispatch = useDispatch();
   const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
-  const { isLoading: loadingCreateTransaction, data: dataCreateTransaction } = useSelector(
-    (state) => state.createTransaction
-  );
   const { isLoading: loadingTransactionByProductID, data: dataTransactionByProductID } = useSelector(
     (state) => state.transactionByProductID
   );
@@ -81,9 +77,9 @@ function DetailProduct() {
       ) : detailProduct.length <= 0 ? (
         navigate('/notfound')
       ) : (
-        <Container style={{ marginTop: '100px' }}>
+        <Container fluid="md" className={`${style['conditional-margin']}`}>
           <Row>
-            <Col xl={8} lg={7} md={12} sm={12} xs={12} className={`mb-4`}>
+            <Col xl={8} lg={7} md={12} sm={12} xs={12} className={`mb-4 p-0`}>
               <Swiper
                 navigation={true}
                 mousewheel={{
@@ -99,7 +95,6 @@ function DetailProduct() {
                   clickable: true,
                 }}
                 modules={[Pagination, Autoplay, Navigation]}
-                className={`${style['swipper']}`}
               >
                 {detailProduct
                   ? detailProduct.image_url.url.map((image) => {
@@ -124,39 +119,39 @@ function DetailProduct() {
                   : null}
               </Swiper>
 
-              <ShareButtons
-                id={detailProduct.id}
-                description={detailProduct.description}
-                user_id={detailProduct.user_id}
-                title={detailProduct.title}
-              />
+              <div style={{ padding: '0px 12px' }}>
+                <ShareButtons
+                  id={detailProduct.id}
+                  description={detailProduct.description}
+                  user_id={detailProduct.user_id}
+                  title={detailProduct.title}
+                />
 
-              <Card className={`mt-3 p-2 ${style['description-card']}`}>
-                <Card.Body>
-                  <h5 className={`mb-4`}>Deskripsi</h5>
-                  <p>{state ? state.description : detailProduct.description}</p>
-                </Card.Body>
-              </Card>
+                <Card className={`mt-3 p-2 ${style['description-card']}`}>
+                  <Card.Body>
+                    <h5 className={`mb-4`}>Deskripsi</h5>
+                    <p>{detailProduct.description}</p>
+                  </Card.Body>
+                </Card>
+              </div>
             </Col>
             <Col>
               <Card className={`p-2 mb-3 ${style['detail-product-card']}`}>
                 <Card.Body>
-                  <h5>{state ? state.title : detailProduct.title}</h5>
+                  <h5>{detailProduct.title}</h5>
                   <Card.Text className={`m-0 text-secondary`} style={{ fontSize: '14px' }}>
-                    {state ? state.category : detailProduct.category}
+                    {detailProduct.category}
                   </Card.Text>
 
                   <h6 className={`mt-3 mb-4 fw-bold fs-5 ${style['main-text-color']}`}>
-                    Rp {new Intl.NumberFormat('de-DE').format(parseInt(state ? state.price : detailProduct.price))}
+                    Rp {new Intl.NumberFormat('de-DE').format(parseInt(detailProduct.price))}
                   </h6>
 
                   <div className="d-flex align-items-center">
                     <button
                       className={`${style['btn-decision']}`}
                       onClick={() => {
-                        state
-                          ? navigate('/productlist')
-                          : localStorage.getItem('access_token')
+                        localStorage.getItem('access_token')
                           ? isMyProduct()
                             ? navigate('/productlist')
                             : setModalShow(true)
@@ -164,13 +159,7 @@ function DetailProduct() {
                       }}
                       disabled={transactionCheck}
                     >
-                      {state
-                        ? 'Terbitkan'
-                        : isMyProduct()
-                        ? 'Atur Produk'
-                        : transactionCheck
-                        ? 'Pending'
-                        : 'Nego Sekarang'}
+                      {isMyProduct() ? 'Atur Produk' : transactionCheck ? 'Pending' : 'Nego Sekarang'}
                     </button>
 
                     {transactionCheck ? (
@@ -187,19 +176,9 @@ function DetailProduct() {
                       </OverlayTrigger>
                     ) : null}
                   </div>
-                  {state ? (
-                    <button
-                      className={`mt-2 ${style['btn-decision']}`}
-                      onClick={() => {
-                        navigate(-1);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  ) : null}
                 </Card.Body>
               </Card>
-              <CardUser sellerDetail={state ? state : detailProduct} />
+              <CardUser sellerDetail={detailProduct} />
             </Col>
           </Row>
         </Container>
@@ -222,6 +201,11 @@ function DetailProduct() {
 function ModalPopUp(props) {
   const dispatch = useDispatch();
   const [bidPrice, setBidPrice] = React.useState();
+  const [error, setError] = React.useState('');
+
+  const { isLoading: loadingCreateTransaction, data: dataCreateTransaction } = useSelector(
+    (state) => state.createTransaction
+  );
 
   return (
     <Modal
@@ -233,10 +217,10 @@ function ModalPopUp(props) {
       onExited={() => setBidPrice(undefined)}
     >
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          dispatch(createTransaction(bidPrice, props.detailProduct.id));
-          props.onHide();
+          await dispatch(createTransaction(bidPrice, props.detailProduct.id));
+          loadingCreateTransaction && props.onHide();
         }}
       >
         <Modal.Header closeButton className={`px-4 pt-3 border-0`} />
@@ -278,9 +262,8 @@ function ModalPopUp(props) {
             <Form.Control
               className={`${style['input-price']}`}
               type="text"
-              placeholder="Rp 0,00"
-              pattern="[0-9]*"
-              title="Harga harus berupa angka. Cth: 125000"
+              placeholder="Contoh: 10000"
+              pattern="^[0-9]+$"
               onChange={(e) => {
                 setBidPrice(e.target.value);
               }}
@@ -289,7 +272,14 @@ function ModalPopUp(props) {
         </Modal.Body>
 
         <Modal.Footer className={`px-4 py-4 border-0`}>
-          <Button type="submit" className={`m-0 ${style['modal-button-action']}`} disabled={bidPrice === undefined}>
+          <Button
+            type="submit"
+            className={`m-0 ${style['modal-button-action']}`}
+            disabled={bidPrice === undefined || bidPrice.toString().match(/^[0-9]+$/) === null}
+            onClick={() => {
+              loadingCreateTransaction && props.onHide();
+            }}
+          >
             Kirim
           </Button>
         </Modal.Footer>

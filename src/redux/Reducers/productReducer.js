@@ -39,22 +39,6 @@ export const productReducer = (state = initialState, action) => {
                     error: error
             };
 
-        case `${DETELE_PRODUCT}_LOADING`:
-            return {
-                isLoading: true
-            };
-        case `${DETELE_PRODUCT}_FULFILLED`:
-            return {
-                ...state,
-                isLoading: false
-            };
-        case `${DETELE_PRODUCT}_ERROR`:
-            return {
-                ...state,
-                isLoading: false,
-                    error: error,
-            };
-
         default:
             return {
                 ...state
@@ -113,6 +97,38 @@ export const editProductReducer = (state = initialState, action) => {
                     isLoading: false,
             };
         case `${EDIT_PRODUCT}_ERROR`:
+            return {
+                ...state,
+                isLoading: false,
+                    error: error,
+            };
+
+        default:
+            return {
+                ...state
+            }
+    }
+};
+
+
+export const deleteProductReducer = (state = initialState, action) => {
+    const {
+        type,
+        payload,
+        error
+    } = action;
+
+    switch (type) {
+        case `${DETELE_PRODUCT}_LOADING`:
+            return {
+                isLoading: true
+            };
+        case `${DETELE_PRODUCT}_FULFILLED`:
+            return {
+                ...state,
+                isLoading: false
+            };
+        case `${DETELE_PRODUCT}_ERROR`:
             return {
                 ...state,
                 isLoading: false,

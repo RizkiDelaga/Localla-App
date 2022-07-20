@@ -22,7 +22,7 @@ export const createTransactionReducer = (state = initialState, action) => {
     switch (type) {
         case `${CREATE_TRANSACTION}_LOADING`:
             return {
-                ...state,
+                isLoading: true,
             };
         case `${CREATE_TRANSACTION}_FULFILLED`:
             return {

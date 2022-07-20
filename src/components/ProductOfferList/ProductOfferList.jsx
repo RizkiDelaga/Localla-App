@@ -129,7 +129,7 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
                         ) : null}
                       </button>
                     ) : (
-                      <h4 className='text-center'>{item.status}</h4>
+                      <h4 className="text-center">{item.status}</h4>
                     )
                   ) : null}
                   {showButtonAction ? (

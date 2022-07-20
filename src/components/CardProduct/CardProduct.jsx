@@ -13,9 +13,7 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
 
-  // const { isLoading: loadingEditProduct, data: editProductData } = useSelector(
-  //   (state) => state.product
-  // );
+  const { isLoading: loadingDeleteProduct } = useSelector((state) => state.deleteProduct);
 
   return (
     <Fragment>
@@ -54,24 +52,35 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
           </div>
         </Link>
         {buttonAction ? (
-          <div className={`mt-3 ${style['button-action']}`}>
+          <>
             <button
-              className={`mt-2 ${style['edit-product-button']}`}
+              className={`mt-2 ${style['transaction-product-button']}`}
               onClick={() => {
-                navigate(`/product/${product.id}/edit`, { state: product });
+                navigate(`/product/transaction/${product.id}`);
               }}
             >
-              Edit
+              Lihat Transaksi
             </button>
-            <button
-              className={`mt-2 ${style['delete-product-button']}`}
-              onClick={() => {
-                setModalShow(true);
-              }}
-            >
-              Hapus
-            </button>
-          </div>
+
+            <div className={`${style['button-action']}`}>
+              <button
+                className={`mt-2 ${style['edit-product-button']}`}
+                onClick={() => {
+                  navigate(`/product/${product.id}/edit`, { state: product });
+                }}
+              >
+                Edit
+              </button>
+              <button
+                className={`mt-2 ${style['delete-product-button']}`}
+                onClick={() => {
+                  setModalShow(true);
+                }}
+              >
+                Hapus
+              </button>
+            </div>
+          </>
         ) : null}
       </div>
 
@@ -110,9 +119,7 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
               className={`mt-2 mx-1 px-3 ${style['delete-product-button']}`}
               onClick={async () => {
                 await dispatch(deleteProduct(product.id));
-                // navigate('/productlist');
-                window.location.reload();
-                setModalShow(false);
+                loadingDeleteProduct && setModalShow(false);
               }}
             >
               Hapus

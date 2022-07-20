@@ -1,25 +1,22 @@
-import React, { Fragment, useState } from "react";
-import axios from "axios";
-import { Row, Col, Spinner, Modal, Button, Form } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
+import React, { Fragment, useState } from 'react';
+import axios from 'axios';
+import { Row, Col, Spinner, Modal, Button, Form, Container } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 
-import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
-import CardProduct from "../../components/CardProduct/CardProduct";
-import {
-  getMyProfile,
-  getUserProfileById,
-} from "../../redux/Actions/ProfileAction";
-import { getProductBySellerId } from "../../redux/Actions/productAction";
-import { useNavigate, useParams } from "react-router-dom";
-import fi_eye from "../../assets/icons/fi_eye.png";
-import style from "./Profile.module.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import CardProduct from '../../components/CardProduct/CardProduct';
+import { getMyProfile, getUserProfileById } from '../../redux/Actions/ProfileAction';
+import { getProductBySellerId } from '../../redux/Actions/productAction';
+import { useNavigate, useParams } from 'react-router-dom';
+import fi_eye from '../../assets/icons/fi_eye.png';
+import style from './Profile.module.css';
 
-import Navbar from "../../components/Navbar/Navbar";
-import BottomNavigation from "../../components/BottomNavigation/BottomNavigation";
-import NoDataFound from "../../components/NoDataFound/NoDataFound";
+import Navbar from '../../components/Navbar/Navbar';
+import BottomNavigation from '../../components/BottomNavigation/BottomNavigation';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
-import Default_PP_Icon from "../../assets/icon/Default_PP_Icon.png";
+import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png';
 
 function Profile() {
   const navigate = useNavigate();
@@ -27,16 +24,16 @@ function Profile() {
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
 
-  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector(
-    (state) => state.myProfile
+  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
+  const { isLoading: loadingDataProductSeller, data: dataProductSeller } = useSelector(
+    (state) => state.productBySellerId
   );
-  const { isLoading: loadingDataProductSeller, data: dataProductSeller } =
-    useSelector((state) => state.productBySellerId);
-  const { isLoading: loadingDataUserProfileById, data: dataUserProfileById } =
-    useSelector((state) => state.userProfileById);
+  const { isLoading: loadingDataUserProfileById, data: dataUserProfileById } = useSelector(
+    (state) => state.userProfileById
+  );
 
   React.useEffect(() => {
-    document.title = "Profile";
+    document.title = 'Profile';
     dispatchUserID();
     dispatchProductSeller();
   }, [loadingDataMyProfile, loadingDataUserProfileById, id]);
@@ -54,10 +51,7 @@ function Profile() {
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-      <div
-        className={`${style["background-image-layer"]}`}
-        style={{ marginTop: "70px" }}
-      >
+      <div className={`${style['background-image-layer']}`} style={{ marginTop: '70px' }}>
         <img
           src={
             id
@@ -68,16 +62,13 @@ function Profile() {
               ? Default_PP_Icon
               : dataMyProfile.imageBackground
           }
-          className={`${style["background-image"]}`}
+          className={`${style['background-image']}`}
           alt=""
         />
       </div>
-      <section
-        className="d-flex justify-content-center"
-        style={{ marginTop: "-100px" }}
-      >
+      <section className="d-flex justify-content-center" style={{ marginTop: '-100px' }}>
         <ToastContainer
-          style={{ textAlign: "center" }}
+          style={{ textAlign: 'center' }}
           position="top-center"
           autoClose={5000}
           hideProgressBar={false}
@@ -88,7 +79,7 @@ function Profile() {
           draggable
           pauseOnHover
         />
-        <Row className={`mx-3 ${style["profile-card"]}`}>
+        <Row className={`mx-3 ${style['profile-card']}`}>
           <Col xs="auto" className="d-flex justify-content-center">
             {/* {console.log('dataMyProfile', dataMyProfile.image)} */}
             <img
@@ -101,12 +92,14 @@ function Profile() {
                   ? Default_PP_Icon
                   : dataMyProfile.imageShop
               }
-              className={`rounded-circle ${style["profile-picture"]}`}
+              className={`rounded-circle ${style['profile-picture']}`}
               alt=""
             />
           </Col>
           <Col className="w-100">
-            <h3 className={`${style['ellipsis-text']}`}>{id ? dataUserProfileById.nameShop : dataMyProfile.nameShop}</h3>
+            <h3 className={`${style['ellipsis-text']}`}>
+              {id ? dataUserProfileById.nameShop : dataMyProfile.nameShop}
+            </h3>
             <p className={`${style['ellipsis-text']}`}>
               {id ? dataUserProfileById.province : dataMyProfile.province},{' '}
               {id ? dataUserProfileById.city : dataMyProfile.city}
@@ -114,7 +107,7 @@ function Profile() {
             {id ? null : (
               <div className="d-flex align-items-center">
                 <button
-                  className={`w-100 me-3 ${style["action-edit-button"]}`}
+                  className={`w-100 me-3 ${style['action-edit-button']}`}
                   onClick={() => {
                     navigate('/mystore');
                   }}
@@ -123,7 +116,7 @@ function Profile() {
                 </button>
 
                 <button
-                  className={`${style["account-setting-button"]}`}
+                  className={`${style['account-setting-button']}`}
                   onClick={() => {
                     setModalShow(true);
                   }}
@@ -146,44 +139,28 @@ function Profile() {
         </Row>
       </section>
 
-      <Row
-        className={`mx-auto mt-5 pt-3`}
-        style={{ maxWidth: "800px", borderTop: "1px solid black" }}
-      >
+      {/* <Container className="d-flex justify-content-center" style={{ marginTop: '100px' }}>
+
+      </Container> */}
+      <Row className={`mx-auto mt-5 pt-3`} style={{ maxWidth: '800px', borderTop: '1px solid black' }}>
         {loadingDataProductSeller ? (
           <div className="text-center mt-5">
             <Spinner animation="border" />
           </div>
         ) : dataProductSeller.length <= 0 ? (
-          <>
-            {id ? null : (
-              <button
-                onClick={() => {
-                  navigate('/mystore')
-                }}
-              >
-                Buka Toko Sekarang
-              </button>
-            )}
-            <NoDataFound />
-          </>
+          <NoDataFound />
         ) : (
-          dataProductSeller.map((item) => {
-            return (
-              <Col
-                xl="4"
-                lg="4"
-                md="4"
-                sm="6"
-                xs="6"
-                className={`my-3`}
-                style={{ width: "maxContent" }}
-                key={item.id}
-              >
-                <CardProduct product={item} />
-              </Col>
-            );
-          })
+          dataProductSeller
+            .filter((e) => {
+              return e.status === 'available';
+            })
+            .map((item) => {
+              return (
+                <Col lg="3" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
+                  <CardProduct product={item} />
+                </Col>
+              );
+            })
         )}
       </Row>
       <BottomNavigation />
@@ -205,24 +182,41 @@ function ModalPopUp(props) {
   const [successAlert, setSuccessAlert] = useState(false);
   const [errorAlert, setErrorAlert] = useState(false);
   const [newPassword, newPasswordChange] = useState({
-    password: "",
-    newPassword: "",
-    confirmPassword: "",
+    password: '',
+    newPassword: '',
+    confirmPassword: '',
   });
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    oldPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  });
+  const [error, setError] = useState({
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const changePasswordHandler = async () => {
     setLoading(true);
 
-    if (newPassword.newPassword !== newPassword.confirmPassword) {
-      alert("Password tidak sama");
+    if (newPassword.password === '') {
+      setLoading(false);
+      return setError({ ...error, oldPassword: 'Masukan password anda yang sekarang' });
+    } else if (newPassword.password === newPassword.newPassword) {
+      setLoading(false);
+      return setError({ ...error, newPassword: 'Password baru tidak boleh sama dengan password lama' });
+    } else if (newPassword.newPassword !== newPassword.confirmPassword) {
+      setLoading(false);
+      return setError({ ...error, confirmPassword: 'Password tidak sama' });
     }
+
     try {
       const res = await axios({
-        method: "PUT",
+        method: 'PUT',
         url: `https://localla-api.herokuapp.com/api/v1/user/updatepassword`,
         data: {
           password: newPassword.password,
@@ -230,27 +224,27 @@ function ModalPopUp(props) {
           confirm_new_password: newPassword.confirmPassword,
         },
         headers: {
-          Authorization: `${localStorage.getItem("access_token")}`,
+          Authorization: `${localStorage.getItem('access_token')}`,
         },
       });
       if (res.status === 200) {
         setSuccessAlert(true);
         newPasswordChange({
-          password: "",
-          newPassword: "",
-          confirmPassword: "",
+          password: '',
+          newPassword: '',
+          confirmPassword: '',
         });
         setShow(false);
         setLoading(false);
-        toast.warn("Password Berhasil Diganti", {
-          position: "top-center",
+        toast.warn('Password Berhasil Diganti', {
+          position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: 'colored',
           icon: false,
         });
       }
@@ -259,14 +253,14 @@ function ModalPopUp(props) {
       setLoading(false);
       setErrorAlert(true);
       toast.error(err.response.data.message, {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: 'colored',
         icon: false,
       });
     }
@@ -277,18 +271,15 @@ function ModalPopUp(props) {
       <Modal
         {...props}
         aria-labelledby="contained-modal-title-vcenter"
-        dialogClassName={`${style["modal-size"]}`}
-        contentClassName={`${style["modal-style"]}`}
-        className={`${style["modal-centered"]}`}
+        dialogClassName={`${style['modal-size']}`}
+        contentClassName={`${style['modal-style']}`}
+        className={`${style['modal-centered']}`}
       >
         <Modal.Body className={`mx-3 my-4 p-0`}>
           <div className="text-center mb-3">
             <h5 className="fw-bold">Pengaturan Akun</h5>
           </div>
-          <div
-            className={`${style["account-setting-item"]}`}
-            onClick={handleShow}
-          >
+          <div className={`${style['account-setting-item']}`} onClick={handleShow}>
             <p className="m-0 w-100">Ubah Password</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -305,12 +296,12 @@ function ModalPopUp(props) {
             </svg>
           </div>
           <div
-            className={`${style["account-setting-item"]}`}
+            className={`${style['account-setting-item']}`}
             onClick={() => {
-              navigate("/editprofile");
+              navigate('/editprofile');
             }}
           >
-            <p className="m-0 w-100">Edit Profile</p>
+            <p className="m-0 w-100">Edit Profil</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -327,88 +318,112 @@ function ModalPopUp(props) {
           </div>
         </Modal.Body>
       </Modal>
-      <Modal show={show} onHide={handleClose}>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        aria-labelledby="contained-modal-title-vcenter"
+        dialogClassName={`${style['modal-size']}`}
+        contentClassName={`${style['modal-style']}`}
+        className={`${style['modal-centered']}`}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Change Password</Modal.Title>
+          <Modal.Title>Ubah Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Label className="fw-bolder mt-3">Password Lama</Form.Label>
-            <div className={`${style["password-holder"]}`}>
-              <input
-                className={`${style["password-input"]}`}
-                type={showPassword ? "text" : "password"}
-                placeholder="Masukkan password lama"
-                onChange={(e) => {
-                  newPasswordChange({
-                    ...newPassword,
-                    password: e.target.value,
-                  });
-                }}
-                required
-              />
-              <button
-                className={`${style["password-toggler"]}`}
-                type="button"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                <img src={fi_eye} alt="" />
-              </button>
-            </div>
+            <Form.Group classname="mb-3">
+              <Form.Label className="fw-bolder">Password Lama</Form.Label>
+              <div className={`${style['password-holder']}`}>
+                <input
+                  className={`${style['password-input']}`}
+                  type={showPassword.oldPassword ? 'text' : 'password'}
+                  placeholder="Masukkan password lama"
+                  onChange={(e) => {
+                    newPasswordChange({
+                      ...newPassword,
+                      password: e.target.value,
+                    });
+                    setError({ ...error, oldPassword: '' });
+                  }}
+                  required
+                />
+                <button
+                  className={`${style['password-toggler']}`}
+                  type="button"
+                  onClick={() => {
+                    setShowPassword({ ...showPassword, oldPassword: !showPassword.oldPassword });
+                  }}
+                >
+                  <img src={fi_eye} alt="" />
+                </button>
+              </div>
+              <Form.Text className="text-muted d-block m-0">
+                <strong className="text-danger">{error.oldPassword}</strong>
+              </Form.Text>
+            </Form.Group>
 
-            <Form.Label className="fw-bolder mt-3">Password Baru</Form.Label>
-            <div className={`${style["password-holder"]}`}>
-              <input
-                className={`${style["password-input"]}`}
-                type={showPassword ? "text" : "password"}
-                placeholder="Masukkan password baru"
-                onChange={(e) => {
-                  newPasswordChange({
-                    ...newPassword,
-                    newPassword: e.target.value,
-                  });
-                }}
-                required
-              />
-              <button
-                className={`${style["password-toggler"]}`}
-                type="button"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                <img src={fi_eye} alt="" />
-              </button>
-            </div>
+            <Form.Group classname="mb-3">
+              <Form.Label className="fw-bolder">Password Baru</Form.Label>
+              <div className={`${style['password-holder']}`}>
+                <input
+                  className={`${style['password-input']}`}
+                  type={showPassword.newPassword ? 'text' : 'password'}
+                  placeholder="Masukkan password baru"
+                  onChange={(e) => {
+                    newPasswordChange({
+                      ...newPassword,
+                      newPassword: e.target.value,
+                    });
+                    setError({ ...error, newPassword: '' });
+                  }}
+                  required
+                />
+                <button
+                  className={`${style['password-toggler']}`}
+                  type="button"
+                  onClick={() => {
+                    setShowPassword({ ...showPassword, newPassword: !showPassword.newPassword });
+                  }}
+                >
+                  <img src={fi_eye} alt="" />
+                </button>
+              </div>
+              <Form.Text className="text-muted d-block m-0">
+                <strong className="text-danger">{error.newPassword}</strong>
+              </Form.Text>
+            </Form.Group>
 
-            <Form.Label className="fw-bolder mt-3">
-              Konfirmasi Password Baru{" "}
-            </Form.Label>
-            <div className={`${style["password-holder"]}`}>
-              <input
-                className={`${style["password-input"]}`}
-                type={showPassword ? "text" : "password"}
-                placeholder="Konfirmasi password baru"
-                onChange={(e) => {
-                  newPasswordChange({
-                    ...newPassword,
-                    confirmPassword: e.target.value,
-                  });
-                }}
-                required
-              />
-              <button
-                className={`${style["password-toggler"]}`}
-                type="button"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                <img src={fi_eye} alt="" />
-              </button>
-            </div>
+            <Form.Group classname="mb-3">
+              <Form.Label className="fw-bolder">Konfirmasi Password Baru </Form.Label>
+              <div className={`${style['password-holder']}`}>
+                <input
+                  className={`${style['password-input']}`}
+                  type={showPassword.confirmPassword ? 'text' : 'password'}
+                  placeholder="Konfirmasi password baru"
+                  onChange={(e) => {
+                    newPasswordChange({
+                      ...newPassword,
+                      confirmPassword: e.target.value,
+                    });
+                    setError({ ...error, confirmPassword: '' });
+                  }}
+                  required
+                />
+                <button
+                  className={`${style['password-toggler']}`}
+                  type="button"
+                  onClick={() => {
+                    setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword });
+                  }}
+                >
+                  <img src={fi_eye} alt="" />
+                </button>
+              </div>
+              <Form.Text className="text-muted d-block m-0">
+                <strong className="text-danger">{error.confirmPassword}</strong>
+              </Form.Text>
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -418,21 +433,21 @@ function ModalPopUp(props) {
             <>
               <Button
                 style={{
-                  backgroundColor: "transparent",
-                  border: "none",
-                  color: "#f6a833",
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#f6a833',
                 }}
                 onClick={handleClose}
               >
-                Cancel
+                Batalkan
               </Button>
               <Button
                 type="submit"
                 onClick={changePasswordHandler}
-                style={{ backgroundColor: "#f6a833", border: "none" }}
+                style={{ backgroundColor: '#f6a833', border: 'none' }}
               >
-                Save Changes
-              </Button>{" "}
+                Ubah Password
+              </Button>{' '}
             </>
           )}
         </Modal.Footer>
