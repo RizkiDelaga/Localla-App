@@ -1,62 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import { Spinner, Modal, Button, Form } from "react-bootstrap";
 
-const ChangePassword = () => {
+import fi_eye from "../../assets/icons/fi_eye.png";
+
+import style from "./ChangePassword.module.css";
+
+const ChangePassword = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <>
-      <Modal
-        {...props}
-        aria-labelledby="contained-modal-title-vcenter"
-        dialogClassName={`${style["modal-size"]}`}
-        contentClassName={`${style["modal-style"]}`}
-        className={`${style["modal-centered"]}`}
-      >
-        <Modal.Body className={`mx-3 my-4 p-0`}>
-          <div className="text-center mb-3">
-            <h5 className="fw-bold">Pengaturan Akun</h5>
-          </div>
-          <div
-            className={`${style["account-setting-item"]}`}
-            onClick={handleShow}
-          >
-            <p className="m-0 w-100">Ubah Password</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              class="bi bi-chevron-right"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-              />
-            </svg>
-          </div>
-          <div
-            className={`${style["account-setting-item"]}`}
-            onClick={() => {
-              navigate("/editprofile");
-            }}
-          >
-            <p className="m-0 w-100">Edit Profile</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              class="bi bi-chevron-right"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-              />
-            </svg>
-          </div>
-        </Modal.Body>
-      </Modal>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
@@ -69,8 +23,8 @@ const ChangePassword = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Masukkan password lama"
                 onChange={(e) => {
-                  newPasswordChange({
-                    ...newPassword,
+                  props.newPasswordChange({
+                    ...props.newPassword,
                     password: e.target.value,
                   });
                 }}
@@ -93,9 +47,10 @@ const ChangePassword = () => {
                 className={`${style["password-input"]}`}
                 type={showPassword ? "text" : "password"}
                 placeholder="Masukkan password baru"
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                 onChange={(e) => {
-                  newPasswordChange({
-                    ...newPassword,
+                  props.newPasswordChange({
+                    ...props.newPassword,
                     newPassword: e.target.value,
                   });
                 }}
@@ -121,8 +76,8 @@ const ChangePassword = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Konfirmasi password baru"
                 onChange={(e) => {
-                  newPasswordChange({
-                    ...newPassword,
+                  props.newPasswordChange({
+                    ...props.newPassword,
                     confirmPassword: e.target.value,
                   });
                 }}
@@ -141,7 +96,7 @@ const ChangePassword = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          {loading ? (
+          {props.loading ? (
             <Spinner animation="border" variant="primary" />
           ) : (
             <>
@@ -151,13 +106,13 @@ const ChangePassword = () => {
                   border: "none",
                   color: "#f6a833",
                 }}
-                onClick={handleClose}
+                onClick={props.handleClose}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                onClick={changePasswordHandler}
+                onClick={props.changePasswordHandler}
                 style={{ backgroundColor: "#f6a833", border: "none" }}
               >
                 Save Changes

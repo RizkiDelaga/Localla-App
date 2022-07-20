@@ -17,12 +17,14 @@ import BottomNavigation from '../../components/BottomNavigation/BottomNavigation
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png';
+import ChangePassword from "../../components/ChangePassword/ChangePassword";
 
 function Profile() {
   const navigate = useNavigate();
   let { id } = useParams();
   const dispatch = useDispatch();
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [image, setImage] = useState(null);
 
   const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
   const { isLoading: loadingDataProductSeller, data: dataProductSeller } = useSelector(
@@ -48,23 +50,96 @@ function Profile() {
       : dispatch(getProductBySellerId(id ? id : dataMyProfile.id));
   };
 
+  const handleImage = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleChangeBackground = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("image", image);
+    try {
+      const res = await axios({
+        method: "put",
+        url: "https://localla-api.herokuapp.com/api/v1/user/image",
+        data: formData,
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      if (res.status === 200) {
+        toast.warn("Change background success", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          icon: false,
+        });
+        dispatchUserID();
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error("Please select a valid image", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        icon: false,
+      });
+    }
+  };
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Header style={{ backgroundColor: "#f6a833" }} as="h3">
+        Change Background
+      </Popover.Header>
+      <Popover.Body>
+        <input type="file" name="image" onChange={handleImage} required />
+        <button className={style["btn-bg"]} onClick={handleChangeBackground}>
+          Change
+        </button>
+      </Popover.Body>
+    </Popover>
+  );
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-      <div className={`${style['background-image-layer']}`} style={{ marginTop: '70px' }}>
-        <img
-          src={
-            id
-              ? dataUserProfileById.imageBackground === null
+      <div
+        className={`${style["background-image-layer"]}`}
+        style={{ marginTop: "70px" }}
+      >
+        <OverlayTrigger
+          trigger="click"
+          placement="bottom-start"
+          overlay={popover}
+        >
+          <img
+            src={
+              id
+                ? dataUserProfileById.imageBackground === null
+                  ? Default_PP_Icon
+                  : dataUserProfileById.imageBackground
+                : dataMyProfile.imageBackground === null
                 ? Default_PP_Icon
-                : dataUserProfileById.imageBackground
-              : dataMyProfile.imageBackground === null
-              ? Default_PP_Icon
-              : dataMyProfile.imageBackground
-          }
-          className={`${style['background-image']}`}
-          alt=""
-        />
+                : dataMyProfile.imageBackground
+            }
+            className={`${style["background-image"]}`}
+            alt=""
+          />
+        </OverlayTrigger>
       </div>
       <section className="d-flex justify-content-center" style={{ marginTop: '-100px' }}>
         <ToastContainer
@@ -81,7 +156,6 @@ function Profile() {
         />
         <Row className={`mx-3 ${style['profile-card']}`}>
           <Col xs="auto" className="d-flex justify-content-center">
-            {/* {console.log('dataMyProfile', dataMyProfile.image)} */}
             <img
               src={
                 id
@@ -109,10 +183,12 @@ function Profile() {
                 <button
                   className={`w-100 me-3 ${style['action-edit-button']}`}
                   onClick={() => {
-                    navigate('/mystore');
+                    navigate("/mystore");
                   }}
                 >
-                  {dataMyProfile.nameShop && dataMyProfile.imageShop ? 'Edit Toko' : 'Buka Toko'}
+                  {dataMyProfile.nameShop && dataMyProfile.imageShop
+                    ? "Edit Toko"
+                    : "Buka Toko"}
                 </button>
 
                 <button
@@ -178,9 +254,7 @@ function Profile() {
 function ModalPopUp(props) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [successAlert, setSuccessAlert] = useState(false);
-  const [errorAlert, setErrorAlert] = useState(false);
+
   const [newPassword, newPasswordChange] = useState({
     password: '',
     newPassword: '',
@@ -197,6 +271,7 @@ function ModalPopUp(props) {
     newPassword: '',
     confirmPassword: '',
   });
+  const [loading, setLoading] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -228,7 +303,6 @@ function ModalPopUp(props) {
         },
       });
       if (res.status === 200) {
-        setSuccessAlert(true);
         newPasswordChange({
           password: '',
           newPassword: '',
@@ -247,11 +321,11 @@ function ModalPopUp(props) {
           theme: 'colored',
           icon: false,
         });
+        console.log(newPassword);
       }
     } catch (err) {
       console.log(err.response);
       setLoading(false);
-      setErrorAlert(true);
       toast.error(err.response.data.message, {
         position: 'top-center',
         autoClose: 5000,
@@ -263,9 +337,9 @@ function ModalPopUp(props) {
         theme: 'colored',
         icon: false,
       });
+      console.log(newPassword);
     }
   };
-
   return (
     <>
       <Modal
@@ -318,7 +392,7 @@ function ModalPopUp(props) {
           </div>
         </Modal.Body>
       </Modal>
-
+      
       <Modal
         show={show}
         onHide={handleClose}

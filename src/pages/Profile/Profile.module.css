@@ -9,6 +9,15 @@
   object-fit: cover;
 }
 
+.btn-bg {
+  margin-top: 15px;
+  border: none;
+  background-color: #f6a833;
+  border-radius: 5px;
+  padding: 5px 20px;
+  width: 100%;
+}
+
 .profile-card {
   display: flex;
   justify-content: center;
