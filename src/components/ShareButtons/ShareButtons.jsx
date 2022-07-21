@@ -9,8 +9,6 @@ import Mail_Icon from "../../assets/icons/Mail_Icon.png";
 import twitter from "../../assets/icons/twitter.png";
 
 const ShareButtons = (props) => {
-  console.log(window.location.href);
-  console.log(props);
   return (
     <div className={`my-3 ${style["share-product"]}`}>
       <Row className="justify-content-center">
@@ -26,7 +24,11 @@ const ShareButtons = (props) => {
               rel="noopener noreferrer"
             >
               <button className={`${style["share-btn"]}`}>
-                <img src={Facebook_Icon} alt="" style={{ height: "25px" }} />
+                <img
+                  src={Facebook_Icon}
+                  alt="fb-icon"
+                  style={{ height: "25px" }}
+                />
               </button>
             </a>
             <a
@@ -35,7 +37,7 @@ const ShareButtons = (props) => {
               rel="noopener noreferrer"
             >
               <button className={`${style["share-btn"]}`}>
-                <img src={twitter} alt="" style={{ height: "25px" }} />
+                <img src={twitter} alt="twt-icon" style={{ height: "25px" }} />
               </button>
             </a>
 
@@ -45,7 +47,7 @@ const ShareButtons = (props) => {
               rel="noopener noreferrer"
             >
               <button className={`${style["share-btn"]}`}>
-                <img src={reddit} alt="" style={{ height: "25px" }} />
+                <img src={reddit} alt="red-icon" style={{ height: "25px" }} />
               </button>
             </a>
 
@@ -55,7 +57,7 @@ const ShareButtons = (props) => {
               rel="noopener noreferrer"
             >
               <button className={`${style["share-btn"]}`}>
-                <img src={hacker} alt="" style={{ height: "25px" }} />
+                <img src={hacker} alt="hck-icon" style={{ height: "25px" }} />
               </button>
             </a>
 
@@ -65,7 +67,11 @@ const ShareButtons = (props) => {
               rel="noopener noreferrer"
             >
               <button className={`${style["share-btn"]}`}>
-                <img src={Mail_Icon} alt="" style={{ height: "25px" }} />
+                <img
+                  src={Mail_Icon}
+                  alt="mail-icon"
+                  style={{ height: "25px" }}
+                />
               </button>
             </a>
           </div>
@@ -80,11 +86,11 @@ const ShareButtons = (props) => {
             width="20"
             height="100%"
             fill={props.id ? "red" : "black"}
-            class="bi bi-heart-fill"
+            className="bi bi-heart-fill"
             viewBox="0 0 16 16"
           >
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
             />
           </svg>

@@ -1,6 +1,6 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import MyProfile from "./profile";
+import MyProfile from "./Myprofile";
 
 afterEach(cleanup);
 

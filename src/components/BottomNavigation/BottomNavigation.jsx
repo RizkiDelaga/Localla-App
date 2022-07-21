@@ -48,7 +48,7 @@ const BottomNavigation = () => {
               navigate(item.link);
             }}
           >
-            <img src={item.img} alt="" />
+            <img src={item.img} alt="item-img" />
             <h6 className={` m-0 ${style["text"]}`}>{item.text}</h6>
           </div>
         );
