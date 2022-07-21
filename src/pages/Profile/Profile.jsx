@@ -206,31 +206,29 @@ function Profile() {
         </Row>
       </section>
 
-      {/* <Container className="d-flex justify-content-center" style={{ marginTop: '100px' }}>
-
-      </Container> */}
-      <Row className={`mx-auto mt-5 pt-3`} style={{ maxWidth: '800px', borderTop: '1px solid black' }}>
-        {loadingDataProductSeller ? (
-          <div className="text-center mt-5">
-            <Spinner animation="border" />
-          </div>
-        ) : dataProductSeller.length <= 0 ? (
-          <NoDataFound />
-        ) : (
-          dataProductSeller
-            .filter((e) => {
-              return e.status === 'Available';
-            })
-            .map((item) => {
-              return (
-                <Col lg="3" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
-                  <CardProduct product={item} />
-                </Col>
-              );
-            })
-        )}
-      </Row>
-      <BottomNavigation />
+      <Container style={{ marginBottom: '50px' }}>
+        <Row className={`mx-auto mt-5 pt-3`} style={{ maxWidth: '800px', borderTop: '1px solid black' }}>
+          {loadingDataProductSeller ? (
+            <div className="text-center mt-5">
+              <Spinner animation="border" />
+            </div>
+          ) : dataProductSeller.length <= 0 ? (
+            <NoDataFound />
+          ) : (
+            dataProductSeller
+              .filter((e) => {
+                return e.status === 'Available';
+              })
+              .map((item) => {
+                return (
+                  <Col lg="3" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
+                    <CardProduct product={item} />
+                  </Col>
+                );
+              })
+          )}
+        </Row>
+      </Container>
 
       <ModalPopUp
         show={modalShow}

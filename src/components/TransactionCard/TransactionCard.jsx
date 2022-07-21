@@ -8,12 +8,12 @@ import {
   getTransactionByProductID,
   updateTransaction,
 } from '../../redux/Actions/TransactionAction';
-import style from './ProductOfferList.module.css';
+import style from './TransactionCard.module.css';
 
 import Image1 from '../../assets/images/image1.jpg';
 import Whatsapp_Icon from '../../assets/icons/Whatsapp_Icon.png';
 
-function ProductOfferList({
+function TransactionCard({
   dispatchType,
   IDProduct,
   showButtonAction,
@@ -97,7 +97,7 @@ function ProductOfferList({
               <Accordion.Item eventKey="0">
                 <Accordion.Header className="py-0">
                   {/* <div> */}
-                  <Row className={`w-100 ${style['flex-condition']}`}>
+                  <Row className={`${style['flex-condition']}`}>
                     <Col lg="2" md="2" sm="3" xs="3" className="pe-0" style={{ minWidth: '120px' }}>
                       <img
                         src={item.image_url === null ? null : item.image_url.url[0]}
@@ -368,4 +368,4 @@ function ModalPopUp(props) {
   );
 }
 
-export default ProductOfferList;
+export default TransactionCard;

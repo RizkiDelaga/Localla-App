@@ -39,6 +39,7 @@ a {
 /* Accordion Start*/
 
 .accordion-button {
+    justify-content: center;
     background-color: transparent !important;
     border: none !important;
     padding: 0px 20px !important;

@@ -40,7 +40,7 @@ function ProductForm() {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     maxFiles: 1,
-    maxSize: 10000,
+    maxSize: 5000000,
     accept: {
       'image/*': [],
     },
@@ -212,7 +212,7 @@ function ProductForm() {
     <Fragment>
       <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
 
-      <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
+      <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px', marginBottom: '50px' }}>
         <section style={{ width: '100%', maxWidth: '800px' }}>
           <h5 className={`mb-5 text-center`}>Lengkapi Data Produk</h5>
 
@@ -417,7 +417,7 @@ function ProductForm() {
               {loadingUploadData || loadingDataMyProfile ? (
                 (state ? (state.id ? loadingEditProduct : loadingCreateProduct) : loadingCreateProduct) ? (
                   <div className={`${style['loading-upload-data']}`}>
-                    <Spinner animation="border" />
+                    <Spinner animation="border" variant="warning" />
                   </div>
                 ) : (
                   navigate('/productlist')

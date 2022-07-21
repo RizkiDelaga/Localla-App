@@ -38,7 +38,7 @@ function LandingPage() {
       listProduct.map((item) => {
         return (
           <Col xl="2" lg="3" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
-            {console.log("item.. ", item)}
+            {console.log('item.. ', item)}
             <CardProduct product={item} />
           </Col>
         );
@@ -50,7 +50,7 @@ function LandingPage() {
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} transparentFade={true} />
       <Banner />
-      <Container className="p-0 my-5">
+      <Container className="p-0 mt-5" style={{ marginBottom: '70px' }}>
         <div className={`${style['horizontal-scroll']}`}>
           <ToggleButtonGroup
             type="radio"
@@ -235,24 +235,26 @@ function LandingPage() {
         </Row>
       </Container>
 
-      <button
-        className={`d-flex align-items-center ${style['btn-add-product']}`}
-        onClick={() => {
-          navigate('product/addproduct');
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          fill="currentColor"
-          class="bi bi-plus"
-          viewBox="0 0 16 16"
+      {localStorage.getItem('access_token') ? (
+        <button
+          className={`d-flex align-items-center ${style['btn-add-product']}`}
+          onClick={() => {
+            navigate('product/addproduct');
+          }}
         >
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-        Jual
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="40"
+            fill="currentColor"
+            class="bi bi-plus"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+          </svg>
+          Jual
+        </button>
+      ) : null}
     </Fragment>
   );
 }
