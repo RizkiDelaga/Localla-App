@@ -10,6 +10,7 @@ import style from './ProductForm.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 
 import Plus_Icon from '../../assets/icon/Plus_Icon.png';
+import { getMyProfile } from '../../redux/Actions/ProfileAction.js';
 
 function ProductForm() {
   let { state } = useLocation();
@@ -31,6 +32,7 @@ function ProductForm() {
   });
 
   const dispatch = useDispatch();
+  const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
   const { isLoading: loadingCreateProduct, data: dataCreateProduct } = useSelector((state) => state.createProduct);
   const { isLoading: loadingEditProduct, data: dataEditProduct } = useSelector((state) => state.editProduct);
 
@@ -99,6 +101,10 @@ function ProductForm() {
   ));
 
   const submitHandler = () => {
+    if (dataMyProfile.nameShop === null || dataMyProfile.imageShop === null) {
+      return alert('Toko anda belum dibuka! ');
+    }
+
     const formData = new FormData();
     console.log('files..123 ', files.length <= 0);
     console.log('dataProduct.status ', dataProduct.status);
@@ -146,6 +152,7 @@ function ProductForm() {
 
   React.useEffect(() => {
     document.title = state ? 'Edit Produk' : 'Tambah Produk';
+    dispatch(getMyProfile());
     refreshForm();
   }, []);
 
@@ -165,7 +172,7 @@ function ProductForm() {
         category: '',
         description: '',
         price: '',
-        status: 'available',
+        status: 'Available',
         image: [],
       });
       setFiles([]);
@@ -349,13 +356,13 @@ function ProductForm() {
                 }}
                 required
               >
-                <option value="available" style={{ color: '#000' }}>
-                  available
+                <option value="Available" style={{ color: '#000' }}>
+                  Available
                 </option>
                 {state ? (
                   state.id ? (
-                    <option value="sold" style={{ color: '#000' }}>
-                      sold
+                    <option value="Sold" style={{ color: '#000' }}>
+                      Sold
                     </option>
                   ) : null
                 ) : null}
@@ -407,7 +414,7 @@ function ProductForm() {
               </button>
 
               {console.log('state addproduct', state)}
-              {loadingUploadData ? (
+              {loadingUploadData || loadingDataMyProfile ? (
                 (state ? (state.id ? loadingEditProduct : loadingCreateProduct) : loadingCreateProduct) ? (
                   <div className={`${style['loading-upload-data']}`}>
                     <Spinner animation="border" />

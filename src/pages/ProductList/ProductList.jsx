@@ -161,21 +161,21 @@ function ProductList() {
                 ? productItems(
                     loadingProductSeller,
                     dataProductSeller.filter((e) => {
-                      return e.status === 'available';
+                      return e.status === 'Available';
                     })
                   )
                 : changeCategory === 'Interested'
                 ? productItems(
                     loadingProductSeller,
                     dataProductSeller.filter((e) => {
-                      return e.status === 'available';
+                      return e.status === 'Available';
                     })
                   )
                 : changeCategory === 'Sold'
                 ? productItems(
                     loadingProductSeller,
                     dataProductSeller.filter((e) => {
-                      return e.status === 'sold';
+                      return e.status === 'Sold';
                     })
                   )
                 : null}

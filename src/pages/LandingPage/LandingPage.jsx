@@ -38,6 +38,7 @@ function LandingPage() {
       listProduct.map((item) => {
         return (
           <Col xl="2" lg="3" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
+            {console.log("item.. ", item)}
             <CardProduct product={item} />
           </Col>
         );
@@ -171,63 +172,63 @@ function LandingPage() {
             ? productItems(
                 loadingProduct,
                 dataProduct.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Kaos'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Kemeja'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Pakaian Olahraga'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Celana'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Sepatu'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Sandal'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Tas'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : changeCategory === 'Aksesoris'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
-                  return e.status === 'available';
+                  return e.status === 'Available';
                 })
               )
             : null}

@@ -15,7 +15,7 @@ function DetailMyTransaction() {
       <Navbar logo={true} backButton="true" normalTitle="Info Penawar" />
       <Container className="d-flex justify-content-center" style={{ marginTop: '100px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
-          <CardUser userDetail={state.item} />
+          <CardUser sellerDetail={state.item} />
           <h6 className={`fw-bold my-4`}>Detail transaksi</h6>
           <ProductOfferList showButtonCallSeller={true} data={state.item} />
         </div>

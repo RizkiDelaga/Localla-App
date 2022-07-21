@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { Container, Row, Col, Button, Modal, Form, Accordion } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal, Form, Accordion, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   getAllMyTransaction,
   getAllTransactionForSeller,
@@ -13,7 +13,16 @@ import style from './ProductOfferList.module.css';
 import Image1 from '../../assets/images/image1.jpg';
 import Whatsapp_Icon from '../../assets/icons/Whatsapp_Icon.png';
 
-function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, showButtonCallSeller, isSeller }) {
+function ProductOfferList({
+  dispatchType,
+  IDProduct,
+  showButtonAction,
+  data,
+  directionTo,
+  showButtonCallSeller,
+  isSeller,
+}) {
+  let { idtransaction } = useParams();
   const navigate = useNavigate();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalUpdateStatus, setModalUpdateStatus] = React.useState();
@@ -22,6 +31,7 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
     isLoading: true,
     data: [],
   });
+  const [loadingUpdateStatus, setLoadingUpdateStatus] = React.useState(false);
 
   const dispatch = useDispatch();
   const { isLoading: loadingTransactionForSeller, data: dataTransactionForSeller } = useSelector(
@@ -31,8 +41,14 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
   const { isLoading: loadingTransactionByProductID, data: dataTransactionByProductID } = useSelector(
     (state) => state.transactionByProductID
   );
+  const { isLoading: loadingUpdateTransaction, data: dataUpdateTransaction } = useSelector(
+    (state) => state.updateTransaction
+  );
 
   React.useEffect(() => {
+    // setDataTransaction({ isLoading: true, data: [] });
+    console.log('isLoading: true', dataTransaction.isLoading);
+
     if (dispatchType === 'transaction for seller') {
       dispatch(getAllTransactionForSeller());
       setDataTransaction({ isLoading: loadingTransactionForSeller, data: dataTransactionForSeller });
@@ -40,15 +56,18 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
       dispatch(getAllMyTransaction());
       setDataTransaction({ isLoading: loadingMyTransaction, data: dataMyTransaction });
     } else if (dispatchType === 'transaction by product id') {
-      dispatch(getTransactionByProductID());
+      handleDispatch();
+      console.log('dataTransactionByProductID', dataTransactionByProductID);
       setDataTransaction({ isLoading: loadingTransactionByProductID, data: dataTransactionByProductID });
     } else {
       setDataTransaction({ isLoading: false, data: [data] });
     }
-  }, [loadingTransactionForSeller, loadingMyTransaction, loadingTransactionByProductID]);
+    console.log('isLoading: true', dataTransaction.isLoading);
+    console.log('isLoading: true', data);
+  }, [loadingTransactionForSeller, loadingMyTransaction, loadingTransactionByProductID, dataTransaction.isLoading]);
 
   const handleDispatch = async () => {
-    await dispatch(getAllTransactionForSeller());
+    await dispatch(getTransactionByProductID(IDProduct));
   };
   console.log('bidder data', data);
 
@@ -80,7 +99,11 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
                   {/* <div> */}
                   <Row className={`w-100 ${style['flex-condition']}`}>
                     <Col lg="2" md="2" sm="3" xs="3" className="pe-0" style={{ minWidth: '120px' }}>
-                      <img src={item.image_url.url[0]} className={`${style['product-image']}`} alt="" />
+                      <img
+                        src={item.image_url === null ? null : item.image_url.url[0]}
+                        className={`${style['product-image']}`}
+                        alt=""
+                      />
                     </Col>
                     <Col
                       className={`d-flex flex-column justify-content-center px-3`}
@@ -91,7 +114,7 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
                           {item.status}
                         </p>
                         <p className={`text-secondary mb-2 text-end`} style={{ fontSize: '14px' }}>
-                          20 Apr, 14:04
+                          {item.transactionDate.slice(0, 10)}
                         </p>
                       </div>
                       <h6 className={`my-1`}>{item.detailproduct.title}</h6>
@@ -110,11 +133,11 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
                 </Accordion.Header>
                 <Accordion.Body className="py-0">
                   {showButtonCallSeller ? (
-                    item.status === 'accept' ? (
+                    item.status === 'Accept' ? (
                       <button
                         className={`mt-2 ${style.btnDecision}`}
                         onClick={() => {
-                          if (item.status === 'accept') {
+                          if (item.status === 'Accept') {
                             // setTransactionItem(item);
                             setModalUpdateStatus(false);
                             setModalShow(true);
@@ -123,8 +146,8 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
                           }
                         }}
                       >
-                        {item.status === 'accept' ? 'Hubungi Seller via' : item.status}
-                        {item.status === 'accept' ? (
+                        {item.status === 'Accept' ? 'Hubungi Seller via' : item.status}
+                        {item.status === 'Accept' ? (
                           <img src={Whatsapp_Icon} className="ms-1" width="25" alt="" />
                         ) : null}
                       </button>
@@ -133,46 +156,56 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
                     )
                   ) : null}
                   {showButtonAction ? (
-                    item.status === 'declined' || item.status === 'sold' || item.status === 'cancle' ? (
+                    item.status === 'Declined' || item.status === 'Sold' || item.status === 'Cancel' ? (
                       <div className="d-flex justify-content-center py-2">
                         <h4 className="m-0">{item.status}</h4>
                       </div>
                     ) : (
                       <>
-                        <Col xs={12} className={`d-flex justify-content-end ${style['button-action']}`}>
-                          <button
-                            className={`mt-2 ${style.btnDecision}`}
-                            onClick={() => {
-                              if (item.status === 'accept') {
-                                // setTransactionItem(item);
-                                setModalUpdateStatus(true);
-                                setModalShow(true);
-                              } else {
-                                dispatch(updateTransaction(item.id, { status: 'declined' }));
-                              }
-                            }}
-                          >
-                            {item.status === 'accept' ? 'Update Status' : 'Tolak'}
-                          </button>
-                          <button
-                            className={`mt-2 ${style.btnDecision}`}
-                            onClick={() => {
-                              if (item.status === 'accept') {
-                                // setTransactionItem(item);
-                                setModalUpdateStatus(false);
-                                setModalShow(true);
-                              } else {
-                                dispatch(updateTransaction(item.id, { status: 'accept' }));
-                                navigate('/product/transaction');
-                              }
-                            }}
-                          >
-                            {item.status === 'accept' ? 'Hubungi di' : 'Terima'}
-                            {item.status === 'accept' ? (
-                              <img src={Whatsapp_Icon} className="ms-1" width="25" alt="" />
-                            ) : null}
-                          </button>
-                        </Col>
+                        {loadingUpdateStatus ? (
+                          loadingUpdateTransaction ? (
+                            <div className={`text-center ${style['loading-upload-data']}`}>
+                              <Spinner animation="border" />
+                            </div>
+                          ) : (
+                            navigate('/productlist')
+                          )
+                        ) : (
+                          <Col xs={12} className={`d-flex justify-content-end ${style['button-action']}`}>
+                            <button
+                              className={`mt-2 ${style.btnDecision}`}
+                              onClick={() => {
+                                if (item.status === 'Accept') {
+                                  setModalUpdateStatus(true);
+                                  setModalShow(true);
+                                } else {
+                                  dispatch(updateTransaction(item.id, { status: 'Declined' }));
+                                  setLoadingUpdateStatus(true);
+                                }
+                              }}
+                            >
+                              {item.status === 'Accept' ? 'Update Status' : 'Tolak'}
+                            </button>
+                            {/* {loadingTransactionForSeller || loadingTransactionByProductID ? null : navigate('/product')} */}
+                            <button
+                              className={`mt-2 ${style.btnDecision}`}
+                              onClick={() => {
+                                if (item.status === 'Accept') {
+                                  setModalUpdateStatus(false);
+                                  setModalShow(true);
+                                } else {
+                                  dispatch(updateTransaction(item.id, { status: 'Accept' }));
+                                  setLoadingUpdateStatus(true);
+                                }
+                              }}
+                            >
+                              {item.status === 'Accept' ? 'Hubungi di' : 'Terima'}
+                              {item.status === 'Accept' ? (
+                                <img src={Whatsapp_Icon} className="ms-1" width="25" alt="" />
+                              ) : null}
+                            </button>
+                          </Col>
+                        )}
                       </>
                     )
                   ) : null}
@@ -181,11 +214,10 @@ function ProductOfferList({ dispatchType, showButtonAction, data, directionTo, s
             </Accordion>
             // </div>
           ))}
-      {dataTransaction.isLoading ? (
-        'loading'
-      ) : modalShow ? (
+      {dataTransaction.isLoading ? null : modalShow ? (
         <ModalPopUp
           data={data}
+          idtransaction={idtransaction}
           isUpdateStatus={modalUpdateStatus}
           show={modalShow}
           onHide={() => {
@@ -201,6 +233,8 @@ function ModalPopUp(props) {
   const [modalUpdateStatus, setModalUpdateStatus] = React.useState(props.isUpdateStatus);
   const [value, setValue] = React.useState(false);
   console.log('data data data', props.data);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   React.useEffect(() => {}, [props.data.data]);
 
@@ -224,7 +258,7 @@ function ModalPopUp(props) {
             <Row className={`mb-3`}>
               <Col xs="4">
                 <img
-                  src={Image1}
+                  src={props.data.owner.imageShop}
                   style={{
                     width: '100%',
                     maxWidth: 'max-content',
@@ -238,17 +272,18 @@ function ModalPopUp(props) {
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <p className={`mb-1`} style={{ fontSize: '14px', fontWeight: '500' }}>
-                  {props.data.detailproduct.title}
+                  {props.data.owner.nameShop}
                 </p>
                 <p className={`text-secondary my-0`} style={{ fontSize: '14px' }}>
-                  Kota
+                  {props.data.owner.province}
+                  {', '} {props.data.owner.city}
                 </p>
               </Col>
             </Row>
             <Row>
               <Col xs="4">
                 <img
-                  src={Image1}
+                  src={props.data.image_url.url[0]}
                   style={{
                     width: '100%',
                     maxWidth: 'max-content',
@@ -282,9 +317,9 @@ function ModalPopUp(props) {
               name="status"
               label="Berhasil terjual"
               type="radio"
-              checked={value === 'Sold Out'}
+              checked={value === 'Sold'}
               onClick={(e) => {
-                setValue('Sold Out');
+                setValue('Sold');
               }}
             />
             <Form.Label className={`mb-4 ms-4 text-secondary`} style={{ fontSize: '14px' }}>
@@ -311,7 +346,20 @@ function ModalPopUp(props) {
       <Modal.Footer className={`px-4 py-4 border-0`}>
         <Button
           className={`m-0 ${style['modal-button-action']}`}
-          disabled={!modalUpdateStatus ? false : value === false}
+          onClick={() => {
+            console.log('props.dispatchType', props.idtransaction);
+            if (!modalUpdateStatus) {
+              window.open(
+                `https://api.whatsapp.com/send?phone=${
+                  props.idtransaction !== undefined ? props.data.buyer.phone : props.data.owner.phone
+                }`,
+                '_blank'
+              );
+            } else {
+              dispatch(updateTransaction(props.data.id, { status: value }));
+              navigate('/productlist');
+            }
+          }}
         >
           {!modalUpdateStatus ? 'Hubungi via Whatsapp' : 'Kirim'}
         </Button>

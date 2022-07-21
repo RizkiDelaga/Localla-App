@@ -151,7 +151,7 @@ export const transactionByProductIDReducer = (state = initialState, action) => {
     switch (type) {
         case `${GET_TRANSACTION_BY_PRODUCT_ID}_LOADING`:
             return {
-                ...state
+                ...state,
             };
         case `${GET_TRANSACTION_BY_PRODUCT_ID}_FULFILLED`:
             return {

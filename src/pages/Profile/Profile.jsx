@@ -219,7 +219,7 @@ function Profile() {
         ) : (
           dataProductSeller
             .filter((e) => {
-              return e.status === 'available';
+              return e.status === 'Available';
             })
             .map((item) => {
               return (
@@ -244,93 +244,8 @@ function Profile() {
 
 function ModalPopUp(props) {
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
+  const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
 
-  const [newPassword, newPasswordChange] = useState({
-    password: '',
-    newPassword: '',
-    confirmPassword: '',
-  });
-
-  const [showPassword, setShowPassword] = useState({
-    oldPassword: false,
-    newPassword: false,
-    confirmPassword: false,
-  });
-  const [error, setError] = useState({
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-  });
-  const [loading, setLoading] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const changePasswordHandler = async () => {
-    setLoading(true);
-
-    if (newPassword.password === '') {
-      setLoading(false);
-      return setError({ ...error, oldPassword: 'Masukan password anda yang sekarang' });
-    } else if (newPassword.password === newPassword.newPassword) {
-      setLoading(false);
-      return setError({ ...error, newPassword: 'Password baru tidak boleh sama dengan password lama' });
-    } else if (newPassword.newPassword !== newPassword.confirmPassword) {
-      setLoading(false);
-      return setError({ ...error, confirmPassword: 'Password tidak sama' });
-    }
-
-    try {
-      const res = await axios({
-        method: 'PUT',
-        url: `https://localla-api.herokuapp.com/api/v1/user/updatepassword`,
-        data: {
-          password: newPassword.password,
-          new_password: newPassword.newPassword,
-          confirm_new_password: newPassword.confirmPassword,
-        },
-        headers: {
-          Authorization: `${localStorage.getItem('access_token')}`,
-        },
-      });
-      if (res.status === 200) {
-        newPasswordChange({
-          password: '',
-          newPassword: '',
-          confirmPassword: '',
-        });
-        setShow(false);
-        setLoading(false);
-        toast.warn('Password Berhasil Diganti', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-          icon: false,
-        });
-        console.log(newPassword);
-      }
-    } catch (err) {
-      console.log(err.response);
-      setLoading(false);
-      toast.error(err.response.data.message, {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        icon: false,
-      });
-      console.log(newPassword);
-    }
-  };
   return (
     <>
       <Modal
@@ -344,7 +259,12 @@ function ModalPopUp(props) {
           <div className="text-center mb-3">
             <h5 className="fw-bold">Pengaturan Akun</h5>
           </div>
-          <div className={`${style['account-setting-item']}`} onClick={handleShow}>
+          <div
+            className={`${style['account-setting-item']}`}
+            onClick={() => {
+              setShowChangePasswordForm(true);
+            }}
+          >
             <p className="m-0 w-100">Ubah Password</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -384,148 +304,12 @@ function ModalPopUp(props) {
         </Modal.Body>
       </Modal>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        aria-labelledby="contained-modal-title-vcenter"
-        dialogClassName={`${style['modal-size']}`}
-        contentClassName={`${style['modal-style']}`}
-        className={`${style['modal-centered']}`}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Ubah Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group classname="mb-3">
-              <Form.Label className="fw-bolder">Password Lama</Form.Label>
-              <div className={`${style['password-holder']}`}>
-                <input
-                  className={`${style['password-input']}`}
-                  type={showPassword.oldPassword ? 'text' : 'password'}
-                  placeholder="Masukkan password lama"
-                  onChange={(e) => {
-                    newPasswordChange({
-                      ...newPassword,
-                      password: e.target.value,
-                    });
-                    setError({ ...error, oldPassword: '' });
-                  }}
-                  required
-                />
-                <button
-                  className={`${style['password-toggler']}`}
-                  type="button"
-                  onClick={() => {
-                    setShowPassword({ ...showPassword, oldPassword: !showPassword.oldPassword });
-                  }}
-                >
-                  <img src={fi_eye} alt="" />
-                </button>
-              </div>
-              <Form.Text className="text-muted d-block m-0">
-                <strong className="text-danger">{error.oldPassword}</strong>
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group classname="mb-3">
-              <Form.Label className="fw-bolder">Password Baru</Form.Label>
-              <div className={`${style['password-holder']}`}>
-                <input
-                  className={`${style['password-input']}`}
-                  type={showPassword.newPassword ? 'text' : 'password'}
-                  placeholder="Masukkan password baru"
-                  onChange={(e) => {
-                    newPasswordChange({
-                      ...newPassword,
-                      newPassword: e.target.value,
-                    });
-                    setError({ ...error, newPassword: '' });
-                  }}
-                  required
-                />
-                <button
-                  className={`${style['password-toggler']}`}
-                  type="button"
-                  onClick={() => {
-                    setShowPassword({ ...showPassword, newPassword: !showPassword.newPassword });
-                  }}
-                >
-                  <img src={fi_eye} alt="" />
-                </button>
-              </div>
-              <Form.Text className="text-muted d-block m-0">
-                <strong className="text-danger">{error.newPassword}</strong>
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group classname="mb-3">
-              <Form.Label className="fw-bolder">Konfirmasi Password Baru </Form.Label>
-              <div className={`${style['password-holder']}`}>
-                <input
-                  className={`${style['password-input']}`}
-                  type={showPassword.confirmPassword ? 'text' : 'password'}
-                  placeholder="Konfirmasi password baru"
-                  onChange={(e) => {
-                    newPasswordChange({
-                      ...newPassword,
-                      confirmPassword: e.target.value,
-                    });
-                    setError({ ...error, confirmPassword: '' });
-                  }}
-                  required
-                />
-                <button
-                  className={`${style['password-toggler']}`}
-                  type="button"
-                  onClick={() => {
-                    setShowPassword({ ...showPassword, confirmPassword: !showPassword.confirmPassword });
-                  }}
-                >
-                  <img src={fi_eye} alt="" />
-                </button>
-              </div>
-              <Form.Text className="text-muted d-block m-0">
-                <strong className="text-danger">{error.confirmPassword}</strong>
-              </Form.Text>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          {loading ? (
-            <Spinner animation="border" variant="primary" />
-          ) : (
-            <>
-              <Button
-                style={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  color: '#f6a833',
-                }}
-                onClick={handleClose}
-              >
-                Batalkan
-              </Button>
-              <Button
-                type="submit"
-                onClick={changePasswordHandler}
-                style={{ backgroundColor: '#f6a833', border: 'none' }}
-              >
-                Ubah Password
-              </Button>{' '}
-            </>
-          )}
-        </Modal.Footer>
-      </Modal>
-
-      {/* <ChangePassword
-        show={show}
-        handleClose={handleClose}
-        changePasswordHandler={changePasswordHandler}
-        loading={loading}
-        newPassword={newPassword}
-        newPasswordChange={newPasswordChange}
-      /> */}
+      <ChangePassword
+        show={showChangePasswordForm}
+        onHide={() => {
+          setShowChangePasswordForm(false);
+        }}
+      />
     </>
   );
 }

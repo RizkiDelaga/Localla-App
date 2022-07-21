@@ -113,10 +113,16 @@ function EditProfile() {
   const submitHandler = async () => {
     const formData = new FormData();
     formData.append('name', dataProfile.name);
-    formData.append('province', dataProfile.province);
-    formData.append('city', dataProfile.city);
     formData.append('phone', dataProfile.phone);
-    formData.append('address', dataProfile.address);
+    if (dataProfile.province !== null) {
+      formData.append('province', dataProfile.province);
+    }
+    if (dataProfile.city !== null) {
+      formData.append('city', dataProfile.city);
+    }
+    if (dataProfile.address !== null) {
+      formData.append('address', dataProfile.address);
+    }
     if (files[0] !== dataMyProfile.image) {
       formData.append('image', files[0]);
     }
@@ -180,7 +186,7 @@ function EditProfile() {
           >
             <Form.Group className="mb-3 d-flex flex-column justify-content-center align-items-center">
               <div {...getRootProps({ className: 'dropzone' })}>
-                {imagePreview}
+                {loadingDataMyProfile ? null : imagePreview}
                 <input {...getInputProps()} required />
               </div>
               <Form.Text className="text-muted d-block m-0">

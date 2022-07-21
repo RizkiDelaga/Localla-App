@@ -58,8 +58,6 @@ export const updateTransaction = (transactionID, updateStatus) => {
                 type: `${UPDATE_TRANSACTION}_FULFILLED`,
                 payload: res.data.data
             });
-            getAllTransactionForSeller();
-            getAllMyTransaction();
         }).catch((err) => {
             console.log("err.. transaction ", err);
             dispatch({
