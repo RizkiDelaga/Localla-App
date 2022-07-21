@@ -23,7 +23,6 @@ const ShareButtons = (props) => {
   const { isLoading: loadingUpdateWishList, data: dataUpdateWishList } = useSelector((state) => state.updateWishList);
 
   React.useEffect(() => {}, []);
-
   return (
     <div className={`my-3 ${style['share-product']}`}>
       <Row className="justify-content-center">
@@ -35,8 +34,12 @@ const ShareButtons = (props) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className={`${style['share-btn']}`}>
-                <img src={Facebook_Icon} alt="" style={{ height: '25px' }} />
+              <button className={`${style["share-btn"]}`}>
+                <img
+                  src={Facebook_Icon}
+                  alt="fb-icon"
+                  style={{ height: "25px" }}
+                />
               </button>
             </a>
             <a
@@ -44,8 +47,8 @@ const ShareButtons = (props) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className={`${style['share-btn']}`}>
-                <img src={twitter} alt="" style={{ height: '25px' }} />
+              <button className={`${style["share-btn"]}`}>
+                <img src={twitter} alt="twt-icon" style={{ height: "25px" }} />
               </button>
             </a>
 
@@ -54,8 +57,8 @@ const ShareButtons = (props) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className={`${style['share-btn']}`}>
-                <img src={reddit} alt="" style={{ height: '25px' }} />
+              <button className={`${style["share-btn"]}`}>
+                <img src={reddit} alt="red-icon" style={{ height: "25px" }} />
               </button>
             </a>
 
@@ -64,8 +67,8 @@ const ShareButtons = (props) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className={`${style['share-btn']}`}>
-                <img src={hacker} alt="" style={{ height: '25px' }} />
+              <button className={`${style["share-btn"]}`}>
+                <img src={hacker} alt="hck-icon" style={{ height: "25px" }} />
               </button>
             </a>
 
@@ -74,8 +77,12 @@ const ShareButtons = (props) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className={`${style['share-btn']}`}>
-                <img src={Mail_Icon} alt="" style={{ height: '25px' }} />
+              <button className={`${style["share-btn"]}`}>
+                <img
+                  src={Mail_Icon}
+                  alt="mail-icon"
+                  style={{ height: "25px" }}
+                />
               </button>
             </a>
           </div>

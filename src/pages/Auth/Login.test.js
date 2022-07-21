@@ -26,7 +26,7 @@ describe("Test Login Page", () => {
   });
   test("render login button", () => {
     view();
-    const loginButton = screen.getByRole("button", { name: /masuk/i });
+    const loginButton = screen.getAllByRole("button", { name: /masuk/i });
     expect(loginButton).toBeTruthy();
   });
 });
