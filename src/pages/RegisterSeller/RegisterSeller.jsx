@@ -70,6 +70,10 @@ function RegisterSeller() {
   };
 
   const submitHandler = async () => {
+    if (dataMyProfile.province === null || dataMyProfile.city === null || dataMyProfile.address === null) {
+      return alert('Lengkapi profil dulu');
+    }
+
     const formData = new FormData();
     if (shopName === '') {
       return setError({ ...error, shopName: '(Nama produk tidak boleh kosong)' });
@@ -136,18 +140,6 @@ function RegisterSeller() {
       </div>
     </div>
   ));
-
-  const disableButtonCondition = () => {
-    console.log('cek file.. ', dataMyProfile.imageShop === files[0]);
-    if (
-      dataMyProfile.nameShop === shopName ||
-      (shopName === '' && dataMyProfile.imageShop === files[0]) ||
-      files.length === 0
-    ) {
-      return true;
-    }
-    return false;
-  };
 
   return (
     <Fragment>
@@ -233,7 +225,7 @@ function RegisterSeller() {
             <button
               type="submit"
               className={`${style['register-button']}`}
-              disabled={disableButtonCondition()}
+              // disabled={disableButtonCondition()}
               onClick={() => {
                 console.log(shopName, '   data file.. ', files);
                 submitHandler();

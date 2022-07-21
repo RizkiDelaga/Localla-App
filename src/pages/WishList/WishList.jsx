@@ -25,31 +25,30 @@ function WishList() {
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-      <Container className='d-flex justify-content-center' style={{ marginTop: '100px' }}>
+      <Container className="d-flex justify-content-center" style={{ marginTop: '100px' }}>
         <section style={{ width: '100%', maxWidth: '800px' }}>
-
-        <h4 className="fw-bold mb-3">Produk yang disukai</h4>
-        <Row>
-          {loadingProduct ? (
-            <div className="text-center mt-5">
-              <Spinner animation="border" />
-            </div>
-          ) : dataProduct.length <= 0 ? (
-            <NoDataFound />
-          ) : (
-            dataProduct
-              .filter((e) => {
-                return e.status === 'available';
-              })
-              .map((item) => {
-                return (
-                  <Col lg='3' md='4' sm='6'  xs="6" className={`my-3 px-2`}>
-                    <CardProduct product={item} />
-                  </Col>
-                );
-              })
-          )}
-        </Row>
+          <h4 className="fw-bold mb-3">Produk yang disukai</h4>
+          <Row>
+            {loadingProduct ? (
+              <div className="text-center mt-5">
+                <Spinner animation="border" />
+              </div>
+            ) : dataProduct.length <= 0 ? (
+              <NoDataFound />
+            ) : (
+              dataProduct
+                .filter((e) => {
+                  return e.status === 'Available';
+                })
+                .map((item) => {
+                  return (
+                    <Col lg="3" md="4" sm="6" xs="6" className={`my-3 px-2`}>
+                      <CardProduct product={item} />
+                    </Col>
+                  );
+                })
+            )}
+          </Row>
         </section>
       </Container>
     </Fragment>

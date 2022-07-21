@@ -18,6 +18,7 @@ import DetailMyTransaction from '../pages/DetailMyTransaction/DetailMyTransactio
 import ProductPreview from '../pages/ProductPreview/ProductPreview';
 import ProductForm from '../pages/ProductForm/ProductForm';
 import WishList from '../pages/WishList/WishList';
+import IncomingProductTransactions from '../pages/IncomingProductTransactions/IncomingProductTransactions';
 
 function IndexRoute() {
   return (
@@ -44,7 +45,7 @@ function IndexRoute() {
         <Route path='product/preview' element={<ProductPreview />}/>
         <Route path='product/:id' element={<DetailProduct />}/>
         <Route path='product/transaction' element={<OfferList />}/>
-        <Route path='product/transaction/:idproduct' element={<OfferList />}/>
+        <Route path='product/transaction/:idproduct' element={<IncomingProductTransactions />}/>
         <Route path='product/transaction/:idproduct/:idtransaction' element={<InformasiPenawar />}/>
         <Route path='product/:productID/edit' element={<ProductForm />} />
         <Route path='product/addproduct' element={<ProductForm />}/>

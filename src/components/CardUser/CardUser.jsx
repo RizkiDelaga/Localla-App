@@ -33,7 +33,7 @@ function CardUser({ userDetail, sellerDetail, buttonAction }) {
           <img
             src={
               userDetail
-                ? userDetail.image_url.url[0]
+                ? userDetail.buyer.image
                 : sellerDetail
                 ? sellerDetail.owner.imageShop
                 : dataMyProfile.imageShop
@@ -43,11 +43,15 @@ function CardUser({ userDetail, sellerDetail, buttonAction }) {
           />
           <div className={`${style.userInfoText}`}>
             <h5>
-              {userDetail ? userDetail.status : sellerDetail ? sellerDetail.owner.nameShop : dataMyProfile.nameShop}
+              {userDetail ? userDetail.buyer.name : sellerDetail ? sellerDetail.owner.nameShop : dataMyProfile.nameShop}
             </h5>
             <p className="m-0" style={{ fontSize: '14px' }}>
-              {userDetail ? userDetail.status : sellerDetail ? sellerDetail.owner.province : dataMyProfile.province},{' '}
-              {userDetail ? userDetail.status : sellerDetail ? sellerDetail.owner.city : dataMyProfile.city}
+              {userDetail
+                ? userDetail.buyer.province
+                : sellerDetail
+                ? sellerDetail.owner.province
+                : dataMyProfile.province}
+              , {userDetail ? userDetail.buyer.city : sellerDetail ? sellerDetail.owner.city : dataMyProfile.city}
             </p>
           </div>
         </div>

@@ -57,7 +57,7 @@ function DetailProduct() {
 
   const transactionCheck = dataTransactionByProductID.find((transaction) => {
     console.log('transaction.status', transaction.status);
-    return transaction.user_id === Number(localStorage.getItem('myId')) && transaction.status === 'pending';
+    return transaction.user_id === Number(localStorage.getItem('myId')) && transaction.status === 'Pending';
   })
     ? true
     : false;

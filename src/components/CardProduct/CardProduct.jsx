@@ -17,7 +17,7 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
 
   return (
     <Fragment>
-      <div className={`${style['card-product']}`}>
+      <div className={`${style['card-product']}`} key={product.id}>
         <Link to={`/product/${product.id}`}>
           <img
             src={product ? product.image_url.url[0] : Default_Product_Image}
@@ -57,6 +57,7 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
               className={`mt-2 ${style['transaction-product-button']}`}
               onClick={() => {
                 navigate(`/product/transaction/${product.id}`);
+                window.location.reload();
               }}
             >
               Lihat Transaksi
