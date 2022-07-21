@@ -7,8 +7,8 @@ import Login_Icon from '../../assets/icons/Login_Icon.png';
 import Logout_Icon from '../../assets/icons/Logout_Icon.png';
 import Search_Icon from '../../assets/icons/Search_Icon.png';
 import Arrow_Left_Icon from '../../assets/icons/Arrow_Left_Icon.png';
-import ProductOfferList from '../ProductOfferList/ProductOfferList';
-import Lcalla_Logo from '../../assets/icons/Localla_Logo.png';
+import TransactionCard from '../TransactionCard/TransactionCard';
+import Localla_Logo from '../../assets/icons/Localla_Logo.png';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeTitle, search, transparentFade }) {
@@ -207,7 +207,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
 
           {logo ? (
             <Link to={'/'}>
-              <img src={Lcalla_Logo} alt="Home" className={`${style['navbar-logo']}`} style={{ height: '50px' }} />
+              <img src={Localla_Logo} alt="Home" className={`${style['navbar-logo']}`} style={{ height: '35px' }} />
             </Link>
           ) : null}
           {search ? (
@@ -309,7 +309,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                           >
                             Lihat semua transaksi
                           </button>
-                          <ProductOfferList
+                          <TransactionCard
                             dispatchType={'my transaction'}
                             directionTo={'/MyTransaction/detailtransaction'}
                           />
@@ -323,7 +323,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                           >
                             Lihat semua tawaran
                           </button>
-                          <ProductOfferList dispatchType={'transaction for seller'} isSeller={true} />
+                          <TransactionCard dispatchType={'transaction for seller'} isSeller={true} />
                         </Tab>
                       </Tabs>
                     </Dropdown.Menu>

@@ -25,7 +25,7 @@ function WishList() {
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-      <Container className="d-flex justify-content-center" style={{ marginTop: '100px' }}>
+      <Container className="d-flex justify-content-center" style={{ marginTop: '100px', marginBottom: '50px' }}>
         <section style={{ width: '100%', maxWidth: '800px' }}>
           <h4 className="fw-bold mb-3">Produk yang disukai</h4>
           <Row>

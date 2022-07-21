@@ -29,6 +29,7 @@ import {
   getTransactionByProductID,
 } from '../../redux/Actions/TransactionAction.js';
 import ShareButtons from '../../components/ShareButtons/ShareButtons.jsx';
+import { updateWishList } from '../../redux/Actions/WishListAction.js';
 
 function DetailProduct() {
   let { id } = useParams();
@@ -37,6 +38,7 @@ function DetailProduct() {
 
   const dispatch = useDispatch();
   const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
+
   const { isLoading: loadingTransactionByProductID, data: dataTransactionByProductID } = useSelector(
     (state) => state.transactionByProductID
   );
@@ -77,7 +79,7 @@ function DetailProduct() {
       ) : detailProduct.length <= 0 ? (
         navigate('/notfound')
       ) : (
-        <Container fluid="md" className={`${style['conditional-margin']}`}>
+        <Container fluid="md" className={`${style['conditional-margin']}`} style={{ marginBottom: '50px' }}>
           <Row>
             <Col xl={8} lg={7} md={12} sm={12} xs={12} className={`mb-4 p-0`}>
               <Swiper
@@ -121,10 +123,7 @@ function DetailProduct() {
 
               <div style={{ padding: '0px 12px' }}>
                 <ShareButtons
-                  id={detailProduct.id}
-                  description={detailProduct.description}
-                  user_id={detailProduct.user_id}
-                  title={detailProduct.title}
+                  detailProduct={detailProduct}
                 />
 
                 <Card className={`mt-3 p-2 ${style['description-card']}`}>
