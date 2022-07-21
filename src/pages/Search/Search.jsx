@@ -30,7 +30,7 @@ function Search() {
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
-      <Container style={{ marginTop: '100px' }}>
+      <Container style={{ marginTop: '100px', marginBottom: '50px' }}>
         <h6>
           Hasil pencarian untuk <strong>"{key}"</strong>
         </h6>

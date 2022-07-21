@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Button, Container, Form, Spinner } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,9 @@ function RegisterSeller() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [shopName, setShopName] = useState('');
+  const [loadingUploadData, setLoadingUploadData] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
   const [files, setFiles] = useState([]);
   const [error, setError] = useState({
     shopName: '',
@@ -24,7 +27,7 @@ function RegisterSeller() {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     maxFiles: 1,
-    maxSize: 10000,
+    maxSize: 5000000,
     accept: {
       'image/*': [],
     },
@@ -86,6 +89,7 @@ function RegisterSeller() {
     if (files[0] !== dataMyProfile.imageShop) {
       formData.append('image', files[0]);
     }
+    setLoadingUploadData(true);
 
     try {
       const res = await axios({
@@ -98,8 +102,7 @@ function RegisterSeller() {
         },
       });
       if (res.status === 200) {
-        console.log('Register Successfully!');
-        navigate('/productlist');
+        setUploadSuccess(true);
       }
     } catch (error) {
       console.log('error..  ', error);
@@ -145,7 +148,7 @@ function RegisterSeller() {
     <Fragment>
       <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
 
-      <Container className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
+      <Container className={`d-flex justify-content-center`} style={{ marginTop: '100px', marginBottom: '70px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
           <h5 className={`mb-5 text-center`}>Informasi Toko</h5>
 
@@ -236,6 +239,15 @@ function RegisterSeller() {
           </Form>
         </div>
       </Container>
+      {loadingUploadData ? (
+        uploadSuccess ? (
+          navigate('/productlist')
+        ) : (
+          <div className={`${style['loading-upload-data']}`}>
+            <Spinner animation="border" variant="warning" />
+          </div>
+        )
+      ) : null}
     </Fragment>
   );
 }

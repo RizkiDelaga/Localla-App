@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Spinner } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +19,8 @@ function EditProfile() {
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [inputImageError, setInputImageError] = useState('');
+  const [loadingUploadData, setLoadingUploadData] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
   const [dataProfile, setDataProfile] = useState({
     name: '',
     province: '',
@@ -30,7 +32,7 @@ function EditProfile() {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     maxFiles: 1,
-    maxSize: 1000000,
+    maxSize: 5000000,
     accept: {
       'image/*': [],
     },
@@ -56,7 +58,7 @@ function EditProfile() {
     <div className={`d-flex align-items-end`} style={{ cursor: 'pointer' }} key={file.name}>
       {console.log('file.. ', file)}
       <img
-        src={typeof file === 'string' ? file : file.preview}
+        src={typeof file === 'string' ? file : file.preview || URL.createObjectURL(file)}
         className={`d-block ${style['profile-photo']}`}
         alt=""
       />
@@ -127,6 +129,8 @@ function EditProfile() {
       formData.append('image', files[0]);
     }
 
+    setLoadingUploadData(true);
+
     try {
       const res = await axios({
         method: 'PUT',
@@ -138,8 +142,7 @@ function EditProfile() {
         },
       });
       if (res.status === 200) {
-        console.log('Register Successfully!');
-        navigate('/profile');
+        setUploadSuccess(true);
       }
     } catch (error) {
       console.log('error..  ', error);
@@ -174,7 +177,7 @@ function EditProfile() {
   return (
     <Fragment>
       <Navbar logo={true} backButton="/profile" />
-      <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px' }}>
+      <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px', marginBottom: '70px' }}>
         <section style={{ width: '100%', maxWidth: '800px' }}>
           <h5 className={`mb-5 text-center`}>Edit Profil</h5>
 
@@ -311,6 +314,15 @@ function EditProfile() {
           </div>
         </section>
       </Container>
+      {loadingUploadData ? (
+        uploadSuccess ? (
+          navigate('/profile')
+        ) : (
+          <div className={`${style['loading-upload-data']}`}>
+            <Spinner animation="border" variant="warning" />
+          </div>
+        )
+      ) : null}
     </Fragment>
   );
 }

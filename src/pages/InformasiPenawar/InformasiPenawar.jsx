@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';
-import ProductOfferList from '../../components/ProductOfferList/ProductOfferList';
+import TransactionCard from '../../components/TransactionCard/TransactionCard';
 import { getAllTransactionForSeller } from '../../redux/Actions/TransactionAction';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -20,12 +20,12 @@ function InformasiPenawar() {
   return (
     <Fragment>
       <Navbar logo={true} backButton="/productlist" normalTitle="Info Penawar" />
-      <Container className="d-flex justify-content-center" style={{ height: '1200px', marginTop: '100px' }}>
+      <Container className="d-flex justify-content-center" style={{ marginTop: '100px', marginBottom: '50px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
           <CardUser userDetail={state.item} />
           <div className="diva">
             <h6 className={`fw-bold my-4`}>Produk yang Ditawar</h6>
-            <ProductOfferList showButtonAction={true} data={state.item} />
+            <TransactionCard showButtonAction={true} data={state.item} />
           </div>
         </div>
       </Container>

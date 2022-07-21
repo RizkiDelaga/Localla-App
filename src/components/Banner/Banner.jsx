@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 // import 'swiper/css/navigation';
 import { Pagination, Autoplay } from 'swiper';
+import { useNavigate } from 'react-router-dom';
 
 import shop from '../../assets/images/shop.jpg';
 import shop1 from '../../assets/images/shop1.jpg';
@@ -14,6 +15,8 @@ import style from './Banner.module.css';
 import { Container } from 'react-bootstrap';
 
 const Banner = () => {
+  const navigate = useNavigate();
+
   return (
     <Swiper
       mousewheel={{
@@ -34,9 +37,19 @@ const Banner = () => {
       <SwiperSlide style={{ width: '100%' }}>
         <div>
           <div className={style['center-item']}>
-            <h3>Local With International Quality</h3>
+            <h3>Support Your Local / Local With International Quality</h3>
             <p>Localla offering local brand with international quality</p>
-            <button className={style['banner-btn']}>Shopping Now</button>
+            <button
+              className={style['banner-btn']}
+              onClick={() => {
+                if (localStorage.getItem('access_token')) {
+                  return navigate('/mystore');
+                }
+                return navigate('/register');
+              }}
+            >
+              {localStorage.getItem('access_token') ? 'Buka toko' : 'Daftar Sekarang'}
+            </button>
           </div>
           <img className={style['swiper-img']} alt="" src={shop} />
         </div>
@@ -46,7 +59,17 @@ const Banner = () => {
           <div className={style['left-item']}>
             <h3>Think Globally Act Locally</h3>
             <p>Globalization must be grow up with localization</p>
-            <button className={style['banner-btn']}>Shopping Now</button>
+            <button
+              className={style['banner-btn']}
+              onClick={() => {
+                if (localStorage.getItem('access_token')) {
+                  return navigate('/mystore');
+                }
+                return navigate('/register');
+              }}
+            >
+              {localStorage.getItem('access_token') ? 'Buka toko' : 'Daftar Sekarang'}
+            </button>
           </div>
         </Container>
         <img className={style['swiper-img']} alt="" src={shop1} />
@@ -54,9 +77,19 @@ const Banner = () => {
       <SwiperSlide style={{ width: '100%' }}>
         <div>
           <div className={style['center-item']}>
-            <h3>Support Your Local</h3>
-            <p>Put your money where your house is</p>
-            <button className={style['banner-btn']}>Shopping Now</button>
+            <h3>Kembangkan Bisnis Fashion Mu</h3>
+            <p>Lebarkan pasar bisnis mu agar semakin berkembang</p>
+            <button
+              className={style['banner-btn']}
+              onClick={() => {
+                if (localStorage.getItem('access_token')) {
+                  return navigate('/product/addproduct');
+                }
+                return navigate('/search/asd');
+              }}
+            >
+              {localStorage.getItem('access_token') ? 'Jual sekarang' : 'Cari produk'}
+            </button>
           </div>
           <img className={style['swiper-img']} alt="" src={shopping} />
         </div>

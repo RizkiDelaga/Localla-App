@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import LandingPage from '../pages/LandingPage/LandingPage';
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import OfferList from '../pages/OfferList/OfferList';
+import OfferList from '../pages/IncomingAllProductTransactions/IncomingAllProductTransactions';
 import EditProfile from "../pages/EditProfile/EditProfile";
 // import AddProduct from "../pages/ProductForm/AddProduct";
 import ProductList from '../pages/ProductList/ProductList';
@@ -19,6 +19,7 @@ import ProductPreview from '../pages/ProductPreview/ProductPreview';
 import ProductForm from '../pages/ProductForm/ProductForm';
 import WishList from '../pages/WishList/WishList';
 import IncomingProductTransactions from '../pages/IncomingProductTransactions/IncomingProductTransactions';
+import IncomingAllProductTransactions from '../pages/IncomingAllProductTransactions/IncomingAllProductTransactions';
 
 function IndexRoute() {
   return (
@@ -30,13 +31,11 @@ function IndexRoute() {
         <Route path="mystore" element={<RegisterSeller />} />
 
         {/* User Route */}
-        {/* :id */}
         <Route exact path="profile" element={<Profile />}>
           <Route path=":id" element={<Profile />}/>
         </Route>
         <Route path='editprofile' element={<EditProfile />}/>
         <Route path='productlist' element={<ProductList />}/>
-        {/* <Route path='offerlist' element={<OfferList />}/> */}
         <Route path='MyWishList' element={<WishList />}/>
         <Route path='MyTransaction' element={<MyTransaction />}/>
         <Route path='MyTransaction/detailtransaction' element={<DetailMyTransaction />}/>
@@ -44,7 +43,7 @@ function IndexRoute() {
         {/* Product Route */}
         <Route path='product/preview' element={<ProductPreview />}/>
         <Route path='product/:id' element={<DetailProduct />}/>
-        <Route path='product/transaction' element={<OfferList />}/>
+        <Route path='product/transaction' element={<IncomingAllProductTransactions />}/>
         <Route path='product/transaction/:idproduct' element={<IncomingProductTransactions />}/>
         <Route path='product/transaction/:idproduct/:idtransaction' element={<InformasiPenawar />}/>
         <Route path='product/:productID/edit' element={<ProductForm />} />

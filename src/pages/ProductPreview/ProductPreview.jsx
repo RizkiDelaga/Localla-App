@@ -48,7 +48,7 @@ function ProductPreview() {
   return (
     <Fragment>
       <Navbar logo={true} backButton="/productlist" desktopMenu={true} transparentFade={true} />
-      <Container style={{ marginTop: '100px' }}>
+      <Container style={{ marginTop: '100px', marginBottom: '50px' }}>
         <Row>
           <Col xl={8} lg={7} md={12} sm={12} xs={12} className={`mb-4`}>
             <Swiper
