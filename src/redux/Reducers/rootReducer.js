@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { productReducer, createProductReducer, editProductReducer, deleteProductReducer, detailProductReducer, productByCategoryReducer, productBySellerIdReducer } from './productReducer';
 import { myProfileReducer, userProfilByIdeReducer } from "./ProfileReducer";
 import { createTransactionReducer, updateTransactionReducer, allTransactionForSellerReducer, myTransactionReducer, transactionByProductIDReducer } from "./TransactionReducer";
-import { updateWishListReducer } from "./WishListReducer";
+import { myWishListReducer, updateWishListReducer } from "./WishListReducer";
 
 export default combineReducers({
     product: productReducer,
@@ -20,4 +20,5 @@ export default combineReducers({
     myTransaction: myTransactionReducer,
     transactionByProductID: transactionByProductIDReducer,
     updateWishList: updateWishListReducer,
+    myWishList: myWishListReducer
 });
