@@ -5,7 +5,7 @@ import axios from 'axios';
 import style from './Form.module.css';
 
 import fi_eye from '../../assets/icons/fi_eye.png';
-import Google_Icon from '../../assets/icons/Google_Icon.png';
+// import Google_Icon from '../../assets/icons/Google_Icon.png';
 
 function RegisterForm() {
   const [dataRegistrasi, setDataRegistrasi] = useState({
@@ -52,34 +52,35 @@ function RegisterForm() {
     }
   };
 
-  const googleAuthHandler = async () => {
-    try {
-      const res = await axios({
-        method: 'GET',
-        url: 'https://localla-api.herokuapp.com/api/v1/auth/google',
-      });
-      console.log('respon..a register google auth ', res);
-      if (res.status === 201) {
-        setRegisterStatus({
-          isSuccess: true,
-          message: 'Register Successfully!',
-        });
-        setShowAlert(true);
-        setDataRegistrasi({
-          name: '',
-          email: '',
-          password: '',
-        });
-      }
-    } catch (error) {
-      setRegisterStatus({
-        isSuccess: false,
-        message: error.response.data.message,
-      });
-      setShowAlert(true);
-      console.log('error..  ', error);
-    }
-  };
+  // Nonaktikan fitur Google Auth || Perbaikan
+  // const googleAuthHandler = async () => {
+  //   try {
+  //     const res = await axios({
+  //       method: 'GET',
+  //       url: 'https://localla-api.herokuapp.com/api/v1/auth/google',
+  //     });
+  //     console.log('respon..a register google auth ', res);
+  //     if (res.status === 201) {
+  //       setRegisterStatus({
+  //         isSuccess: true,
+  //         message: 'Register Successfully!',
+  //       });
+  //       setShowAlert(true);
+  //       setDataRegistrasi({
+  //         name: '',
+  //         email: '',
+  //         password: '',
+  //       });
+  //     }
+  //   } catch (error) {
+  //     setRegisterStatus({
+  //       isSuccess: false,
+  //       message: error.response.data.message,
+  //     });
+  //     setShowAlert(true);
+  //     console.log('error..  ', error);
+  //   }
+  // };
 
   return (
     <Fragment>
@@ -196,8 +197,9 @@ function RegisterForm() {
             Masuk di sini
           </Link>
         </p>
-        <p className="my-2 fw-bold">atau</p>
-        {/* <a href="https://localla-api.herokuapp.com/api/v1/auth/google"> */}
+
+        {/* Nonaktikan fitur Google Auth || Perbaikan */}
+        {/* <p className="my-2 fw-bold">atau</p>
         <button
           className={`${style['login-with-google']}`}
           onClick={() => {
@@ -206,8 +208,7 @@ function RegisterForm() {
         >
           <img src={Google_Icon} alt="" style={{ width: '35px', paddingRight: '5px' }} />
           <p className="m-0">Masuk dengan Google</p>
-        </button>
-        {/* </a> */}
+        </button> */}
       </div>
     </Fragment>
   );

@@ -9,7 +9,8 @@ import TransactionCard from '../../components/TransactionCard/TransactionCard';
 function MyTransaction() {
   return (
     <Fragment>
-      <Navbar logo={true} backButton="/productlist" normalTitle="Info Penawar" />
+      <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
+
       <Container className="d-flex justify-content-center" style={{ marginTop: '100px', marginBottom: '50px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
           <CardUser buttonAction={true} />

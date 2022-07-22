@@ -26,7 +26,7 @@ function CardUser({ userDetail, sellerDetail, buttonAction }) {
           style={sellerDetail ? { cursor: 'pointer' } : null}
           onClick={() => {
             if (sellerDetail) {
-              navigate(`/profile/${sellerDetail ? sellerDetail.user_id : dataMyProfile.id}`);
+              navigate(`/profile/${sellerDetail ? sellerDetail.seller_id || sellerDetail.user_id : dataMyProfile.id}`);
             }
           }}
         >

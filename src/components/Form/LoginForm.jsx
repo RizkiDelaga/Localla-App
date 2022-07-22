@@ -5,7 +5,7 @@ import axios from 'axios';
 import style from './Form.module.css';
 
 import fi_eye from '../../assets/icons/fi_eye.png';
-import Google_Icon from '../../assets/icons/Google_Icon.png';
+// import Google_Icon from '../../assets/icons/Google_Icon.png';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -123,11 +123,12 @@ function LoginForm() {
             Daftar di sini
           </Link>
         </p>
-        <p className="my-3 fw-bold">atau</p>
+        {/* Nonaktikan fitur Google Auth || Perbaikan */}
+        {/* <p className="my-3 fw-bold">atau</p>
         <button className={`${style['login-with-google']}`}>
           <img src={Google_Icon} alt="" style={{ width: '35px', paddingRight: '5px' }} />
           <p className="m-0">Masuk dengan Google</p>
-        </button>
+        </button> */}
       </div>
     </Fragment>
   );

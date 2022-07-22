@@ -23,8 +23,8 @@ function IncomingProductTransactions() {
           <h6 className={`fw-bold my-4`}>Tawaran pada produk</h6>
           <TransactionCard
             dispatchType={'transaction by product id'}
-            directionTo={'/MyTransaction/detailtransaction'}
             IDProduct={idproduct}
+            isSeller={true}
           />
         </div>
       </Container>

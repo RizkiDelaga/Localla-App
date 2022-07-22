@@ -25,7 +25,7 @@
 
 .category-product-list {
     width: 100%;
-    background-color: #f9fafb !important;
+    background-color: #ffffff !important;
     display: block !important;
     padding: 5px;
     display: flex;
@@ -37,7 +37,7 @@
 }
 
 .button-group-custom {
-    background-color: #f9fafb !important;
+    background-color: #ffffff !important;
     display: flex !important;
 }
 

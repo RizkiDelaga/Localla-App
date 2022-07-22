@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProduct, editProduct } from '../../redux/Actions/productAction.js';
+import { toast, ToastContainer } from 'react-toastify';
 import style from './ProductForm.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
@@ -101,57 +102,65 @@ function ProductForm() {
   ));
 
   const submitHandler = () => {
-    if (dataMyProfile.nameShop === null || dataMyProfile.imageShop === null) {
-      return alert('Toko anda belum dibuka! ');
-    }
-
     const formData = new FormData();
     console.log('files..123 ', files.length <= 0);
     console.log('dataProduct.status ', dataProduct.status);
     if (dataProduct.title === '') {
-      setError({ ...error, title: '(Nama produk tidak boleh kosong)' });
+      return setError({ ...error, title: '(Nama produk tidak boleh kosong)' });
     } else if (dataProduct.price === '' || dataProduct.price.toString().match(/^[0-9]+$/) === null) {
-      setError({ ...error, price: '(Harga tidak sesuai dengan format. Contoh: 125000)' });
+      return setError({ ...error, price: '(Harga tidak sesuai dengan format. Contoh: 125000)' });
     } else if (dataProduct.category === '') {
-      setError({ ...error, category: '(Kategori tidak boleh kosong)' });
+      return setError({ ...error, category: '(Kategori tidak boleh kosong)' });
     } else if (files.length <= 0) {
-      setError({ ...error, image: '(Gambar produk tidak boleh kosong)' });
-    } else {
-      formData.append('title', dataProduct.title);
-      formData.append('category', dataProduct.category);
-      formData.append('description', dataProduct.description);
-      formData.append('price', dataProduct.price);
-      formData.append('status', dataProduct.status);
+      return setError({ ...error, image: '(Gambar produk tidak boleh kosong)' });
+    }
 
-      files
-        .filter((file) => typeof file !== 'string')
-        .map((item, index) => {
-          console.log('file landingpage', item);
-          formData.append(`image`, item);
-        });
+    if (dataMyProfile.nameShop === null || dataMyProfile.imageShop === null) {
+      return toast.info('Anda belum membuka toko!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
 
-      files
-        .filter((file) => typeof file === 'string')
-        .map((item, index) => {
-          console.log('file landingpage', item);
-          formData.append(`image${index + 1}`, item);
-        });
-      if (state) {
-        if (state.id) {
-          dispatch(editProduct(state.id, formData));
-        } else if (!state.id) {
-          dispatch(createProduct(formData));
-        }
-      } else {
+    formData.append('title', dataProduct.title);
+    formData.append('category', dataProduct.category);
+    formData.append('description', dataProduct.description);
+    formData.append('price', dataProduct.price);
+    formData.append('status', dataProduct.status);
+
+    files
+      .filter((file) => typeof file !== 'string')
+      .map((item, index) => {
+        console.log('file landingpage', item);
+        formData.append(`image`, item);
+      });
+
+    files
+      .filter((file) => typeof file === 'string')
+      .map((item, index) => {
+        console.log('file landingpage', item);
+        formData.append(`image${index + 1}`, item);
+      });
+    if (state) {
+      if (state.id) {
+        dispatch(editProduct(state.id, formData));
+      } else if (!state.id) {
         dispatch(createProduct(formData));
       }
-      // state ? dispatch(editProduct(state.id, formData)) : dispatch(createProduct(formData));
-      setLoadingUploadData(true);
+    } else {
+      dispatch(createProduct(formData));
     }
+    // state ? dispatch(editProduct(state.id, formData)) : dispatch(createProduct(formData));
+    setLoadingUploadData(true);
   };
 
   React.useEffect(() => {
-    document.title = state ? 'Edit Produk' : 'Tambah Produk';
+    document.title = state ? (state.id ? 'Edit Produk' : 'Tambah Produk') : 'Tambah Produk';
     dispatch(getMyProfile());
     refreshForm();
   }, []);
@@ -179,40 +188,50 @@ function ProductForm() {
     }
   };
 
-  const disableButtonCondition = () => {
-    console.log('cek file.. ', state);
-    if (state) {
-      if (
-        state.title === dataProduct.title &&
-        state.category === dataProduct.category &&
-        state.description === dataProduct.description &&
-        (state.price === dataProduct.price || dataProduct.price.match(/^[0-9]+$/) === null) &&
-        (state.image_url.url.map((element, index) => {
-          return element === files[index];
-        }) ||
-          files.length === 0)
-        // (state.image_url.url.length === files.length || files.length === 0)
-      ) {
-        return true;
-      }
-    }
-    if (
-      dataProduct.title === '' &&
-      dataProduct.category === '' &&
-      dataProduct.description === '' &&
-      dataProduct.price === '' &&
-      files.length === 0
-    ) {
-      return true;
-    }
-    return false;
-  };
+  // const disableButtonCondition = () => {
+  //   console.log('cek file.. ', state);
+  //   if (state) {
+  //     if (
+  //       state.title === dataProduct.title &&
+  //       state.category === dataProduct.category &&
+  //       state.description === dataProduct.description &&
+  //       (state.price === dataProduct.price || dataProduct.price.match(/^[0-9]+$/) === null) &&
+  //       (state.image_url.url.map((element, index) => {
+  //         return element === files[index];
+  //       }) ||
+  //         files.length === 0)
+  //     ) {
+  //       return true;
+  //     }
+  //   }
+  //   if (
+  //     dataProduct.title === '' &&
+  //     dataProduct.category === '' &&
+  //     dataProduct.description === '' &&
+  //     dataProduct.price === '' &&
+  //     files.length === 0
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   return (
     <Fragment>
       <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
 
       <Container fluid className={`d-flex justify-content-center`} style={{ marginTop: '100px', marginBottom: '50px' }}>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <section style={{ width: '100%', maxWidth: '800px' }}>
           <h5 className={`mb-5 text-center`}>Lengkapi Data Produk</h5>
 
