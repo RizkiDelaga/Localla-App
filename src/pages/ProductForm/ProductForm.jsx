@@ -6,12 +6,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProduct, editProduct } from '../../redux/Actions/productAction.js';
 import { toast, ToastContainer } from 'react-toastify';
+import { getMyProfile } from '../../redux/Actions/ProfileAction.js';
 import style from './ProductForm.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 
-import Plus_Icon from '../../assets/icon/Plus_Icon.png';
-import { getMyProfile } from '../../redux/Actions/ProfileAction.js';
+import Plus_Icon from '../../assets/icons/Plus_Icon.png';
 
 function ProductForm() {
   let { state } = useLocation();
@@ -46,7 +46,6 @@ function ProductForm() {
       'image/*': [],
     },
     onDrop: (acceptedFiles, fileRejections) => {
-      console.log('fileRejections..  ', fileRejections);
       if (fileRejections.length) {
         return setError({ ...error, image: '(Tidak sesuai format ketentuan)' });
       }
@@ -54,7 +53,6 @@ function ProductForm() {
         ...error,
         image: '',
       });
-      console.log('acceptedFiles..  ', acceptedFiles);
       return setFiles([
         ...(files.length < 4 ? files : null),
         ...acceptedFiles.map((file) =>
@@ -69,10 +67,7 @@ function ProductForm() {
   const filesName = files.map((file) => (
     <li>
       <div className="d-flex mb-2">
-        <p className={`m-0 ${style['text-ellipsis']}`}>
-          {console.log('file.. ', typeof file)}
-          {typeof file === 'string' ? file : file.path || file.name}
-        </p>
+        <p className={`m-0 ${style['text-ellipsis']}`}>{typeof file === 'string' ? file : file.path || file.name}</p>
         <Button
           variant="danger"
           className={`ms-3 py-0`}
@@ -103,8 +98,6 @@ function ProductForm() {
 
   const submitHandler = () => {
     const formData = new FormData();
-    console.log('files..123 ', files.length <= 0);
-    console.log('dataProduct.status ', dataProduct.status);
     if (dataProduct.title === '') {
       return setError({ ...error, title: '(Nama produk tidak boleh kosong)' });
     } else if (dataProduct.price === '' || dataProduct.price.toString().match(/^[0-9]+$/) === null) {
@@ -136,14 +129,12 @@ function ProductForm() {
     files
       .filter((file) => typeof file !== 'string')
       .map((item, index) => {
-        console.log('file landingpage', item);
         formData.append(`image`, item);
       });
 
     files
       .filter((file) => typeof file === 'string')
       .map((item, index) => {
-        console.log('file landingpage', item);
         formData.append(`image${index + 1}`, item);
       });
     if (state) {
@@ -155,7 +146,6 @@ function ProductForm() {
     } else {
       dispatch(createProduct(formData));
     }
-    // state ? dispatch(editProduct(state.id, formData)) : dispatch(createProduct(formData));
     setLoadingUploadData(true);
   };
 
@@ -188,34 +178,6 @@ function ProductForm() {
     }
   };
 
-  // const disableButtonCondition = () => {
-  //   console.log('cek file.. ', state);
-  //   if (state) {
-  //     if (
-  //       state.title === dataProduct.title &&
-  //       state.category === dataProduct.category &&
-  //       state.description === dataProduct.description &&
-  //       (state.price === dataProduct.price || dataProduct.price.match(/^[0-9]+$/) === null) &&
-  //       (state.image_url.url.map((element, index) => {
-  //         return element === files[index];
-  //       }) ||
-  //         files.length === 0)
-  //     ) {
-  //       return true;
-  //     }
-  //   }
-  //   if (
-  //     dataProduct.title === '' &&
-  //     dataProduct.category === '' &&
-  //     dataProduct.description === '' &&
-  //     dataProduct.price === '' &&
-  //     files.length === 0
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
   return (
     <Fragment>
       <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
@@ -244,7 +206,6 @@ function ProductForm() {
                 value={dataProduct.title}
                 className={`${style['input-form-style']}`}
                 onChange={(e) => {
-                  console.log('e.target.files', e.target.value);
                   setDataProduct({ ...dataProduct, title: e.target.value });
                   setError({ ...error, title: '' });
                 }}
@@ -265,7 +226,6 @@ function ProductForm() {
                 pattern="^[0-9]+$"
                 title="Harga harus berupa angka. Cth: 125000"
                 onChange={(e) => {
-                  console.log('e.target.files', e.target.value);
                   setDataProduct({ ...dataProduct, price: e.target.value });
                   setError({ ...error, price: '' });
                 }}
@@ -283,33 +243,26 @@ function ProductForm() {
                 value={dataProduct.category}
                 className={`text-secondary ${style['input-form-style']}`}
                 onChange={(e) => {
-                  console.log('e.target.files', e.target.value);
                   setDataProduct({ ...dataProduct, category: e.target.value });
                   setError({ ...error, category: '' });
                 }}
                 required
               >
                 <option hidden>Pilih Kategori</option>
-                <option value="Kaos" style={{ color: '#000' }}>
-                  Kaos
-                </option>
-                <option value="Kemeja" style={{ color: '#000' }}>
-                  Kemeja
-                </option>
-                <option value="Pakaian Olahraga" style={{ color: '#000' }}>
-                  Pakaian Olahraga
+                <option value="Baju" style={{ color: '#000' }}>
+                  Baju
                 </option>
                 <option value="Celana" style={{ color: '#000' }}>
                   Celana
                 </option>
-                <option value="Sepatu" style={{ color: '#000' }}>
-                  Sepatu
+                <option value="Pakaian Olahraga" style={{ color: '#000' }}>
+                  Pakaian Olahraga
                 </option>
-                <option value="Sandal" style={{ color: '#000' }}>
-                  Sandal
+                <option value="Alas Kaki" style={{ color: '#000' }}>
+                  Alas Kaki
                 </option>
-                <option value="Tas" style={{ color: '#000' }}>
-                  Tas
+                <option value="Aksesoris" style={{ color: '#000' }}>
+                  Aksesoris
                 </option>
               </Form.Select>
               <Form.Text className="text-muted d-block m-0">
@@ -326,7 +279,6 @@ function ProductForm() {
                 value={dataProduct.description}
                 className={`${style['input-form-style']}`}
                 onChange={(e) => {
-                  console.log('e.target.files', e.target.value);
                   setDataProduct({
                     ...dataProduct,
                     description: e.target.value,
@@ -369,9 +321,7 @@ function ProductForm() {
                 value={dataProduct.status}
                 className={`text-secondary ${style['input-form-style']}`}
                 onChange={(e) => {
-                  console.log('e.target.files', e.target.value);
                   setDataProduct({ ...dataProduct, status: e.target.value });
-                  // setError({ ...error, category: '' });
                 }}
                 required
               >
@@ -424,15 +374,12 @@ function ProductForm() {
                 type="submit"
                 className={`${style['btn-decision']}`}
                 onClick={() => {
-                  console.log('dataProduct', dataProduct);
                   submitHandler();
                 }}
-                // disabled={disableButtonCondition()}
               >
                 Terbitkan
               </button>
 
-              {console.log('state addproduct', state)}
               {loadingUploadData || loadingDataMyProfile ? (
                 (state ? (state.id ? loadingEditProduct : loadingCreateProduct) : loadingCreateProduct) ? (
                   <div className={`${style['loading-upload-data']}`}>

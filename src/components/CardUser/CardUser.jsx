@@ -1,10 +1,8 @@
 import React, { Fragment } from 'react';
-import style from './CardUser.module.css';
-
-import Image1 from '../../assets/images/image1.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyProfile } from '../../redux/Actions/ProfileAction';
+import style from './CardUser.module.css';
 
 function CardUser({ userDetail, sellerDetail, buttonAction }) {
   const navigate = useNavigate();

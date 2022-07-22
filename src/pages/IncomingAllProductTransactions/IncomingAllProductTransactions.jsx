@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Container } from 'react-bootstrap';
-import style from './IncomingAllProductTransactions.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';

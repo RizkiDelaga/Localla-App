@@ -27,7 +27,6 @@ function LoginForm() {
         url: 'https://localla-api.herokuapp.com/api/v1/auth/login',
         data: dataLogin,
       });
-      console.log('respon..a  ', res);
       if (res.status === 200) {
         localStorage.setItem('access_token', res.data.tokenAccess);
         localStorage.setItem('myId', res.data.data.id);
@@ -42,7 +41,6 @@ function LoginForm() {
         message: error.response.data.message,
       });
       setShowAlert(true);
-      console.log('error..  ', error);
     }
   };
 

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-
-import Default_Product_Image from '../../assets/images/image1.jpg';
 import { Container } from 'react-bootstrap';
+
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';
 import TransactionCard from '../../components/TransactionCard/TransactionCard';

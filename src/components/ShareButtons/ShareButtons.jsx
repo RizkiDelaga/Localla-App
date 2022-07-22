@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { updateWishList } from '../../redux/Actions/WishListAction';
+import { useNavigate } from 'react-router-dom';
 import style from './ShareButtons.module.css';
+
 import Facebook_Icon from '../../assets/icons/Facebook_Icon.png';
 import hacker from '../../assets/icons/hacker.png';
 import reddit from '../../assets/icons/reddit.png';
 import Mail_Icon from '../../assets/icons/Mail_Icon.png';
 import twitter from '../../assets/icons/twitter.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateWishList } from '../../redux/Actions/WishListAction';
-import { useNavigate } from 'react-router-dom';
 
 const ShareButtons = (props) => {
-  console.log(window.location.href);
-  console.log(props);
   const navigate = useNavigate();
 
   const [loadingUploadData, setLoadingUploadData] = useState(false);

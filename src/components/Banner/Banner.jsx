@@ -1,20 +1,17 @@
+import { Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import style from './Banner.module.css';
+
+import shop1 from '../../assets/images/shop1.jpg';
+import shopping from '../../assets/images/shopping.jpg';
+import Banner1_Image from '../../assets/images/Banner1_Image.jpg';
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper style
 import 'swiper/css';
 import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
 import { Pagination, Autoplay } from 'swiper';
-import { useNavigate } from 'react-router-dom';
-
-import shop from '../../assets/images/shop.jpg';
-import shop1 from '../../assets/images/shop1.jpg';
-import shopping from '../../assets/images/shopping.jpg';
-import Banner1_Image from '../../assets/images/Banner1_Image.jpg';
-import Banner2_Image from '../../assets/images/Banner2_Image.jpg';
-
-import style from './Banner.module.css';
-import { Container } from 'react-bootstrap';
 
 const Banner = () => {
   const navigate = useNavigate();

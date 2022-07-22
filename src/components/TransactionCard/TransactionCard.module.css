@@ -1,5 +1,4 @@
 .transaction-card {
-    /* background-color: rgb(223, 0, 0); */
     border-radius: 8px;
     box-shadow: 0px 0px 4px rgb(0 0 0 / 15%);
 }
@@ -10,7 +9,6 @@
     align-items: center;
     width: 100%;
 }
-
 
 .btnDecision {
     border-radius: 50px;
@@ -63,10 +61,6 @@
     padding: 14px;
 }
 
-
-
-
-
 .modal-button-action {
     border-radius: 16px !important;
     border: none !important;
@@ -80,7 +74,6 @@
 
 /* Modal End */
 
-
 @media (max-width: 400px) {
     .btnDecision {
         width: 100%;
@@ -90,7 +83,6 @@
         flex-wrap: wrap;
     }
 }
-
 
 @media (max-width: 200px) {
     .flex-condition {

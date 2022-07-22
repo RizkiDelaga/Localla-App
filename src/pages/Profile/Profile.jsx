@@ -1,20 +1,19 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Spinner, Modal, Container } from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import CardProduct from '../../components/CardProduct/CardProduct';
 import { getMyProfile, getUserProfileById } from '../../redux/Actions/ProfileAction';
 import { getProductBySellerId } from '../../redux/Actions/productAction';
 import { useNavigate, useParams } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import style from './Profile.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
-import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png';
+import Default_PP_Icon from '../../assets/icons/Default_PP_Icon.png';
 import ChangePassword from '../../components/ChangePassword/ChangePassword';
 
 function Profile() {
@@ -53,9 +52,7 @@ function Profile() {
   const handleChangeBackground = async () => {
     const formData = new FormData();
     formData.append('image', backgroundImage);
-
     setLoadingUploadData(true);
-    console.log('formData', formData);
 
     try {
       const res = await axios({
@@ -105,7 +102,6 @@ function Profile() {
                 accept="image/*"
                 style={{ display: 'none' }}
                 onChange={(e) => {
-                  console.log('e.target.files[0]', e.target.files[0]);
                   setBackgroundImage(e.target.files[0]);
                 }}
               />

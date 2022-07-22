@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import { Container, Row, Col, Button, Modal, Form, Accordion, Spinner } from 'react-bootstrap';
+import React from 'react';
+import { Row, Col, Button, Modal, Form, Accordion, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   getAllMyTransaction,
   getAllTransactionForSeller,
@@ -10,7 +10,6 @@ import {
 } from '../../redux/Actions/TransactionAction';
 import style from './TransactionCard.module.css';
 
-import Image1 from '../../assets/images/image1.jpg';
 import Whatsapp_Icon from '../../assets/icons/Whatsapp_Icon.png';
 
 function TransactionCard({
@@ -26,7 +25,6 @@ function TransactionCard({
   const navigate = useNavigate();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalUpdateStatus, setModalUpdateStatus] = React.useState();
-  // const [transactionItem, setTransactionItem] = React.useState([]);
   const [dataTransaction, setDataTransaction] = React.useState({
     isLoading: true,
     data: [],
@@ -46,9 +44,6 @@ function TransactionCard({
   );
 
   React.useEffect(() => {
-    // setDataTransaction({ isLoading: true, data: [] });
-    console.log('isLoading: true', dataTransaction.isLoading);
-
     if (dispatchType === 'transaction for seller') {
       dispatch(getAllTransactionForSeller());
       setDataTransaction({ isLoading: loadingTransactionForSeller, data: dataTransactionForSeller });
@@ -57,26 +52,21 @@ function TransactionCard({
       setDataTransaction({ isLoading: loadingMyTransaction, data: dataMyTransaction });
     } else if (dispatchType === 'transaction by product id') {
       handleDispatch();
-      console.log('dataTransactionByProductID', dataTransactionByProductID);
       setDataTransaction({ isLoading: loadingTransactionByProductID, data: dataTransactionByProductID });
     } else {
       setDataTransaction({ isLoading: false, data: [data] });
     }
-    console.log('isLoading: true', dataTransaction.isLoading);
-    console.log('isLoading: true', data);
   }, [loadingTransactionForSeller, loadingMyTransaction, loadingTransactionByProductID, dataTransaction.isLoading]);
 
   const handleDispatch = async () => {
     await dispatch(getTransactionByProductID(IDProduct));
   };
-  console.log('bidder data', data);
 
   return (
     <div>
       {dataTransaction.isLoading
         ? 'loading...'
         : dataTransaction.data.map((item) => (
-            // <div>
             <Accordion
               className={`mb-3 py-3 ${style['transaction-card']}`}
               onClick={() => {
@@ -96,7 +86,6 @@ function TransactionCard({
             >
               <Accordion.Item eventKey="0">
                 <Accordion.Header className="py-0">
-                  {/* <div> */}
                   <Row className={`${style['flex-condition']}`}>
                     <Col lg="2" md="2" sm="3" xs="3" className="pe-0" style={{ minWidth: '120px' }}>
                       <img
@@ -129,7 +118,6 @@ function TransactionCard({
                       </h6>
                     </Col>
                   </Row>
-                  {/* </div> */}
                 </Accordion.Header>
                 <Accordion.Body className="py-0">
                   {showButtonCallSeller ? (
@@ -138,7 +126,6 @@ function TransactionCard({
                         className={`mt-2 ${style.btnDecision}`}
                         onClick={() => {
                           if (item.status === 'Accept') {
-                            // setTransactionItem(item);
                             setModalUpdateStatus(false);
                             setModalShow(true);
                           } else {
@@ -186,7 +173,6 @@ function TransactionCard({
                             >
                               {item.status === 'Accept' ? 'Update Status' : 'Tolak'}
                             </button>
-                            {/* {loadingTransactionForSeller || loadingTransactionByProductID ? null : navigate('/product')} */}
                             <button
                               className={`mt-2 ${style.btnDecision}`}
                               onClick={() => {
@@ -212,7 +198,6 @@ function TransactionCard({
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
-            // </div>
           ))}
       {dataTransaction.isLoading ? null : modalShow ? (
         <ModalPopUp
@@ -232,7 +217,6 @@ function TransactionCard({
 function ModalPopUp(props) {
   const [modalUpdateStatus, setModalUpdateStatus] = React.useState(props.isUpdateStatus);
   const [value, setValue] = React.useState(false);
-  console.log('data data data', props.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -248,7 +232,6 @@ function ModalPopUp(props) {
       onExited={() => setValue(false)}
     >
       <Modal.Header closeButton className={`px-4 pt-3 border-0`} />
-      {console.log('data data data......', props.data)}
       {!modalUpdateStatus ? (
         <Modal.Body className={`mx-4 p-0`}>
           <h6>Yeay kamu berhasil mendapat harga yang sesuai</h6>
@@ -258,7 +241,7 @@ function ModalPopUp(props) {
             <Row className={`mb-3`}>
               <Col xs="4">
                 <img
-                  src={!props.data.owner? props.data.buyer.image : props.data.owner.imageShop}
+                  src={!props.data.owner ? props.data.buyer.image : props.data.owner.imageShop}
                   style={{
                     width: '100%',
                     maxWidth: 'max-content',
@@ -272,11 +255,11 @@ function ModalPopUp(props) {
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <p className={`mb-1`} style={{ fontSize: '14px', fontWeight: '500' }}>
-                  {!props.data.owner? props.data.buyer.name : props.data.owner.nameShop}
+                  {!props.data.owner ? props.data.buyer.name : props.data.owner.nameShop}
                 </p>
                 <p className={`text-secondary my-0`} style={{ fontSize: '14px' }}>
-                  {!props.data.owner? props.data.buyer.province : props.data.owner.province}
-                  {', '} {!props.data.owner? props.data.buyer.city : props.data.owner.city}
+                  {!props.data.owner ? props.data.buyer.province : props.data.owner.province}
+                  {', '} {!props.data.owner ? props.data.buyer.city : props.data.owner.city}
                 </p>
               </Col>
             </Row>
@@ -338,8 +321,6 @@ function ModalPopUp(props) {
               Kamu membatalkan transaksi produk ini dengan pembeli
             </Form.Label>
           </Form.Group>
-          {console.log('Compare.. ', props.show)}
-          {console.log(value)}
         </Modal.Body>
       )}
 
@@ -347,7 +328,6 @@ function ModalPopUp(props) {
         <Button
           className={`m-0 ${style['modal-button-action']}`}
           onClick={() => {
-            console.log('props.dispatchType', props.idtransaction);
             if (!modalUpdateStatus) {
               window.open(
                 `https://api.whatsapp.com/send?phone=${

@@ -1,14 +1,12 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Spinner, Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import style from './ChangePassword.module.css';
 
 import fi_eye from '../../assets/icons/fi_eye.png';
 
-import style from './ChangePassword.module.css';
-
 const ChangePassword = (props) => {
-  // const [showPassword, setShowPassword] = useState(false);
   const [newPassword, newPasswordChange] = useState({
     password: '',
     newPassword: '',
@@ -73,10 +71,8 @@ const ChangePassword = (props) => {
           theme: 'colored',
           icon: false,
         });
-        console.log(newPassword);
       }
     } catch (err) {
-      console.log(err.response);
       setLoading(false);
       toast.error(err.response.data.message, {
         position: 'top-center',
@@ -89,7 +85,6 @@ const ChangePassword = (props) => {
         theme: 'colored',
         icon: false,
       });
-      console.log(newPassword);
     }
   };
 

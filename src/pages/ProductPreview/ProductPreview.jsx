@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
-import { Container, Row, Col, Modal, Button, Form, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDetailProduct } from '../../redux/Actions/productAction.js';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import style from './ProductPreview.module.css';
@@ -11,8 +9,6 @@ import Card from 'react-bootstrap/Card';
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';
 
-import Image1 from '../../assets/images/image1.jpg';
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -20,7 +16,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper';
-import { createProductTransaction } from '../../redux/Actions/TransactionAction.js';
 import ShareButtons from '../../components/ShareButtons/ShareButtons.jsx';
 
 function ProductPreview() {
@@ -29,21 +24,9 @@ function ProductPreview() {
   const files = state.files;
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const { isLoading: loadingDetailProduct, data: detailProduct } = useSelector((state) => state.detailProduct);
-
   React.useEffect(() => {
-    document.title = detailProduct.title || 'Preview Product';
-    console.log(dataProduct);
-    console.log(files);
-    console.log('state state state dataProduct', state.dataProduct);
-    console.log('state state state Files', state.files);
-    console.log('state state state Files', false ? 'true' : 'false');
+    document.title = 'Preview Product';
   }, []);
-
-  const getDetailProductHandler = async () => {
-    return dispatch(getDetailProduct());
-  };
 
   return (
     <Fragment>
@@ -94,23 +77,20 @@ function ProductPreview() {
             <Card className={`mt-3 p-2 ${style['description-card']}`}>
               <Card.Body>
                 <h5 className={`mb-4`}>Deskripsi</h5>
-                <p>{state ? state.dataProduct.description : detailProduct.description}</p>
+                <p>{state.dataProduct.description}</p>
               </Card.Body>
             </Card>
           </Col>
           <Col>
             <Card className={`p-2 mb-3 ${style['detail-product-card']}`}>
               <Card.Body>
-                <h5>{state ? state.dataProduct.title : detailProduct.title}</h5>
+                <h5>{state.dataProduct.title}</h5>
                 <Card.Text className={`m-0 text-secondary`} style={{ fontSize: '14px' }}>
-                  {state ? state.dataProduct.category : detailProduct.category}
+                  {state.dataProduct.category}
                 </Card.Text>
 
                 <h6 className={`mt-3 mb-4 fw-bold fs-5 ${style['main-text-color']}`}>
-                  Rp{' '}
-                  {new Intl.NumberFormat('de-DE').format(
-                    parseInt(state ? state.dataProduct.price : detailProduct.price)
-                  )}
+                  Rp {new Intl.NumberFormat('de-DE').format(parseInt(state.dataProduct.price))}
                 </h6>
 
                 <div className="d-flex align-items-center">

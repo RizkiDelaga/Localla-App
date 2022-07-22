@@ -20,8 +20,6 @@ function RegisterForm() {
     message: '',
   });
 
-  console.log('dataRegistrasi..  ', dataRegistrasi);
-
   const submitHandler = async () => {
     try {
       const res = await axios({
@@ -48,7 +46,6 @@ function RegisterForm() {
         message: error.response.data.message,
       });
       setShowAlert(true);
-      console.log('error..  ', error);
     }
   };
 

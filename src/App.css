@@ -2,8 +2,6 @@
     color: #f6a833 !important;
 }
 
-
-
 /* Overwriting Radio Buttons Group Style */
 .btn-check:active+.btn-primary,
 .btn-check:checked+.btn-primary,

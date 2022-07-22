@@ -10,19 +10,14 @@ import style from './ProductList.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 import CardProduct from '../../components/CardProduct/CardProduct';
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
-
-import Plus_Icon from '../../assets/icon/Plus_Icon.png';
-import Box_Icon from '../../assets/icons/Box_Icon.png';
-import Heart_Icon from '../../assets/icons/Heart_Icon.png';
-import Dollar_Sign_Icon from '../../assets/icons/Dollar_Sign_Icon.png';
-import Chevron_Right_Icon from '../../assets/icons/Chevron_Right_Icon.png';
 import CardUser from '../../components/CardUser/CardUser';
+
+import Plus_Icon from '../../assets/icons/Plus_Icon.png';
 
 function ProductList() {
   const navigate = useNavigate();
   const [changeCategory, setChangeCategory] = useState('All Product');
   const [showAddProduct, setShowAddProduct] = useState(true);
-  const [loadProductSeller, setLoadProductSeller] = useState(true);
 
   const dispatch = useDispatch();
   const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
@@ -33,7 +28,6 @@ function ProductList() {
     dispatchMyprofile();
     dispatchMyProduct();
   }, [loadingDataMyProfile, loadingProductSeller]);
-  // }, [loadingDataMyProfile, loadingProductSeller, dispatch]);
 
   const dispatchMyprofile = async () => {
     return await dispatch(getMyProfile());
@@ -89,7 +83,6 @@ function ProductList() {
                   }}
                 >
                   <div className={`d-flex justify-content-center align-items-center`}>
-                    {/* <img src={Box_Icon} className={`me-2`} style={{ width: '25px' }} alt="" /> */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="25"
@@ -125,7 +118,6 @@ function ProductList() {
                   }}
                 >
                   <div className={`d-flex justify-content-center align-items-center`}>
-                    {/* <img src={Heart_Icon} className={`me-2`} style={{ width: '25px' }} alt="" /> */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="25"
@@ -161,7 +153,6 @@ function ProductList() {
                   }}
                 >
                   <div className={`d-flex justify-content-center align-items-center`}>
-                    {/* <img src={Dollar_Sign_Icon} className={`me-2`} style={{ width: '25px' }} alt="" /> */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="25"
@@ -175,12 +166,6 @@ function ProductList() {
                     </svg>
                     <p className={`m-0`}>Terjual</p>
                   </div>
-                  {/* <img
-                    src={Chevron_Right_Icon}
-                    className={`${style['right-arrow']}`}
-                    style={{ width: '25px' }}
-                    alt=""
-                  /> */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"

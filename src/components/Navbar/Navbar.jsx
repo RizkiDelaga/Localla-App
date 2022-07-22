@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Container, Dropdown, Button, Form, Tab, Tabs, Collapse } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Link, useNavigate } from 'react-router-dom';
 import style from './Navbar.module.css';
 
 import Login_Icon from '../../assets/icons/Login_Icon.png';
@@ -9,7 +10,6 @@ import Search_Icon from '../../assets/icons/Search_Icon.png';
 import Arrow_Left_Icon from '../../assets/icons/Arrow_Left_Icon.png';
 import TransactionCard from '../TransactionCard/TransactionCard';
 import Localla_Logo from '../../assets/icons/Localla_Logo.png';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeTitle, search, transparentFade }) {
   const navigate = useNavigate();
@@ -216,7 +216,6 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
               onSubmit={(event) => {
                 event.preventDefault();
                 if (searchingKey) {
-                  // <Navigate to={`/search/${searchingKey}`} />
                   navigate(`/search/${searchingKey}`);
                 }
               }}
