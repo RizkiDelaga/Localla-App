@@ -134,8 +134,8 @@ const ShareButtons = (props) => {
                 ) : currentWishlistStatus ? (
                   'Disukai'
                 ) : null
-              ) : null}{' '}
-              {props.detailProduct.productWishlist.total_wishlist}
+              ) : null}
+              {props.detailProduct.id ? props.detailProduct.productWishlist.total_wishlist : null}
             </p>
           </button>
         </Col>
