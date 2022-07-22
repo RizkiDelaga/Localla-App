@@ -57,7 +57,7 @@
     border-radius: 16px !important;
 }
 
-.btn-decision {
+.btn-continue {
     width: 100% !important;
     min-height: 48px;
     height: fit-content;
@@ -70,9 +70,22 @@
     /* padding: 5px 20px; */
 }
 
-.btn-decision:hover {
+.btn-continue:hover {
     background-color: white;
     color: #f6a833;
+}
+
+.btn-cancel {
+    width: 100% !important;
+    min-height: 48px;
+    height: fit-content;
+    border-radius: 16px;
+    border: 2px solid red;
+    background-color: #ffffff;
+    color: red;
+    width: 158px;
+    font-weight: 500;
+    /* padding: 5px 20px; */
 }
 
 /* Detail Product Card End */

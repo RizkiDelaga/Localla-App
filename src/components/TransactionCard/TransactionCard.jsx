@@ -86,7 +86,7 @@ function TransactionCard({
                   });
                 }
                 if (isSeller) {
-                  navigate(`/product/transaction/${item.product_id}/${item.id}`, {
+                  return navigate(`/product/transaction/${item.product_id}/${item.id}`, {
                     state: { item },
                   });
                 }
@@ -258,7 +258,7 @@ function ModalPopUp(props) {
             <Row className={`mb-3`}>
               <Col xs="4">
                 <img
-                  src={props.data.owner.imageShop}
+                  src={!props.data.owner? props.data.buyer.image : props.data.owner.imageShop}
                   style={{
                     width: '100%',
                     maxWidth: 'max-content',
@@ -272,11 +272,11 @@ function ModalPopUp(props) {
               </Col>
               <Col className={`ps-0 d-flex flex-column justify-content-center`}>
                 <p className={`mb-1`} style={{ fontSize: '14px', fontWeight: '500' }}>
-                  {props.data.owner.nameShop}
+                  {!props.data.owner? props.data.buyer.name : props.data.owner.nameShop}
                 </p>
                 <p className={`text-secondary my-0`} style={{ fontSize: '14px' }}>
-                  {props.data.owner.province}
-                  {', '} {props.data.owner.city}
+                  {!props.data.owner? props.data.buyer.province : props.data.owner.province}
+                  {', '} {!props.data.owner? props.data.buyer.city : props.data.owner.city}
                 </p>
               </Col>
             </Row>

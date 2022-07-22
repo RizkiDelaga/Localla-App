@@ -89,12 +89,7 @@ function ProductPreview() {
               })}
             </Swiper>
 
-            <ShareButtons
-              id={state.dataProduct.price}
-              description={state.dataProduct.description}
-              user_id={state.dataProduct.price}
-              title={state.dataProduct.title}
-            />
+            <ShareButtons detailProduct={dataProduct} />
 
             <Card className={`mt-3 p-2 ${style['description-card']}`}>
               <Card.Body>
@@ -120,26 +115,26 @@ function ProductPreview() {
 
                 <div className="d-flex align-items-center">
                   <button
-                    className={`${style['btn-decision']}`}
+                    className={`${style['btn-continue']}`}
                     onClick={() => {
-                      // navigate('/productlist')
+                      navigate('/product/addproduct', {
+                        state: {
+                          dataProduct,
+                          files,
+                        },
+                      });
                     }}
                   >
-                    Terbitkan
+                    Lanjutkan
                   </button>
                 </div>
                 <button
-                  className={`mt-2 ${style['btn-decision']}`}
+                  className={`mt-2 ${style['btn-cancel']}`}
                   onClick={() => {
-                    navigate('/product/addproduct', {
-                      state: {
-                        dataProduct,
-                        files,
-                      },
-                    });
+                    navigate('/productlist');
                   }}
                 >
-                  Edit
+                  Batalkan
                 </button>
               </Card.Body>
             </Card>

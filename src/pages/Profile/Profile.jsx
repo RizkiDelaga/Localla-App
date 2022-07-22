@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
-import { Row, Col, Spinner, Modal, Button, Form, Container, Popover, OverlayTrigger } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { Row, Col, Spinner, Modal, Container } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,11 +9,9 @@ import CardProduct from '../../components/CardProduct/CardProduct';
 import { getMyProfile, getUserProfileById } from '../../redux/Actions/ProfileAction';
 import { getProductBySellerId } from '../../redux/Actions/productAction';
 import { useNavigate, useParams } from 'react-router-dom';
-import fi_eye from '../../assets/icons/fi_eye.png';
 import style from './Profile.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
-import BottomNavigation from '../../components/BottomNavigation/BottomNavigation';
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 import Default_PP_Icon from '../../assets/icon/Default_PP_Icon.png';
@@ -24,7 +22,9 @@ function Profile() {
   let { id } = useParams();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
-  const [image, setImage] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState();
+  const [loadingUploadData, setLoadingUploadData] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const { isLoading: loadingDataMyProfile, data: dataMyProfile } = useSelector((state) => state.myProfile);
   const { isLoading: loadingDataProductSeller, data: dataProductSeller } = useSelector(
@@ -36,11 +36,11 @@ function Profile() {
 
   React.useEffect(() => {
     document.title = 'Profile';
-    dispatchUserID();
+    dispatchProfile();
     dispatchProductSeller();
   }, [loadingDataMyProfile, loadingDataUserProfileById, id]);
 
-  const dispatchUserID = async () => {
+  const dispatchProfile = async () => {
     return await dispatch(id ? getUserProfileById(id) : getMyProfile());
   };
 
@@ -50,16 +50,13 @@ function Profile() {
       : dispatch(getProductBySellerId(id ? id : dataMyProfile.id));
   };
 
-  const handleImage = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-
-  const handleChangeBackground = async (e) => {
-    e.preventDefault();
+  const handleChangeBackground = async () => {
     const formData = new FormData();
-    formData.append('image', image);
+    formData.append('image', backgroundImage);
+
+    setLoadingUploadData(true);
+    console.log('formData', formData);
+
     try {
       const res = await axios({
         method: 'put',
@@ -72,67 +69,81 @@ function Profile() {
       });
 
       if (res.status === 200) {
-        toast.warn('Change background success', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-          icon: false,
-        });
-        dispatchUserID();
-        window.location.reload();
+        dispatchProfile();
+        setUploadSuccess(true);
+        setBackgroundImage(null);
       }
     } catch (error) {
-      toast.error('Please select a valid image', {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        icon: false,
-      });
+      console.log(error);
     }
   };
 
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Header style={{ backgroundColor: '#f6a833' }} as="h3">
-        Change Background
-      </Popover.Header>
-      <Popover.Body>
-        <input type="file" name="image" onChange={handleImage} required />
-        <button className={style['btn-bg']} onClick={handleChangeBackground}>
-          Change
-        </button>
-      </Popover.Body>
-    </Popover>
-  );
   return (
     <Fragment>
       <Navbar logo={true} search={true} mobileMenu={true} desktopMenu={true} />
       <div className={`${style['background-image-layer']}`} style={{ marginTop: '70px' }}>
-        <OverlayTrigger trigger="click" placement="bottom-start" overlay={popover}>
-          <img
-            src={
-              id
-                ? dataUserProfileById.imageBackground === null
-                  ? Default_PP_Icon
-                  : dataUserProfileById.imageBackground
-                : dataMyProfile.imageBackground === null
+        <img
+          src={
+            id
+              ? dataUserProfileById.imageBackground === null
                 ? Default_PP_Icon
-                : dataMyProfile.imageBackground
-            }
-            className={`${style['background-image']}`}
-            alt=""
-          />
-        </OverlayTrigger>
+                : dataUserProfileById.imageBackground
+              : dataMyProfile.imageBackground === null
+              ? Default_PP_Icon
+              : dataMyProfile.imageBackground
+          }
+          className={`${style['background-image']}`}
+          alt=""
+        />
+        {localStorage.getItem('access_token') ? (
+          <>
+            <div className={`${style['edit-background']}`}>
+              <input
+                type="file"
+                name="background-image"
+                id="background-image"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={(e) => {
+                  console.log('e.target.files[0]', e.target.files[0]);
+                  setBackgroundImage(e.target.files[0]);
+                }}
+              />
+              <label for="background-image" style={{ cursor: 'pointer' }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="100%"
+                  fill="currentColor"
+                  class="bi bi-camera-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                  <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
+                </svg>
+              </label>
+              {backgroundImage && (
+                <button
+                  className={style['btn-upload-background']}
+                  onClick={() => {
+                    handleChangeBackground();
+                  }}
+                >
+                  Upload
+                </button>
+              )}
+            </div>
+            {loadingUploadData ? (
+              uploadSuccess ? (
+                (setLoadingUploadData(false), setUploadSuccess(false))
+              ) : (
+                <div className={`${style['loading-upload-data']}`}>
+                  <Spinner animation="border" variant="warning" />
+                </div>
+              )
+            ) : null}
+          </>
+        ) : null}
       </div>
       <section className="d-flex justify-content-center" style={{ marginTop: '-100px' }}>
         <ToastContainer

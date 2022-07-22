@@ -12,7 +12,7 @@ function DetailMyTransaction() {
 
   return (
     <Fragment>
-      <Navbar logo={true} backButton="true" normalTitle="Info Penawar" />
+      <Navbar logo={true} backButton="true" normalTitle="Detail transaksi" desktopMenu={true} />
       <Container className="d-flex justify-content-center" style={{ marginTop: '100px', marginBottom: '50px' }}>
         <div style={{ maxWidth: '800px', width: '100%' }}>
           <CardUser sellerDetail={state.item} />

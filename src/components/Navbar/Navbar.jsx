@@ -391,6 +391,7 @@ function Navbar({ logo, mobileMenu, desktopMenu, backButton, normalTitle, largeT
                           localStorage.removeItem('access_token');
                           localStorage.removeItem('myId');
                           navigate('/');
+                          window.location.reload();
                         }}
                       >
                         <p className="m-0 w-100 me-3">Keluar</p>

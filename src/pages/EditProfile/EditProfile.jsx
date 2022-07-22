@@ -99,7 +99,6 @@ function EditProfile() {
       } else {
         setFiles([Plus_Icon]);
       }
-      // setBackgroundImage([dataMyProfile.imageBackground]);
     } else {
       setDataProfile({
         name: '',
@@ -108,7 +107,6 @@ function EditProfile() {
         phone: '',
         address: '',
       });
-      // setFiles([]);
     }
   };
 

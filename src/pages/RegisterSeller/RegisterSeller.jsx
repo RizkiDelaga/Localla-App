@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyProfile } from '../../redux/Actions/ProfileAction';
 import style from './RegisterSeller.module.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 import Navbar from '../../components/Navbar/Navbar';
 
@@ -73,15 +74,23 @@ function RegisterSeller() {
   };
 
   const submitHandler = async () => {
-    if (dataMyProfile.province === null || dataMyProfile.city === null || dataMyProfile.address === null) {
-      return alert('Lengkapi profil dulu');
-    }
-
     const formData = new FormData();
     if (shopName === '') {
       return setError({ ...error, shopName: '(Nama produk tidak boleh kosong)' });
     } else if (files.length === 0) {
       return setError({ ...error, image: '(Gambar produk tidak boleh kosong)' });
+    }
+
+    if (dataMyProfile.province === null || dataMyProfile.city === null || dataMyProfile.address === null) {
+      return toast.info('Lengkapi profil mu sebelum membuka toko!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
 
     formData.append('nameShop', shopName);
@@ -149,6 +158,17 @@ function RegisterSeller() {
       <Navbar logo={true} backButton="/productlist" desktopMenu={true} />
 
       <Container className={`d-flex justify-content-center`} style={{ marginTop: '100px', marginBottom: '70px' }}>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div style={{ maxWidth: '800px', width: '100%' }}>
           <h5 className={`mb-5 text-center`}>Informasi Toko</h5>
 
@@ -166,6 +186,10 @@ function RegisterSeller() {
                 value={shopName}
                 onChange={(e) => {
                   setShopName(e.target.value);
+                  setError({
+                    ...error,
+                    shopName: '',
+                  });
                 }}
                 required
               />
