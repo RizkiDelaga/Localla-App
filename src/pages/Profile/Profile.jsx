@@ -92,7 +92,7 @@ function Profile() {
           className={`${style['background-image']}`}
           alt=""
         />
-        {localStorage.getItem('access_token') ? (
+        {id ? null : localStorage.getItem('access_token') ? (
           <>
             <div className={`${style['edit-background']}`}>
               <input
