@@ -6,7 +6,7 @@ import style from './CardProduct.module.css';
 
 import Default_Product_Image from '../../assets/images/image1.jpg';
 import Remove_Icon from '../../assets/icons/Remove_Icon.png';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 function CardProduct({ product, buttonAction, dispatchMyProduct }) {
   const navigate = useNavigate();
@@ -89,7 +89,6 @@ function CardProduct({ product, buttonAction, dispatchMyProduct }) {
         show={modalShow}
         onHide={() => setModalShow(false)}
         aria-labelledby="contained-modal-title-vcenter"
-        // dialogClassName={`${style["modal-size"]}`}
         contentClassName={`${style['modal-style']}`}
         className={`${style['modal-centered']}`}
       >

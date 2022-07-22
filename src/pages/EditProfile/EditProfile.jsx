@@ -3,16 +3,15 @@ import { Button, Container, Spinner } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { listArea } from '../../utils/listArea';
+import { useDropzone } from 'react-dropzone';
+import { getMyProfile } from '../../redux/Actions/ProfileAction';
+import axios from 'axios';
 import style from './EditProfile.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 
-import Plus_Icon from '../../assets/icon/Plus_Icon.png';
-
-import { useDropzone } from 'react-dropzone';
-import { getMyProfile } from '../../redux/Actions/ProfileAction';
-import axios from 'axios';
-import { listArea } from '../../utils/listArea';
+import Plus_Icon from '../../assets/icons/Plus_Icon.png';
 
 function EditProfile() {
   const dispatch = useDispatch();
@@ -37,12 +36,10 @@ function EditProfile() {
       'image/*': [],
     },
     onDrop: (acceptedFiles, fileRejections) => {
-      console.log('fileRejections..  ', fileRejections);
       if (fileRejections.length) {
         return setInputImageError('(Harus berupa gambar & ukuran maksimal 5MB)');
       }
       setInputImageError('');
-      console.log('acceptedFiles..  ', acceptedFiles);
       return setFiles([
         ...acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -56,7 +53,6 @@ function EditProfile() {
 
   const imagePreview = files.map((file) => (
     <div className={`d-flex align-items-end`} style={{ cursor: 'pointer' }} key={file.name}>
-      {console.log('file.. ', file)}
       <img
         src={typeof file === 'string' ? file : file.preview || URL.createObjectURL(file)}
         className={`d-block ${style['profile-photo']}`}
@@ -84,7 +80,6 @@ function EditProfile() {
   }, [loadingDataMyProfile]);
 
   const refreshForm = () => {
-    console.log('refreshForm', dataMyProfile);
     if (dataMyProfile) {
       setDataProfile({
         name: dataMyProfile.name,
@@ -94,7 +89,6 @@ function EditProfile() {
         address: dataMyProfile.address,
       });
       if (dataMyProfile.image !== null) {
-        console.log('dataMyProfile.image', dataMyProfile.image);
         setFiles([dataMyProfile.image]);
       } else {
         setFiles([Plus_Icon]);
@@ -226,7 +220,6 @@ function EditProfile() {
                 ))}
               </Form.Select>
             </Form.Group>
-            {console.log('dataProfile.province', dataProfile.province)}
 
             <Form.Group className="mb-3" style={{ width: '100% !important' }}>
               <Form.Label>Kota</Form.Label>
@@ -301,9 +294,6 @@ function EditProfile() {
               className={`${style['btn-decision']}`}
               disabled={disableButtonCondition()}
               onClick={() => {
-                // navigate('/profile');
-                console.log(dataProfile);
-                console.log(files);
                 submitHandler();
               }}
             >

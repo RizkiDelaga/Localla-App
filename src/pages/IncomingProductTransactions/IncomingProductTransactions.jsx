@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Container } from 'react-bootstrap';
-// import style from './OfferList.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';
@@ -11,7 +10,6 @@ function IncomingProductTransactions() {
   let { idproduct } = useParams();
   React.useEffect(() => {
     document.title = 'Transaksi Produk';
-    console.log(idproduct);
   }, [idproduct]);
 
   return (

@@ -4,13 +4,13 @@ import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyProfile } from '../../redux/Actions/ProfileAction';
-import style from './RegisterSeller.module.css';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import style from './RegisterSeller.module.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 
-import Plus_Icon from '../../assets/icon/Plus_Icon.png';
-import { useNavigate } from 'react-router-dom';
+import Plus_Icon from '../../assets/icons/Plus_Icon.png';
 
 function RegisterSeller() {
   const dispatch = useDispatch();
@@ -24,7 +24,6 @@ function RegisterSeller() {
     shopName: '',
     image: '',
   });
-  // const [backgroundImage, setBackgroundImage] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     maxFiles: 1,
@@ -33,7 +32,6 @@ function RegisterSeller() {
       'image/*': [],
     },
     onDrop: (acceptedFiles, fileRejections) => {
-      console.log('fileRejections..  ', fileRejections);
       if (fileRejections.length) {
         return setError({ ...error, image: '(File tidak support atau size terlalu besar)' });
       }
@@ -41,7 +39,6 @@ function RegisterSeller() {
         ...error,
         image: '',
       });
-      console.log('acceptedFiles..  ', acceptedFiles);
       return setFiles([
         ...acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -57,16 +54,12 @@ function RegisterSeller() {
     document.title = 'Registrasi Seller';
     dispatch(getMyProfile());
     loadingDataMyProfile ? console.log('loadingDataMyProfile') : refreshForm();
-
-    console.log('dataMyProfile.. register', dataMyProfile);
   }, [loadingDataMyProfile]);
 
   const refreshForm = () => {
-    console.log('refreshForm', dataMyProfile);
     if (dataMyProfile && dataMyProfile.nameShop && dataMyProfile.imageShop) {
       setShopName(dataMyProfile.nameShop);
       setFiles([dataMyProfile.imageShop]);
-      // setBackgroundImage([dataMyProfile.imageBackground]);
     } else {
       setShopName('');
       setFiles([]);
@@ -94,7 +87,6 @@ function RegisterSeller() {
     }
 
     formData.append('nameShop', shopName);
-    // formData.append('imageBackground', backgroundImage);
     if (files[0] !== dataMyProfile.imageShop) {
       formData.append('image', files[0]);
     }
@@ -121,10 +113,7 @@ function RegisterSeller() {
   const filesName = files.map((file) => (
     <li>
       <div className="d-flex mb-2">
-        <p className={`m-0 ${style['text-ellipsis']}`}>
-          {console.log('file.. ', typeof file)}
-          {typeof file === 'string' ? file : file.path}
-        </p>
+        <p className={`m-0 ${style['text-ellipsis']}`}>{typeof file === 'string' ? file : file.path}</p>
         <Button
           variant="danger"
           className={`ms-3 py-0`}
@@ -224,14 +213,6 @@ function RegisterSeller() {
               </aside>
             </Form.Group>
 
-            {/* <input
-              type="file"
-              onChange={(e) => {
-                console.log('e.. ', e.target.files[0]);
-
-                setBackgroundImage(e.target.value);
-              }}
-            /> */}
             <div className="d-flex justify-content-end my-4">
               <button className={`d-flex align-items-center ${style['refresh-button']}`} onClick={() => refreshForm()}>
                 <svg
@@ -252,7 +233,6 @@ function RegisterSeller() {
             <button
               type="submit"
               className={`${style['register-button']}`}
-              // disabled={disableButtonCondition()}
               onClick={() => {
                 console.log(shopName, '   data file.. ', files);
                 submitHandler();

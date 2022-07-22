@@ -2,15 +2,16 @@ import React, { Fragment } from 'react';
 import { Container, Row, Col, Modal, Button, Form, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailProduct } from '../../redux/Actions/productAction.js';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import Card from 'react-bootstrap/Card';
+import { createTransaction, getTransactionByProductID } from '../../redux/Actions/TransactionAction.js';
 import style from './DetailProduct.module.css';
 
-import Card from 'react-bootstrap/Card';
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';
-import NoDataFound from '../../components/NoDataFound/NoDataFound';
+import ShareButtons from '../../components/ShareButtons/ShareButtons.jsx';
 
 import Image1 from '../../assets/images/image1.jpg';
 import Info_Icon from '../../assets/icons/Info_Icon.png';
@@ -22,14 +23,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper';
-import {
-  createProductTransaction,
-  createTransaction,
-  getProductTransactionByID,
-  getTransactionByProductID,
-} from '../../redux/Actions/TransactionAction.js';
-import ShareButtons from '../../components/ShareButtons/ShareButtons.jsx';
-import { updateWishList } from '../../redux/Actions/WishListAction.js';
 
 function DetailProduct() {
   let { id } = useParams();
@@ -58,14 +51,12 @@ function DetailProduct() {
   };
 
   const transactionCheck = dataTransactionByProductID.find((transaction) => {
-    console.log('transaction.status', transaction.status);
     return transaction.user_id === Number(localStorage.getItem('myId')) && transaction.status === 'Pending';
   })
     ? true
     : false;
 
   const isMyProduct = () => {
-    console.log('detailProduct.user_id', detailProduct);
     return detailProduct.user_id === Number(localStorage.getItem('myId')) ? true : false;
   };
 
@@ -122,9 +113,7 @@ function DetailProduct() {
               </Swiper>
 
               <div style={{ padding: '0px 12px' }}>
-                <ShareButtons
-                  detailProduct={detailProduct}
-                />
+                <ShareButtons detailProduct={detailProduct} />
 
                 <Card className={`mt-3 p-2 ${style['description-card']}`}>
                   <Card.Body>
@@ -200,7 +189,6 @@ function DetailProduct() {
 function ModalPopUp(props) {
   const dispatch = useDispatch();
   const [bidPrice, setBidPrice] = React.useState();
-  const [error, setError] = React.useState('');
 
   const { isLoading: loadingCreateTransaction, data: dataCreateTransaction } = useSelector(
     (state) => state.createTransaction

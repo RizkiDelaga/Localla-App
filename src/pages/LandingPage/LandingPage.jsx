@@ -10,8 +10,6 @@ import Navbar from '../../components/Navbar/Navbar';
 import Banner from '../../components/Banner/Banner';
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
-import Search from '../../assets/icon/fi_search.png';
-
 function LandingPage() {
   const navigate = useNavigate();
   const [changeCategory, setChangeCategory] = useState('All Product');
@@ -38,7 +36,6 @@ function LandingPage() {
       listProduct.map((item) => {
         return (
           <Col xl="2" lg="3" md="4" sm="6" xs="6" className={`my-3`} style={{ width: 'maxContent' }} key={item.id}>
-            {console.log('item.. ', item)}
             <CardProduct product={item} />
           </Col>
         );
@@ -83,25 +80,23 @@ function LandingPage() {
             </ToggleButton>
             <ToggleButton
               id="category-product-2"
-              value={'Kaos'}
+              value={'Baju'}
               className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`}
               onClick={() => {
-                dispatch(getProductByKey('Kaos'));
+                dispatch(getProductByKey('Baju'));
               }}
             >
-              {/* <ion-icon name="shirt" size="small" className="me-2"></ion-icon> */}
-              Kaos
+              Baju
             </ToggleButton>
             <ToggleButton
-              id="category-product-3"
-              value={'Kemeja'}
+              id="category-product-5"
+              value={'Celana'}
               className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`}
               onClick={() => {
-                dispatch(getProductByKey('Kemeja'));
+                dispatch(getProductByKey('Celana'));
               }}
             >
-              {/* <img src={Search} className={`me-2`} alt=""/> */}
-              Kemeja
+              Celana
             </ToggleButton>
             <ToggleButton
               id="category-product-4"
@@ -114,45 +109,14 @@ function LandingPage() {
               Pakaian Olahraga
             </ToggleButton>
             <ToggleButton
-              id="category-product-5"
-              value={'Celana'}
-              className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`}
-              onClick={() => {
-                dispatch(getProductByKey('Celana'));
-              }}
-            >
-              {/* <img src={Search} className={`me-2`} alt=""/> */}
-              Celana
-            </ToggleButton>
-            <ToggleButton
               id="category-product-6"
-              value={'Sepatu'}
+              value={'Alas Kaki'}
               className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`}
               onClick={() => {
-                dispatch(getProductByKey('Sepatu'));
+                dispatch(getProductByKey('Alas Kaki'));
               }}
             >
-              Sepatu
-            </ToggleButton>
-            <ToggleButton
-              id="category-product-7"
-              value={'Sandal'}
-              className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`}
-              onClick={() => {
-                dispatch(getProductByKey('Sandal'));
-              }}
-            >
-              Sandal
-            </ToggleButton>
-            <ToggleButton
-              id="category-product-8"
-              value={'Tas'}
-              className={`me-3 py-2 px-3 d-flex justify-content-center align-items-center ${style['btn-group-style']}`}
-              onClick={() => {
-                dispatch(getProductByKey('Tas'));
-              }}
-            >
-              Tas
+              Alas Kaki
             </ToggleButton>
             <ToggleButton
               id="category-product-9"
@@ -175,21 +139,7 @@ function LandingPage() {
                   return e.status === 'Available';
                 })
               )
-            : changeCategory === 'Kaos'
-            ? productItems(
-                loadingProductByCategory,
-                dataProductByCategory.filter((e) => {
-                  return e.status === 'Available';
-                })
-              )
-            : changeCategory === 'Kemeja'
-            ? productItems(
-                loadingProductByCategory,
-                dataProductByCategory.filter((e) => {
-                  return e.status === 'Available';
-                })
-              )
-            : changeCategory === 'Pakaian Olahraga'
+            : changeCategory === 'Baju'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
@@ -203,21 +153,14 @@ function LandingPage() {
                   return e.status === 'Available';
                 })
               )
-            : changeCategory === 'Sepatu'
+            : changeCategory === 'Pakaian Olahraga'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {
                   return e.status === 'Available';
                 })
               )
-            : changeCategory === 'Sandal'
-            ? productItems(
-                loadingProductByCategory,
-                dataProductByCategory.filter((e) => {
-                  return e.status === 'Available';
-                })
-              )
-            : changeCategory === 'Tas'
+            : changeCategory === 'Alas Kaki'
             ? productItems(
                 loadingProductByCategory,
                 dataProductByCategory.filter((e) => {

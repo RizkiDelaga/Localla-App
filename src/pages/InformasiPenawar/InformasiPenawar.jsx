@@ -1,20 +1,16 @@
 import React, { Fragment } from 'react';
 import { Container } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 import Navbar from '../../components/Navbar/Navbar';
 import CardUser from '../../components/CardUser/CardUser';
 import TransactionCard from '../../components/TransactionCard/TransactionCard';
-import { getAllTransactionForSeller } from '../../redux/Actions/TransactionAction';
-import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
 
 function InformasiPenawar() {
-  const dispatch = useDispatch();
   const { state } = useLocation();
 
   React.useEffect(() => {
     document.title = 'Informasi Penawar';
-    console.log('state', state.item);
   }, []);
 
   return (
