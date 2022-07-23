@@ -210,9 +210,13 @@ function ProductList() {
                 : changeCategory === 'Interested'
                 ? productItems(
                     loadingProductSeller,
-                    dataProductSeller.filter((e) => {
-                      return e.status === 'Available';
-                    })
+                    dataProductSeller
+                      .sort(function (a, b) {
+                        return b.productWishlist.total_wishlist - a.productWishlist.total_wishlist;
+                      })
+                      .filter((e) => {
+                        return e.status === 'Available';
+                      })
                   )
                 : changeCategory === 'Sold'
                 ? productItems(
